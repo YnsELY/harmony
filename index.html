@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Harmony Féminine</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <!-- AOS - Animate On Scroll -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* ════════════════════════════════════════════
+       Override Bootstrap's theme tokens with the
+       Harmonie Féminine palette. Every colour
+       reference below uses var(--bs-*) only.
+       ════════════════════════════════════════════ */
+    :root {
+      --bs-primary:             #C8927A;
+      --bs-primary-rgb:         200, 146, 122;
+
+      --bs-secondary:           #D4A896;
+      --bs-secondary-rgb:       212, 168, 150;
+
+      --bs-info:                #E8C4B4;
+      --bs-info-rgb:            232, 196, 180;
+
+      --bs-light:               #FAF0EB;
+      --bs-light-rgb:           250, 240, 235;
+
+      --bs-dark:                #3A2420;
+      --bs-dark-rgb:            58, 36, 32;
+
+      --bs-success:             #A8B5A0;
+      --bs-success-rgb:         168, 181, 160;
+
+      --bs-warning:             #F5D8CC;
+      --bs-warning-rgb:         245, 216, 204;
+
+      --bs-body-color:          #7A4A3C;
+      --bs-body-bg:             #FAF0EB;
+      --bs-body-font-family:    'Jost', sans-serif;
+      --bs-body-font-weight:    300;
+      --bs-body-line-height:    1.7;
+      --bs-emphasis-color:      #3A2420;
+
+      --bs-secondary-color:     rgba(122,74,60,0.75);
+      --bs-tertiary-color:      rgba(122,74,60,0.5);
+
+      --bs-border-color:        #E8C4B4;
+      --bs-border-radius:       0.75rem;
+      --bs-border-radius-lg:    1.25rem;
+      --bs-border-radius-xl:    1.5rem;
+      --bs-border-radius-pill:  2.5rem;
+
+      --bs-link-color:          var(--bs-primary);
+      --bs-link-hover-color:    #A87060;
+
+      --bs-card-border-color:   var(--bs-info);
+      --bs-card-bg:             #fff;
+      --bs-card-border-radius:  var(--bs-border-radius-lg);
+
+      /* Extra token outside BS naming (one only) */
+      --bs-mauve:               #B07FA8;
+      --font-display:           'Lustria', 'ZTOtez', 'Cormorant Garamond', serif;
+      --font-body:              'Mulish', 'Jost', sans-serif;
+    }
+    
+    @font-face {
+      font-family: ZTOtez;
+      src: url('assets/fonts/ZTOtez-Regular.ttf');
+    }
+    
+    @font-face {
+      font-family: Lustria;
+      src: url('assets/fonts/Lustria-Regular.ttf');
+    }
+    
+    @font-face {
+      font-family: Mulish;
+      src: url('assets/fonts/Mulish-Regular.ttf');
+    }
+
+    /* ── Global ── */
+    * { scroll-behavior: smooth; }
+    body { letter-spacing: 0.02em; }
+    h1,h2,h3,h4,h5 { font-family: var(--font-display); font-weight:400; color:var(--bs-dark); }
+
+    /* ── Language toggle ── */
+    body.lang-fr .txt-fr, body.lang-de .txt-de { display:inline; }
+    body.lang-fr .txt-de, body.lang-de .txt-fr { display:none; }
+    .txt-fr, .txt-de { display:none; }
+
+    /* ── Navbar ── */
+    .navbar {
+      background: rgba(var(--bs-light-rgb),0.96) !important;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--bs-info);
+      padding: 1rem 0; transition: box-shadow 0.3s;
+    }
+    .navbar.scrolled { box-shadow: 0 4px 24px rgba(var(--bs-primary-rgb),0.12); }
+    .navbar-brand { font-family:var(--font-display); font-size:1.5rem; color:var(--bs-primary)!important; letter-spacing:0.05em; }
+    .navbar-brand span { font-style:italic; }
+    .nav-link { font-size:0.82rem; font-weight:400; letter-spacing:0.12em; text-transform:uppercase; color:var(--bs-body-color)!important; padding:0.4rem 1rem!important; transition:color 0.2s; }
+    .nav-link:hover, .nav-link.active { color:var(--bs-primary)!important; }
+
+    .lang-switch { display:flex; gap:6px; align-items:center; }
+    .lang-btn {
+      font-size:0.72rem; font-weight:500; letter-spacing:0.1em;
+      border:1px solid var(--bs-secondary); color:var(--bs-primary);
+      background:transparent; border-radius:var(--bs-border-radius-pill);
+      padding:2px 10px; cursor:pointer; transition:all 0.2s;
+    }
+    .lang-btn.active, .lang-btn:hover { background:var(--bs-primary); color:#fff; border-color:var(--bs-primary); }
+
+    /* ── Hero ── */
+    .hero {
+      min-height:100vh;
+      background:
+        linear-gradient(135deg, rgba(var(--bs-light-rgb),0.88) 0%, rgba(var(--bs-warning-rgb),0.75) 50%, rgba(var(--bs-success-rgb),0.3) 100%),
+        url('assets/images/file_00000000d5c072439dc8ff3d80cf7165.png') center/cover no-repeat;
+      display:flex; align-items:center; position:relative; overflow:hidden;
+    }
+    .hero::before {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(var(--bs-primary-rgb),0.18) 0%, transparent 70%);
+    }
+    .hero-tagline { font-size:1.5rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--bs-primary); font-weight:500; margin-bottom:1.5rem; }
+    .hero h1 { font-size:clamp(2.8rem,6vw,5.5rem); line-height:1.12; color:var(--bs-dark); margin-bottom:1.5rem; }
+    .hero h1 em { color:var(--bs-primary); font-style:italic; }
+    .hero-sub { font-size:1.05rem; color:var(--bs-body-color); max-width:520px; line-height:1.75; margin-bottom:2.5rem; }
+    .petal-bg { position:absolute; right:-60px; bottom:-80px; width:520px; height:520px; background:radial-gradient(circle, rgba(var(--bs-primary-rgb),0.15) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
+
+    /* ── Buttons (extend Bootstrap) ── */
+    .btn-primary {
+      --bs-btn-bg:           var(--bs-primary);
+      --bs-btn-border-color: var(--bs-primary);
+      --bs-btn-hover-bg:     var(--bs-mauve);
+      --bs-btn-hover-border-color: var(--bs-mauve);
+      --bs-btn-active-bg:    #A87060;
+      border-radius: var(--bs-border-radius-pill);
+      padding:0.85rem 2.4rem; font-size:0.82rem; letter-spacing:0.12em; text-transform:uppercase; font-weight:400; transition:all 0.3s;
+    }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(var(--bs-primary-rgb),0.3); }
+    .btn-outline-primary {
+      --bs-btn-color:              var(--bs-primary);
+      --bs-btn-border-color:       var(--bs-primary);
+      --bs-btn-hover-bg:           var(--bs-primary);
+      --bs-btn-hover-border-color: var(--bs-primary);
+      --bs-btn-active-bg:          #A87060;
+      border-radius:var(--bs-border-radius-pill); padding:0.82rem 2.2rem; font-size:0.82rem; letter-spacing:0.12em; text-transform:uppercase; font-weight:400; transition:all 0.3s;
+    }
+    .btn-outline-primary:hover { transform:translateY(-2px); }
+
+    /* Calendly trigger style */
+    .btn-cal {
+      background:var(--bs-primary); color:#fff; border:none;
+      border-radius:var(--bs-border-radius-pill);
+      padding:0.85rem 2.2rem; font-size:0.82rem; letter-spacing:0.12em; text-transform:uppercase;
+      cursor:pointer; transition:all 0.3s; font-weight:400;
+      display:inline-flex; align-items:center; gap:0.6rem;
+      text-decoration:none;
+    }
+    .btn-cal:hover { background:var(--bs-mauve); color:#fff; transform:translateY(-2px); box-shadow:0 8px 32px rgba(var(--bs-primary-rgb),0.3); }
+    .btn-cal.sm { padding:0.5rem 1.1rem; font-size:0.75rem; }
+
+    /* ── Section common ── */
+    section { padding:100px 0; }
+    .section-label { font-size:0.72rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--bs-primary); font-weight:500; margin-bottom:0.75rem; }
+    .section-title { font-size:clamp(2rem,4vw,3.2rem); line-height:1.2; color:var(--bs-dark); margin-bottom:1.5rem; }
+    .section-title em { color:var(--bs-primary); font-style:italic; }
+    .divider { width:50px; height:2px; background:linear-gradient(90deg,var(--bs-primary),var(--bs-secondary)); margin:1.5rem 0; border-radius:2px; }
+
+    /* ── Symptom cards ── */
+    .symptom-card { background:#fff; border:1px solid var(--bs-border-color); border-radius:var(--bs-border-radius-lg); padding:2rem; transition:all 0.35s; height:100%; }
+    .symptom-card:hover { transform:translateY(-6px); box-shadow:0 20px 60px rgba(var(--bs-primary-rgb),0.14); border-color:var(--bs-secondary); }
+    .symptom-icon { width:56px; height:56px; border-radius:calc(var(--bs-border-radius) + 4px); background:var(--bs-warning); display:flex; align-items:center; justify-content:center; margin-bottom:1.2rem; font-size:1.4rem; color:var(--bs-primary); }
+    .symptom-card h5 { font-size:1.1rem; margin-bottom:0.5rem; }
+    .symptom-card p { font-size:0.88rem; color:var(--bs-body-color); line-height:1.7; margin:0; }
+
+    /* ── Mission ── */
+    .mission-section {
+      background:
+        linear-gradient(135deg, rgba(var(--bs-primary-rgb),0.1) 0%, rgba(var(--bs-success-rgb),0.1) 100%),
+        url('assets/images/background 5.webp') center/cover no-repeat;
+      position:relative;
+    }
+    .mission-section::before { content:''; position:absolute; inset:0; background:rgba(var(--bs-light-rgb),0.89); }
+    .mission-section > .container { position:relative; z-index:2; }
+    .mission-pillar { text-align:center; padding:2.5rem 1.5rem; }
+    .pillar-icon { width:72px; height:72px; border-radius:50%; background:linear-gradient(135deg,var(--bs-primary),var(--bs-mauve)); color:#fff; font-size:1.7rem; display:flex; align-items:center; justify-content:center; margin:0 auto 1.5rem; box-shadow:0 8px 32px rgba(var(--bs-primary-rgb),0.28); }
+    .mission-pillar h4 { font-size:1.3rem; margin-bottom:0.75rem; }
+    .mission-pillar p { font-size:0.9rem; color:var(--bs-body-color); line-height:1.75; }
+    .stat-num { font-family:var(--font-display); font-size:3rem; color:var(--bs-primary); line-height:1; }
+    .stat-label { font-size:1.0rem; color:var(--bs-body-color); text-transform:uppercase; letter-spacing:0.12em; }
+
+    /* ── About ── */
+    .about-section { background:var(--bs-body-bg); }
+    .about-photo-wrap { position:relative; border-radius:var(--bs-border-radius-xl); overflow:visible; }
+    .about-photo-wrap img { width:100%; border-radius:var(--bs-border-radius-xl); filter:saturate(0.9); display:block; }
+    .about-badge { position:absolute; bottom:24px; left:-24px; background:#fff; border-radius:var(--bs-border-radius-lg); padding:1rem 1.4rem; box-shadow:0 12px 40px rgba(var(--bs-primary-rgb),0.18); min-width:180px; z-index:2; }
+    .about-badge .big-num { font-family:var(--font-display); font-size:2.4rem; color:var(--bs-primary); line-height:1; }
+    .about-badge .small-txt { font-size:0.78rem; color:var(--bs-body-color); line-height:1.4; }
+    .credential-chip { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--bs-border-color); border-radius:var(--bs-border-radius-pill); padding:0.4rem 1rem; font-size:0.8rem; color:var(--bs-body-color); background:#fff; margin:0.25rem; }
+    .credential-chip i { color:var(--bs-primary); }
+    .quote-block { padding-left:1.5rem; font-family:var(--font-display); font-style:italic; font-size:1.35rem; color:var(--bs-dark); line-height:1.5; margin:2rem 0; }
+    .quote-block-border { border-left:3px solid var(--bs-secondary); padding-left:1.5rem; font-family:var(--font-display); font-style:italic; font-size:1.35rem; color:var(--bs-dark); line-height:1.5; margin:2rem 0; }
+
+    /* ── Testimonials ── */
+    .testi-section { background:linear-gradient(180deg,var(--bs-warning) 0%,var(--bs-body-bg) 100%); }
+    .testi-card { background:#fff; border-radius:var(--bs-border-radius-lg); padding:2rem; border:1px solid var(--bs-border-color); height:100%; transition:box-shadow 0.3s; }
+    .testi-card:hover { box-shadow:0 16px 48px rgba(var(--bs-primary-rgb),0.12); }
+    .stars { color:var(--bs-primary); font-size:0.9rem; margin-bottom:1rem; }
+    .testi-text { font-family:var(--font-display); font-style:italic; font-size:1.08rem; color:var(--bs-dark); line-height:1.6; margin-bottom:1.2rem; }
+    .testi-author { font-size:0.82rem; color:var(--bs-body-color); font-weight:500; }
+
+    /* ── Contact ── */
+    .contact-section {
+      background:
+        linear-gradient(135deg, rgba(var(--bs-light-rgb),0.9) 0%, rgba(var(--bs-warning-rgb),0.6) 100%),
+        url('assets/images/background 4.webp') center/cover no-repeat;
+      position:relative;
+    }
+    .contact-section::before { content:''; position:absolute; inset:0; background:rgba(var(--bs-light-rgb),0.9); }
+    .contact-section > .container { position:relative; z-index:2; }
+
+    .contact-card { background:#fff; border-radius:var(--bs-border-radius-xl); box-shadow:0 24px 80px rgba(var(--bs-primary-rgb),0.12); border:1px solid var(--bs-border-color); overflow:hidden; }
+    .form-control, .form-select { border:1.5px solid var(--bs-border-color); border-radius:var(--bs-border-radius); padding:0.75rem 1rem; font-size:0.9rem; color:var(--bs-dark); background:var(--bs-body-bg); transition:border-color 0.2s; }
+    .form-control:focus, .form-select:focus { border-color:var(--bs-secondary); box-shadow:0 0 0 3px rgba(var(--bs-secondary-rgb),0.2); background:#fff; }
+    .form-label { font-size:1.0rem; letter-spacing:0.08em; color:var(--bs-body-color); font-weight:500; }
+
+    /* Tab strip */
+    .contact-tabs { border-bottom:1px solid var(--bs-border-color); }
+    .ctab { flex:1; padding:1rem; background:transparent; border:none; font-size:0.82rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--bs-body-color); cursor:pointer; font-weight:400; border-bottom:2px solid transparent; transition:all 0.2s; }
+    .ctab.active { color:var(--bs-primary); border-bottom-color:var(--bs-primary); font-weight:500; }
+    .ctab:hover:not(.active) { color:var(--bs-primary); }
+
+    /* Calendly inline */
+    .calendly-inline-widget { min-width:280px; height:680px; border-radius:0!important; border:none!important; }
+
+    /* Booking highlight box */
+    .booking-box { background:linear-gradient(135deg,var(--bs-primary),var(--bs-mauve)); border-radius:var(--bs-border-radius-lg); padding:2rem; color:#fff; text-align:center; }
+    .booking-box h5 { font-family:var(--font-display); font-size:1.4rem; color:#fff; margin-bottom:0.5rem; }
+    .booking-box p { font-size:0.88rem; opacity:0.9; line-height:1.7; margin-bottom:1.5rem; }
+
+    .contact-info-item { display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.5rem; }
+    .ci-icon { width:44px; height:44px; border-radius:var(--bs-border-radius); background:var(--bs-warning); color:var(--bs-primary); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+    .ci-label { font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--bs-body-color); }
+    .ci-value { font-size:0.95rem; color:var(--bs-dark); }
+
+    /* ── Footer ── */
+    footer { background:var(--bs-dark); color:rgba(255,255,255,.65); padding:3rem 0 2rem; }
+    footer .brand { font-family:var(--font-display); font-size:1.4rem; color:var(--bs-info); }
+    footer a { color:rgba(255,255,255,.5); text-decoration:none; font-size:0.83rem; transition:color 0.2s; }
+    footer a:hover { color:var(--bs-info); }
+    .footer-divider { border-color:rgba(255,255,255,.1); margin:1.5rem 0; }
+    .social-link { width:36px; height:36px; border-radius:50%; border:1px solid rgba(255,255,255,.2); display:inline-flex; align-items:center; justify-content:center; color:rgba(255,255,255,.5)!important; transition:all 0.2s; }
+    .social-link:hover { border-color:var(--bs-secondary); color:var(--bs-secondary)!important; transform:translateY(-2px); }
+
+    /* ── Scroll top ── */
+    #scrollTop { position:fixed; bottom:2rem; right:2rem; z-index:999; width:44px; height:44px; border-radius:50%; background:var(--bs-primary); color:#fff; border:none; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(var(--bs-primary-rgb),.35); opacity:0; transform:translateY(10px); transition:all 0.3s; pointer-events:none; cursor:pointer; }
+    #scrollTop.visible { opacity:1; transform:translateY(0); pointer-events:all; }
+    #scrollTop:hover { background:var(--bs-mauve); transform:translateY(-2px); }
+
+    @media(max-width:768px) { section { padding:70px 0; } .about-badge { left:12px; } }
+
+    @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+    .hero-content > * { animation:fadeInUp 0.8s ease both; }
+    .hero-content > *:nth-child(1){animation-delay:.1s}
+    .hero-content > *:nth-child(2){animation-delay:.25s}
+    .hero-content > *:nth-child(3){animation-delay:.4s}
+    .hero-content > *:nth-child(4){animation-delay:.55s}
+  </style>
+</head>
+<body class="lang-fr">
+
+<!-- ══════════════════ NAVBAR ══════════════════ -->
+<nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="#accueil">
+      <span class="fw-bold">Harmony</span> Féminine
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <i class="bi bi-list fs-4" style="color:var(--bs-primary)"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1 mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="#accueil"><span class="txt-fr">Accueil</span><span class="txt-de"></span></a></li>
+        <li class="nav-item"><a class="nav-link" href="#mission"><span class="txt-fr">Ma methode</span><span class="txt-de"></span></a></li>
+        <li class="nav-item"><a class="nav-link" href="#apropos"><span class="txt-fr">À Propos</span><span class="txt-de"></span></a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact"><span class="txt-fr">Contact</span><span class="txt-de"></span></a></li>
+        <li class="nav-item ms-lg-2">
+          <button class="btn-cal sm" onclick="openCalendlyPopup()">
+            <i class="bi bi-calendar-check"></i>
+            <span class="txt-fr">Rendez-vous</span><span class="txt-de">Termin</span>
+          </button>
+        </li>
+        <li class="nav-item ms-lg-2">
+          <div class="lang-switch">
+            <button class="lang-btn active" id="btnFR" onclick="setLang('fr')">FR</button>
+            <button class="lang-btn" id="btnDE" onclick="setLang('de')">DE</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section id="accueil" class="hero">
+  <div class="petal-bg"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="hero-content">
+          <p class="hero-tagline">
+            <span class="txt-fr">Consultante certifiée  spécialisée en premenopause et menopause</span>
+            <span class="txt-de">Zertifizierte Beraterin spezialisiert auf Prämenopause und Menopause</span>
+          </p>
+          <blockquote class="quote-block">
+            <span class="txt-fr">« La ménopause n'est pas une fin, c'est une renaissance vers plus de liberté. »</span>
+            <span class="txt-de"></span>
+          </blockquote>
+          <p class="hero-sub">
+            <span class="txt-fr">
+              Je vous accompagne pour comprendre votre corps et traverser cette transition avec clarté, équilibre et confiance.
+            </span>
+            <span class="txt-de">
+            </span>
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <button class="btn-cal" onclick="openCalendlyPopup()">
+              <i class="bi bi-calendar-heart"></i>
+              <span class="txt-fr">Prendre rendez-vous</span><span class="txt-de">Termin vereinbaren</span>
+            </button>
+            <a href="#mission" class="btn btn-outline-primary">
+              <span class="txt-fr">En savoir plus</span>
+              <span class="txt-de">Mehr erfahren</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ SYMPTOMS ══════════════ -->
+<section style="background: var(--bs-warning); padding: 80px 0;">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <p class="section-label">
+        <span class="txt-fr">Ce que vous vivez</span>
+        <span class="txt-de">Was Sie erleben</span>
+      </p>
+      <h2 class="section-title">
+        <span class="txt-fr">Les symptômes<br><em>enfin compris</em></span>
+        <span class="txt-de"></span>
+      </h2>
+      <p class="text-muted" style="max-width:560px; margin:0 auto; font-size:0.93rem; line-height:1.75;">
+        <span class="txt-fr">Parce que chaque femme est unique, vos ressentis le sont aussi.</span>
+        <span class="txt-de"></span>
+      </p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Card 1 -->
+      <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
+        <div class="symptom-card">
+          <div class="symptom-icon"><i class="bi bi-thermometer-sun"></i></div>
+          <h5 class="txt-fr">Bouffées de chaleur</h5>
+          <h5 class="txt-de"></h5>
+          <p class="txt-fr">Vagues de chaleur soudaines qui peuvent perturber le sommeil et le quotidien.</p>
+          <p class="txt-de"></p>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+        <div class="symptom-card">
+          <div class="symptom-icon"><i class="bi bi-moon-stars"></i></div>
+          <h5 class="txt-fr">Troubles du sommeil</h5>
+          <h5 class="txt-de"></h5>
+          <p class="txt-fr">Insomnies, réveils nocturnes et fatigue chronique liés aux fluctuations hormonales.</p>
+          <p class="txt-de"></p>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+        <div class="symptom-card">
+          <div class="symptom-icon"><i class="bi bi-emoji-frown"></i></div>
+          <h5 class="txt-fr">Changements d'humeur</h5>
+          <h5 class="txt-de"></h5>
+          <p class="txt-fr">Irritabilité, anxiété et moments de tristesse qui impactent les relations et la qualité de vie.</p>
+          <p class="txt-de"></p>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="col-sm-6 col-lg-3 d-none" data-aos="fade-up" data-aos-delay="300">
+        <div class="symptom-card">
+          <div class="symptom-icon"><i class="bi bi-heart-pulse"></i></div>
+          <h5 class="txt-fr">Santé cardiovasculaire</h5>
+          <h5 class="txt-de"></h5>
+          <p class="txt-fr">Le déclin des œstrogènes augmente le risque cardiovasculaire — la prévention est essentielle.</p>
+          <p class="txt-de"></p>
+        </div>
+      </div>
+      <!-- Card 5 -->
+      <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
+        <div class="symptom-card">
+          <div class="symptom-icon"><i class="bi bi-droplet-half"></i></div>
+          <h5 class="txt-fr">Sécheresse vaginale</h5>
+          <h5 class="txt-de"></h5>
+          <p class="txt-fr">Un symptôme courant mais souvent tabou, qui peut être soulagé efficacement.</p>
+          <p class="txt-de"></p>
+        </div>
+      </div>
+      <!-- Card 6 -->
+      <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+        <div class="symptom-card">
+          <div class="symptom-icon"><i class="bi bi-puzzle"></i></div>
+          <h5 class="txt-fr">Brouillard mental</h5>
+          <h5 class="txt-de"></h5>
+          <p class="txt-fr">Difficultés de concentration et de mémoire souvent mal comprises et sous-diagnostiquées.</p>
+          <p class="txt-de"></p>
+        </div>
+      </div>
+      <!-- Card 7 -->
+      <div class="col-sm-6 col-lg-3 d-none" data-aos="fade-up" data-aos-delay="200">
+        <div class="symptom-card">
+          <div class="symptom-icon"><i class="bi bi-shield-check"></i></div>
+          <h5 class="txt-fr">Santé osseuse</h5>
+          <h5 class="txt-de"></h5>
+          <p class="txt-fr">L'ostéoporose est une conséquence silencieuse — agissez tôt pour protéger vos os.</p>
+          <p class="txt-de"></p>
+        </div>
+      </div>
+      <!-- Card 8 -->
+      <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+        <div class="symptom-card">
+          <div class="symptom-icon"><i class="bi bi-person-heart"></i></div>
+          <h5 class="txt-fr">Bien-être global</h5>
+          <h5 class="txt-de"></h5>
+          <p class="txt-fr">Corps, esprit et libido : une approche holistique pour retrouver votre vitalité.</p>
+          <p class="txt-de"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ MISSION ══════════════ -->
+<section id="mission" class="mission-section">
+  <div class="container">
+    <div class="row justify-content-center text-center mb-5" data-aos="fade-up">
+      <div class="col-lg-7">
+        <p class="section-label">
+          <span class="txt-fr">Ma methode</span>
+          <span class="txt-de"></span>
+        </p>
+        <h2 class="section-title">
+          <span class="txt-fr"></span>
+          <span class="txt-de"></span>
+        </h2>
+        <div class="divider mx-auto"></div>
+        <p style="color:var(--warm-brown); line-height:1.85; font-size:0.95rem;">
+          <span class="txt-fr">Ma méthode repose sur une approche holistique et personnalisée, pour transformer cette période de vie souvent redoutée en une transition de vie vécue avec avec clarté, confiance et bienveillance.</span>
+          <span class="txt-de"></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="row g-4 mt-2">
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+        <div class="mission-pillar">
+          <div class="pillar-icon"><i class="bi bi-book"></i></div>
+          <h4 class="txt-fr">Éduquer</h4>
+          <h4 class="txt-de"></h4>
+          <p class="txt-fr">Comprendre ce qui se passe dans votre corps vous donne le pouvoir de faire des choix éclairés.</p>
+          <p class="txt-de"></p>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+        <div class="mission-pillar">
+          <div class="pillar-icon"><i class="bi bi-stars"></i></div>
+          <h4 class="txt-fr">Prévenir</h4>
+          <h4 class="txt-de"></h4>
+          <p class="txt-fr">Des solutions concrètes — nutrition, mouvement, gestion du stress — pour minimiser les symptômes long terme.</p>
+          <p class="txt-de"></p>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="mission-pillar">
+          <div class="pillar-icon"><i class="bi bi-hand-heart"></i></div>
+          <h4 class="txt-fr">Soutenir</h4>
+          <h4 class="txt-de"></h4>
+          <p class="txt-fr">Un espace sûr et sans jugement où vos expériences sont entendues, validées et accompagnées avec compassion.</p>
+          <p class="txt-de"></p>
+        </div>
+      </div>
+      <div class="divider mx-auto"></div>
+      <div class="bg-info" style="border-radius:20px; padding:2rem; color:var(--bs-dark);">
+        <i class="bi bi-exclamation-circle fs-2 mb-2 d-block"></i>
+        <h6 style="font-family:var(--font-display); font-size:1.2rem; margin-bottom:0.75rem;">
+          <span class="txt-fr">Ce que ce n'est pas</span>
+          <span class="txt-de"></span>
+        </h6>
+        <p style="font-size:0.85rem; opacity:0.9; line-height:1.7; margin:0;">
+          <span class="txt-fr">Cet accompagnement ne remplace pas un suivi médical. Il vient en complément, dans un approche éducative et préventive.</span>
+          <span class="txt-de"></span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="row g-3 mt-5 d-none">
+      <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="0">
+        <div class="text-center p-3">
+          <div class="mb-3" style="font-family:var(--font-display); font-size:3rem; color:var(--hf-primary-deep); line-height:1;">500+</div>
+          <div style="font-size:1.0rem; color:var(--warm-brown); text-transform:uppercase; letter-spacing:0.12em;">
+            <span class="txt-fr">Femmes accompagnées</span>
+            <span class="txt-de">Begleitete Frauen</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="100">
+        <div class="text-center p-3">
+          <div class="mb-3" style="font-family:var(--font-display); font-size:3rem; color:var(--hf-primary-deep); line-height:1;">15+</div>
+          <div style="font-size:1.0rem; color:var(--warm-brown); text-transform:uppercase; letter-spacing:0.12em;">
+            <span class="txt-fr">Années d'expérience</span>
+            <span class="txt-de">Jahre Erfahrung</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="200">
+        <div class="text-center p-3">
+          <div class="mb-3" style="font-family:var(--font-display); font-size:3rem; color:var(--hf-primary-deep); line-height:1;">98%</div>
+          <div style="font-size:1.0rem; color:var(--warm-brown); text-transform:uppercase; letter-spacing:0.12em;">
+            <span class="txt-fr">Satisfaction client</span>
+            <span class="txt-de">Kundenzufriedenheit</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="300">
+        <div class="text-center p-3">
+          <div class="mb-3" style="font-family:var(--font-display); font-size:3rem; color:var(--hf-primary-deep); line-height:1;">3</div>
+          <div style="font-size:1.0rem; color:var(--warm-brown); text-transform:uppercase; letter-spacing:0.12em;">
+            <span class="txt-fr">Pays desservis</span>
+            <span class="txt-de">Länder bedient</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ ABOUT ══════════════════ -->
+<section id="apropos" class="about-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5" data-aos="fade-right">
+        <div class="about-photo-wrap">
+          <img src="assets/images/Baustelle.svg"
+               alt="Sabine Trierweiler — Consultante"
+               style="aspect-ratio:4/5; object-fit:contain;"/>
+          <div class="about-badge d-none">
+            <div class="big-num">2+</div>
+            <div class="small-txt">
+              <span class="txt-fr">années d'expérience</span>
+              <span class="txt-de"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-7" data-aos="fade-left">
+        <p class="section-label">
+          <span class="txt-fr">À propos de moi</span>
+          <span class="txt-de"></span>
+        </p>
+        <h5 class="quote-block my-5">
+          <span class="txt-fr">De la <em>beauté</em> extérieure à <em>l’équilibre</em> intérieur.</span>
+          <span class="txt-de"></span>
+        </h5>
+        <h2 class="section-title">
+          <span class="txt-fr">Bonjour, je suis <em>Sabine</em></span>
+          <span class="txt-de"></span>
+        </h2>
+        <div class="divider"></div>
+
+        <p style="color:var(--warm-brown); line-height:1.85; font-size:0.95rem;">
+          <span class="txt-fr">Pendant 28 ans j`ai accompagné les femmes à se sentir belle à travers la coiffure, en prenant soin de leur image et en contribuant à leur confiance en elles.</span>
+          <span class="txt-de"></span>
+        </p>
+        <p style="color:var(--warm-brown); line-height:1.85; font-size:0.95rem;">
+          <span class="txt-fr">Avec le temps, j’ai ressenti le besoin profond d`aller plus loin.</span>
+          <span class="txt-de"></span>
+        </p>
+        <p style="color:var(--warm-brown); line-height:1.85; font-size:0.95rem;">
+          <span class="txt-fr">Comme beaucoup de femmes, j’ai moi-même traversé une période de flou, marquée par une forme d’errance, avec le sentiment de ne plus comprendre mon corps ni ce qui s´y jouait. Cette expérience a été un véritable tournant.
+          </span>
+          <span class="txt-de"></span>
+        </p>
+        <p style="color:var(--warm-brown); line-height:1.85; font-size:0.95rem;">
+          <span class="txt-fr">Elle m´a conduite à m’intéresser en profondeur à la préménopause et la ménopause, jusqu’à en faire une véritable mission de vie. J’ai alors choisi de me former de manière rigoureuse afin d’acquérir une compréhension globale et fiable de cette transition.</span>
+          <span class="txt-de"></span>
+        </p>
+        <p style="color:var(--warm-brown); line-height:1.85; font-size:0.95rem;">
+          <span class="txt-fr">Aujourd’hui, je suis consultante certifiée et j’ai à cœur de faire évoluer le regard porté sur cette étape de vie longtemps ignorée et minimisée, pour permettre aux femmes de la vivre avec plus de sérénité et de compréhension.</span>
+          <span class="txt-de"></span>
+        </p>
+        <p style="color:var(--warm-brown); line-height:1.85; font-size:0.95rem;">
+          <span class="txt-fr">Ensemble, passons de l’invisibilité à la lumière.</span>
+          <span class="txt-de"></span>
+        </p>
+
+        <!-- Credentials -->
+        <div class="mt-3 mb-4">
+          <span class="credential-chip"><i class="bi bi-patch-check-fill"></i>
+            <span class="txt-fr">Certifiée en accompagnement de la premenopause et menopause</span>
+            <span class="txt-de"></span>
+          </span>
+          <span class="credential-chip d-none"><i class="bi bi-patch-check-fill"></i>
+            <span class="txt-fr">Nutritionniste clinique</span>
+            <span class="txt-de"></span>
+          </span>
+          <span class="credential-chip"><i class="bi bi-patch-check-fill"></i>
+            <span class="txt-fr">Coach certifiée en bien-être</span>
+            <span class="txt-de"></span>
+          </span>
+          <span class="credential-chip d-none"><i class="bi bi-patch-check-fill"></i>
+            <span class="txt-fr">Formatrice agréée</span>
+            <span class="txt-de"></span>
+          </span>
+        </div>
+
+        <button class="btn-cal" onclick="openCalendlyPopup()">
+          <i class="bi bi-calendar-plus"></i>
+          <span class="txt-fr">Travailler avec moi</span><span class="txt-de">Mit mir arbeiten</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ TESTIMONIALS ══════════════════ -->
+<section class="testi-section">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <p class="section-label">
+        <span class="txt-fr">Témoignages</span>
+        <span class="txt-de"></span>
+      </p>
+      <h2 class="section-title">
+        <span class="txt-fr">Elles ont <em>retrouvé leur équilibre</em></span>
+        <span class="txt-de"></span>
+      </h2>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+        <div class="testi-card">
+          <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+          <p class="testi-text txt-fr">« Sabine m'a redonné confiance en mon corps. Les bouffées de chaleur ont diminué de 70% en 3 mois grâce à son programme personnalisé. »</p>
+          <p class="testi-text txt-de"></p>
+          <div class="testi-author">— Marie-Claire B., 52 ans · Paris</div>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+        <div class="testi-card">
+          <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+          <p class="testi-text txt-fr">« Enfin quelqu'un qui comprend vraiment. J'ai repris le travail avec une énergie que je n'avais pas connue depuis des années. »</p>
+          <p class="testi-text txt-de"></p>
+          <div class="testi-author">— Sabine M., 49 ans · Genève</div>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="testi-card">
+          <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+          <p class="testi-text txt-fr">« Le suivi en ligne est parfait. Grâce à Sabine, j'ai appris à écouter mon corps et à prendre soin de moi différemment. »</p>
+          <p class="testi-text txt-de"></p>
+          <div class="testi-author">— Ingrid W., 55 ans · Zurich</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CONTACT + CALENDLY ══════════════ -->
+<section id="contact" class="contact-section">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <p class="section-label">Contact</p>
+      <h2 class="section-title">
+        <span class="txt-fr">Commençons votre <em>transformation</em></span>
+        <span class="txt-de">Beginnen wir Ihre <em>Transformation</em></span>
+      </h2>
+      <p style="max-width:520px;margin:0 auto;font-size:.93rem;line-height:1.75;">
+        <span class="txt-fr">Choisissez un créneau dans mon agenda ou envoyez-moi un message. Consultation découverte <strong style="color:var(--bs-primary)">gratuite</strong> de 30 min.</span>
+        <span class="txt-de">Buchen Sie einen Termin in meinem Kalender oder schreiben Sie mir. Kostenloses Kennenlerngespräch: <strong style="color:var(--bs-primary)">30 Minuten</strong>.</span>
+      </p>
+    </div>
+
+    <div class="row g-5 justify-content-center">
+
+      <!-- LEFT: tabbed card -->
+      <div class="col-lg-7" data-aos="fade-right">
+        <div class="contact-card">
+
+          <!-- Tab strip -->
+          <div class="contact-tabs d-flex">
+            <button class="ctab active" id="tabCal" onclick="showTab('cal')">
+              <i class="bi bi-calendar-week me-2"></i>
+              <span class="txt-fr">Réserver un créneau</span><span class="txt-de">Termin buchen</span>
+            </button>
+            <button class="ctab" id="tabMsg" onclick="showTab('msg')">
+              <i class="bi bi-envelope-heart me-2"></i>
+              <span class="txt-fr">Envoyer un message</span><span class="txt-de">Nachricht senden</span>
+            </button>
+          </div>
+
+          <!-- Calendly panel -->
+          <div id="panelCal">
+            <div class="calendly-inline-widget"
+              data-url="https://calendly.com/sabine-harmony-feminine/30min?hide_gdpr_banner=1&primary_color=C8927A">
+            </div>
+          </div>
+
+          <!-- Message panel -->
+          <div id="panelMsg" style="display:none;padding:2.5rem;">
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label"><span class="txt-fr">Prénom</span><span class="txt-de">Vorname</span></label>
+                <input type="text" class="form-control" placeholder="Marie">
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label"><span class="txt-fr">Nom</span><span class="txt-de">Nachname</span></label>
+                <input type="text" class="form-control" placeholder="Dubois">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" placeholder="marie@example.com">
+              </div>
+              <div class="col-12">
+                <label class="form-label"><span class="txt-fr">Sujet</span><span class="txt-de">Thema</span></label>
+                <select class="form-select" id="topicSelect">
+                  <option value="" disabled selected></option>
+                  <option data-fr="Bouffées de chaleur & sueurs nocturnes" data-de="Hitzewallungen & Nachtschweiß"></option>
+                  <option data-fr="Troubles du sommeil" data-de="Schlafstörungen"></option>
+                  <option data-fr="Humeur & bien-être émotionnel" data-de="Stimmung & emotionales Wohlbefinden"></option>
+                  <option data-fr="Nutrition & poids" data-de="Ernährung & Gewicht"></option>
+                  <option data-fr="Santé osseuse & cardiovasculaire" data-de="Knochen- & Herzgesundheit"></option>
+                  <option data-fr="Programme complet" data-de="Vollständiges Programm"></option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label"><span class="txt-fr">Votre message</span><span class="txt-de">Ihre Nachricht</span></label>
+                <textarea class="form-control" rows="4" placeholder="Décrivez brièvement votre situation…"></textarea>
+              </div>
+              <div class="col-12 mt-5">
+                <button class="btn-cal w-100 justify-content-center">
+                  <i class="bi bi-send"></i>
+                  <span class="txt-fr">Envoyer le message</span><span class="txt-de">Nachricht senden</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: info -->
+      <div class="col-lg-4" data-aos="fade-left">
+        <div class="booking-box mb-4">
+          <i class="bi bi-calendar-heart fs-1 mb-2 d-block"></i>
+          <h5><span class="txt-fr">Appel gratuit</span><span class="txt-de">Kostenloses Gespräch</span></h5>
+          <p>
+            <span class="txt-fr">20 minutes pour discuter de vos besoins. Aucun engagement.</span>
+            <span class="txt-de">20 Minuten, um Ihre Bedürfnisse zu besprechen. Keine Verpflichtung.</span>
+          </p>
+          <button class="btn btn-light w-100" style="border-radius:var(--bs-border-radius-pill);font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bs-primary);font-weight:500;"
+                  onclick="openCalendlyPopup()">
+            <i class="bi bi-box-arrow-up-right me-2"></i>
+            <span class="txt-fr">Ouvrir l'agenda</span><span class="txt-de">Kalender öffnen</span>
+          </button>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="ci-icon"><i class="bi bi-envelope-heart"></i></div>
+          <div><div class="ci-label">Email</div><div class="ci-value">sabine@harmonie-feminine.com</div></div>
+        </div>
+        <div class="contact-info-item d-none">
+          <div class="ci-icon"><i class="bi bi-telephone"></i></div>
+          <div><div class="ci-label"><span class="txt-fr">Téléphone</span><span class="txt-de">Telefon</span></div><div class="ci-value">+33 7 82 49 36 58</div></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="ci-icon"><i class="bi bi-camera-video"></i></div>
+          <div><div class="ci-label"><span class="txt-fr">Consultations en ligne</span><span class="txt-de">Online-Beratungen</span></div><div class="ci-value"><span class="txt-fr">Disponible dans le monde entier</span><span class="txt-de">Weltweit verfügbar</span></div></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="ci-icon"><i class="bi bi-clock"></i></div>
+          <div><div class="ci-label"><span class="txt-fr">Horaires</span><span class="txt-de">Öffnungszeiten</span></div><div class="ci-value"><span class="txt-fr">Lun–Ven 9h–18h (CET)</span><span class="txt-de">Mo–Fr 9–18 Uhr (MEZ)</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="brand mb-2"><span class="fw-bold" style="font-style:italic;">Harmony</span> Féminine</div>
+        <p style="font-size:0.85rem; line-height:1.75; max-width:280px;">
+          <span class="txt-fr">Consultante spécialisée en ménopause. Votre transformation commence ici.</span>
+          <span class="txt-de"></span>
+        </p>
+        <div class="d-flex gap-2 mt-3">
+          <a href="#" class="social-link"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="social-link d-none"><i class="bi bi-linkedin"></i></a>
+          <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="social-link d-none"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2 offset-lg-1">
+        <h6 style="color:rgba(255,255,255,0.8); font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:1rem;">
+          <span class="txt-fr">Navigation</span>
+          <span class="txt-de"></span>
+        </h6>
+        <ul class="list-unstyled" style="line-height:2.2;">
+          <li><a href="#accueil"><span class="txt-fr">Accueil</span><span class="txt-de"></span></a></li>
+          <li><a href="#mission"><span class="txt-fr">Ma methode</span><span class="txt-de"></span></a></li>
+          <li><a href="#apropos"><span class="txt-fr">À Propos</span><span class="txt-de"></span></a></li>
+          <li><a href="#contact"><span class="txt-fr">Contact</span><span class="txt-de"></span></a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6 style="color:rgba(255,255,255,0.8); font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:1rem;">
+          <span class="txt-fr">Services</span>
+          <span class="txt-de"></span>
+        </h6>
+        <ul class="list-unstyled" style="line-height:2.2;">
+          <li><a href="#contact"><span class="txt-fr">Consultation individuelle</span><span class="txt-de"></span></a></li>
+          <li><a href="#contact"><span class="txt-fr">Atelier de groupe</span><span class="txt-de"></span></a></li>
+          <li><a href="#contact"><span class="txt-fr">Programme en ligne</span><span class="txt-de"></span></a></li>
+          <li><a href="#contact"><span class="txt-fr">Conférences</span><span class="txt-de"></span></a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 d-none">
+        <h6 style="color:rgba(255,255,255,0.8); font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:1rem;">
+          <span class="txt-fr">Newsletter</span>
+          <span class="txt-de"></span>
+        </h6>
+        <p style="font-size:0.83rem; line-height:1.65;">
+          <span class="txt-fr">Conseils bienveillants & ressources exclusives sur la ménopause.</span>
+          <span class="txt-de"></span>
+        </p>
+        <div class="input-group mt-2" style="border-radius:30px; overflow:hidden;">
+          <input type="email" class="form-control" style="border:none; background:rgba(255,255,255,0.1); color:#fff; font-size:0.82rem; border-radius:0;"
+                 placeholder="Email…">
+          <button style="background:var(--hf-primary-deep); border:none; color:#fff; padding:0 1.2rem; font-size:1.0rem; cursor:pointer; transition:background 0.2s;"
+                  onmouseover="this.style.background='var(--mauve)'"
+                  onmouseout="this.style.background='var(--hf-primary-deep)'">
+            <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <hr class="footer-divider"/>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2" style="font-size:0.78rem;">
+      <span>© 2026 Harmony Féminine. 
+        <span class="txt-fr">Tous droits réservés.</span>
+        <span class="txt-de"></span>
+      </span>
+      <div class="d-flex gap-3">
+        <a href="#">
+          <span class="txt-fr">Politique de confidentialité</span>
+          <span class="txt-de"></span>
+        </a>
+        <a href="#">
+          <span class="txt-fr">Mentions légales</span>
+          <span class="txt-de"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">
+  <i class="bi bi-arrow-up"></i>
+</button>
+
+<!-- ══════════════ SCRIPTS ══════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<!-- Calendly widget JS (async — loaded after page) -->
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+<script>
+  /* ── AOS ── */
+  AOS.init({ duration: 750, once: true, offset: 80 });
+
+  /* ── Navbar scroll ── */
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+    document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 400);
+  });
+
+  /* ── Calendly popup
+     Replace the URL path with your real Calendly username/event-type.
+     The primary_color param matches --bs-primary (without the #).      ── */
+  const CALENDLY_URL = 'https://calendly.com/sabine-harmony-feminine/30min?hide_gdpr_banner=1&primary_color=C8927A';
+
+  function openCalendlyPopup() {
+    if (typeof Calendly !== 'undefined') {
+      Calendly.initPopupWidget({ url: CALENDLY_URL });
+    } else {
+      window.open(CALENDLY_URL, '_blank');
+    }
+    return false;
+  }
+
+  /* ── Contact tab switcher ── */
+  function showTab(tab) {
+    ['cal','msg'].forEach(t => {
+      const btn = document.getElementById('tab' + (t === 'cal' ? 'Cal' : 'Msg'));
+      btn.classList.toggle('active', t === tab);
+    });
+    document.getElementById('panelCal').style.display = tab === 'cal' ? 'block' : 'none';
+    document.getElementById('panelMsg').style.display = tab === 'msg' ? 'block' : 'none';
+  }
+
+  /* ── Language switcher ── */
+  function setLang(lang) {
+    document.body.className = 'lang-' + lang;
+    document.getElementById('btnFR').classList.toggle('active', lang === 'fr');
+    document.getElementById('btnDE').classList.toggle('active', lang === 'de');
+    document.documentElement.lang = lang;
+
+    const sel = document.querySelector('.contact-section select');
+    if (sel) sel.options[0].text = lang === 'fr'
+      ? 'Choisissez un sujet…'
+      : 'Wählen Sie ein Thema…';
+    // Update select options
+    document.querySelectorAll('.contact-section select option[data-fr]').forEach(o => {
+      o.text = o.dataset[lang];
+    });
+  }
+  setLang('fr');
+
+  /* ── Active nav on scroll ── */
+  document.querySelectorAll('section[id]').forEach(s => {
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting)
+        document.querySelectorAll('.nav-link').forEach(l =>
+          l.classList.toggle('active', l.getAttribute('href') === '#' + s.id));
+    }, { rootMargin:'-40% 0px -55% 0px' }).observe(s);
+  });
+</script>
+</body>
+</html>
