@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- SEO -->
+  <meta name="description" content="
+Consultante certifiée spécialisée en premenopause et menopause">
+
   <title>Harmony Féminine</title>
 
   <!-- Bootstrap 5 -->
@@ -230,7 +235,7 @@
     /* ── Contact ── */
     .contact-section {
       background:
-        linear-gradient(135deg, rgba(var(--bs-light-rgb),0.9) 0%, rgba(var(--bs-warning-rgb),0.6) 100%),
+        linear-gradient(135deg, rgba(var(--bs-primary-rgb),0.1) 0%, rgba(var(--bs-warning-rgb),0.1) 100%),
         url('assets/images/background 4.webp') center/cover no-repeat;
       position:relative;
     }
@@ -274,6 +279,12 @@
     #scrollTop { position:fixed; bottom:2rem; right:2rem; z-index:999; width:44px; height:44px; border-radius:50%; background:var(--bs-primary); color:#fff; border:none; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(var(--bs-primary-rgb),.35); opacity:0; transform:translateY(10px); transition:all 0.3s; pointer-events:none; cursor:pointer; }
     #scrollTop.visible { opacity:1; transform:translateY(0); pointer-events:all; }
     #scrollTop:hover { background:var(--bs-mauve); transform:translateY(-2px); }
+    
+    .hf-text {
+      color:var(--warm-brown);
+      line-height:1.85;
+      font-size:1.2rem;
+    }
 
     @media(max-width:768px) { section { padding:70px 0; } .about-badge { left:12px; } }
 
@@ -370,9 +381,9 @@
         <span class="txt-fr">Les symptômes<br><em>enfin compris</em></span>
         <span class="txt-de">Die Symptome,<br><em>endlich verstanden</em></span>
       </h2>
-      <p class="text-muted" style="max-width:560px; margin:0 auto; font-size:1rem; line-height:1.75;">
+      <p class="hf-text" style="max-width:560px; margin:0 auto;">
         <span class="txt-fr">Parce que chaque femme est unique, vos ressentis le sont aussi.</span>
-        <span class="txt-de"></span>
+        <span class="txt-de">Weil jede Frau einzigartig ist, so wie auch Ihre Empfindungen.</span>
       </p>
     </div>
 
@@ -455,7 +466,7 @@
           <span class="txt-de">Warum ich Frauen <em>begleite</em></span>
         </h2>
         <div class="divider mx-auto"></div>
-        <p style="color:var(--warm-brown); line-height:1.85; font-size:1rem;">
+        <p style="color:var(--warm-brown); line-height:1.85; font-size:1.2rem;">
           <span class="txt-fr">Ma méthode repose sur une approche holistique et personnalisée, pour transformer cette période de vie souvent redoutée en une transition de vie vécue avec avec clarté, confiance et bienveillance.</span>
           <span class="txt-de">Meine Methode basiert auf einem ganzheitlichen und personalisierten Ansatz, um diese oft gefürchtete Lebensphase in einen Lebensübergang zu verwandeln, der mit Klarheit, Vertrauen und Wohlwollen erlebt wird.</span>
         </p>
@@ -483,7 +494,7 @@
       </div>
       <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
         <div class="mission-pillar">
-          <div class="pillar-icon"><i class="bi bi-heart"></i></div>
+          <div class="pillar-icon"><img src="assets/images/hand-heart.svg" alt="Microsoft Teams" height="32" width="32" /></div>
           <h4 class="txt-fr">Soutenir</h4>
           <h4 class="txt-de">Unterstützung</h4>
           <p class="txt-fr">Un espace sûr et sans jugement où vos expériences sont entendues, validées et accompagnées avec compassion.</p>
@@ -521,27 +532,27 @@
         </h2>
         <div class="divider"></div>
 
-        <p style="color:var(--warm-brown); line-height:1.85; font-size:1rem;">
+        <p style="color:var(--warm-brown); line-height:1.85; font-size:1.2rem;">
           <span class="txt-fr">Pendant 28 ans j`ai accompagné les femmes à se sentir belle à travers la coiffure, en prenant soin de leur image et en contribuant à leur confiance en elles.</span>
           <span class="txt-de">Seit 28 Jahren begleite ich Frauen dabei, sich durch Frisuren schön zu fühlen, indem ich mich um ihr Erscheinungsbild kümmere und zu ihrem Selbstvertrauen beitrage.</span>
         </p>
-        <p style="color:var(--warm-brown); line-height:1.85; font-size:1rem;">
+        <p style="color:var(--warm-brown); line-height:1.85; font-size:1.2rem;">
           <span class="txt-fr">Avec le temps, j’ai ressenti le besoin profond d`aller plus loin.</span>
           <span class="txt-de">Mit der Zeit habe ich das tiefe Bedürfnis verspürt, weiter zu gehen.</span>
         </p>
-        <p style="color:var(--warm-brown); line-height:1.85; font-size:1rem;">
+        <p style="color:var(--warm-brown); line-height:1.85; font-size:1.2rem;">
           <span class="txt-fr">Comme beaucoup de femmes, j’ai moi-même traversé une période de flou, marquée par une forme d’errance, avec le sentiment de ne plus comprendre mon corps ni ce qui s´y jouait. Cette expérience a été un véritable tournant.</span>
           <span class="txt-de">Wie viele Frauen habe ich selbst eine Zeit der Unklarheit durchgemacht, geprägt von einer Art des Umherirrens, mit dem Gefühl, meinen Körper und das, was sich in ihm abspielte, nicht mehr zu verstehen. Diese Erfahrung war ein echter Wendepunkt.</span>
         </p>
-        <p style="color:var(--warm-brown); line-height:1.85; font-size:1rem;">
+        <p style="color:var(--warm-brown); line-height:1.85; font-size:1.2rem;">
           <span class="txt-fr">Elle m´a conduite à m’intéresser en profondeur à la préménopause et la ménopause, jusqu’à en faire une véritable mission de vie. J’ai alors choisi de me former de manière rigoureuse afin d’acquérir une compréhension globale et fiable de cette transition.</span>
           <span class="txt-de">Sie hat mich dazu gebracht, mich eingehend für die Prämenopause und Menopause zu interessieren, bis es zu einer wahren Lebensmission wurde. Ich habe mich dann entschieden, mich auf rigorose Weise weiterzubilden, um ein umfassendes und zuverlässiges Verständnis für diesen Übergang zu erlangen.</span>
         </p>
-        <p style="color:var(--warm-brown); line-height:1.85; font-size:1rem;">
+        <p style="color:var(--warm-brown); line-height:1.85; font-size:1.2rem;">
           <span class="txt-fr">Aujourd’hui, je suis consultante certifiée et j’ai à cœur de faire évoluer le regard porté sur cette étape de vie longtemps ignorée et minimisée, pour permettre aux femmes de la vivre avec plus de sérénité et de compréhension.</span>
           <span class="txt-de">Heute bin ich zertifizierte Beraterin und es liegt mir am Herzen, die Wahrnehmung dieser lange ignorierten und vernachlässigten Lebensphase zu verändern, um es Frauen zu ermöglichen, sie mit mehr Gelassenheit und Verständnis zu erleben.</span>
         </p>
-        <p style="color:var(--warm-brown); line-height:1.85; font-size:1rem;">
+        <p style="color:var(--warm-brown); line-height:1.85; font-size:1.2rem;">
           <span class="txt-fr">Ensemble, passons de l’invisibilité à la lumière.</span>
           <span class="txt-de">Gemeinsam gehen wir von der Unsichtbarkeit ins Licht.</span>
         </p>
@@ -556,7 +567,7 @@
 
         <button class="btn btn-primary" onclick="openCalendlyPopup()">
           <i class="bi bi-calendar-plus"></i>
-          <span class="txt-fr">RDV 20 min</span><span class="txt-de">Termin vereinbaren</span>
+          <span class="txt-fr">Appel 20 Min. offert</span><span class="txt-de">20 Min. Anruf gratis</span>
         </button>
       </div>
     </div>
@@ -641,41 +652,53 @@
 
           <!-- Message panel -->
           <div id="panelMsg" style="padding:2.5rem;">
-            <div class="row g-3">
-              <div class="col-sm-6">
-                <label class="form-label"><span class="txt-fr">Prénom</span><span class="txt-de">Vorname</span></label>
-                <input type="text" class="form-control" placeholder="Marie">
+            <form id="contact-form"> 
+              <div class="row g-3">
+                <div class="col-sm-6">
+                  <label class="form-label"><span class="txt-fr">Prénom</span><span class="txt-de">Vorname</span></label>
+                  <input type="text" class="form-control" placeholder="Marie" name="firstName" required>
+                </div>
+                <div class="col-sm-6">
+                  <label class="form-label"><span class="txt-fr">Nom</span><span class="txt-de">Nachname</span></label>
+                  <input type="text" class="form-control" placeholder="Dubois" name="lastName" required>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-control" placeholder="marie@example.com" name="email" required>
+                </div>
+                <div class="col-12">
+                  <label class="form-label"><span class="txt-fr">Sujet</span><span class="txt-de">Thema</span></label>
+                  <select class="form-select" id="topicSelect" name="topic" >
+                    <option value="" disabled selected></option>
+                    <option data-fr="Bouffées de chaleur & sueurs nocturnes" data-de="Hitzewallungen & Nachtschweiß"></option>
+                    <option data-fr="Troubles du sommeil" data-de="Schlafstörungen"></option>
+                    <option data-fr="Humeur & bien-être émotionnel" data-de="Stimmung & emotionales Wohlbefinden"></option>
+                    <option data-fr="Nutrition & poids" data-de="Ernährung & Gewicht"></option>
+                    <option data-fr="Programme complet" data-de="Vollständiges Programm"></option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label"><span class="txt-fr">Votre message</span><span class="txt-de">Ihre Nachricht</span></label>
+                  <textarea name="message" class="form-control" rows="4" placeholder="Décrivez brièvement votre situation… / Beschreiben Sie kurz Ihre Situation…" required></textarea>
+                </div>
+                <div class="d-none">
+                  <input type="text" name="website" style="display:none">
+                  <input type="hidden" name="form_time" id="form_time">
+                </div>
+                <div class="col-12">
+                  <label>
+                  <input type="checkbox" required>
+                  <span class="txt-fr">Consentement RGPD</span><span class="txt-de">Zustimmung zur Datenverarbeitung</span>
+                </label>
+                </div>
+                <div class="col-12 mt-3">
+                  <button class="btn-cal w-100 justify-content-center">
+                    <i class="bi bi-send"></i>
+                    <span class="txt-fr">Envoyer le message</span><span class="txt-de">Nachricht senden</span>
+                  </button>
+                </div>
               </div>
-              <div class="col-sm-6">
-                <label class="form-label"><span class="txt-fr">Nom</span><span class="txt-de">Nachname</span></label>
-                <input type="text" class="form-control" placeholder="Dubois">
-              </div>
-              <div class="col-12">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-control" placeholder="marie@example.com">
-              </div>
-              <div class="col-12">
-                <label class="form-label"><span class="txt-fr">Sujet</span><span class="txt-de">Thema</span></label>
-                <select class="form-select" id="topicSelect">
-                  <option value="" disabled selected></option>
-                  <option data-fr="Bouffées de chaleur & sueurs nocturnes" data-de="Hitzewallungen & Nachtschweiß"></option>
-                  <option data-fr="Troubles du sommeil" data-de="Schlafstörungen"></option>
-                  <option data-fr="Humeur & bien-être émotionnel" data-de="Stimmung & emotionales Wohlbefinden"></option>
-                  <option data-fr="Nutrition & poids" data-de="Ernährung & Gewicht"></option>
-                  <option data-fr="Programme complet" data-de="Vollständiges Programm"></option>
-                </select>
-              </div>
-              <div class="col-12">
-                <label class="form-label"><span class="txt-fr">Votre message</span><span class="txt-de">Ihre Nachricht</span></label>
-                <textarea class="form-control" rows="4" placeholder="Décrivez brièvement votre situation…"></textarea>
-              </div>
-              <div class="col-12 mt-5">
-                <button class="btn-cal w-100 justify-content-center">
-                  <i class="bi bi-send"></i>
-                  <span class="txt-fr">Envoyer le message</span><span class="txt-de">Nachricht senden</span>
-                </button>
-              </div>
-            </div>
+            </form>
           </div>
 
           <!-- Calendly panel -->
@@ -703,8 +726,7 @@
                 <span class="txt-de">Ablehnen</span>
               </button>
                 
-              <button class="btn btn-outline-primary" onclick="resetCookies()">
-                
+              <button class="btn btn-outline-primary" onclick="resetCookies()">                
                 <i class="bi bi-x"></i>
                 <span class="txt-fr">Changer mon choix</span>
                 <span class="txt-de">Wiederrufen</span></button>
@@ -736,31 +758,52 @@
         </div>
         <div class="contact-info-item">
           <div class="ci-icon"><i class="bi bi-camera-video"></i></div>
-          <div><div class="ci-label"><span class="txt-fr">Consultations en ligne</span><span class="txt-de">Online-Beratungen</span></div><div class="ci-value"><span class="txt-fr">Disponible dans le monde entier</span><span class="txt-de">Weltweit verfügbar</span></div></div>
+          <div>
+            <div class="ci-label">
+              <span class="txt-fr">Consultations en ligne</span>
+              <span class="txt-de">Online-Beratungen</span>
+            </div>
+            <div class="ci-value">
+              <span class="txt-fr">Disponible dans</span>
+              <span class="txt-de">Verfügbar auf</span>
+              <img src="assets/images/microsoft-teams.svg" alt="Microsoft Teams" height="24" width="24" />
+              <img src="assets/images/cisco-webex.svg" alt="Cisco Webex" height="24" width="24" />
+              <img src="assets/images/zoom.svg" alt="Zoom" height="24" width="24" />
+            </div>
+          </div>
         </div>
         <div class="contact-info-item">
           <div class="ci-icon"><i class="bi bi-clock"></i></div>
-          <div><div class="ci-label"><span class="txt-fr">Horaires</span><span class="txt-de">Öffnungszeiten</span></div><div class="ci-value"><span class="txt-fr">Lun–Ven 9h–18h (CET)</span><span class="txt-de">Mo–Fr 9–18 Uhr (MEZ)</span></div></div>
+          <div>
+            <div class="ci-label">
+              <span class="txt-fr">Horaires</span>
+              <span class="txt-de">Öffnungszeiten</span>
+            </div>
+            <div class="ci-value">
+              <span class="txt-fr">Lun–Ven 9h–18h (CET)</span>
+              <span class="txt-de">Mo–Fr 9–18 Uhr (MEZ)</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
   
-<section>  
-    <div class="text-center" data-aos="fade-up">
-      <div class="bg-danger-subtle mx-3" style="border-radius:20px; padding:2rem; color:var(--bs-dark); background-color: var(--bs-mauve);">
-        <i class="bi bi-exclamation-octagon fs-2 mb-2 d-block"></i>
-        <h6 style="font-family:var(--font-display); font-size:1.2rem; margin-bottom:0.75rem;">
-          <span class="txt-fr">Avertissement</span>
-          <span class="txt-de">Warnung</span>
-        </h6>
-        <p style="font-size:0.85rem; opacity:0.9; line-height:1.7; margin:0;">
-          <span class="txt-fr">Cet accompagnement ne remplace pas un suivi médical. Il vient en complément, dans un approche éducative et préventive.</span>
-          <span class="txt-de">Diese Begleitung ersetzt keine medizinische Betreuung. Sie ergänzt sie im Rahmen eines pädagogischen und präventiven Ansatzes.</span>
-        </p>
-      </div>
-    </div>  
+<section class="py-3">  
+  <div class="d-flex justify-content-center text-center" data-aos="fade-up">
+    <div class="bg-danger-subtle mx-3 shadow border border-1 border-dark-subtle col-12 col-lg-6 p-4" style="border-radius:20px; max-width:560px;">
+      <i class="bi bi-exclamation-octagon fs-2 mb-2 d-block"></i>
+      <h6 class="fw-bold" style="font-family:var(--font-display); font-size:1.2rem; margin-bottom:0.75rem;">
+        <span class="txt-fr">Avertissement</span>
+        <span class="txt-de">Warnung</span>
+      </h6>
+      <p style="font-size:1.0rem; opacity:0.9; line-height:1.7; margin:0;">
+        <span class="txt-fr">Cet accompagnement ne remplace pas un suivi médical. Il vient en complément, dans un approche éducative et préventive.</span>
+        <span class="txt-de">Diese Begleitung ersetzt keine medizinische Betreuung. Sie ergänzt sie im Rahmen eines pädagogischen und präventiven Ansatzes.</span>
+      </p>
+    </div>
+  </div>  
 </section>
 
 <!-- ══════════════ FOOTER ══════════════ -->
@@ -838,8 +881,6 @@
 <!-- ══════════════ SCRIPTS ══════════════ -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<!-- Calendly widget JS (async — loaded after page) -->
-<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 
 <script>
   /* ── AOS ── */
@@ -944,15 +985,14 @@ window.onload = function () {
   
   const userLang = navigator.language || navigator.userLanguage;
 
-if (userLang.startsWith("fr")) {
-  setLang("fr");
-} else {
-  setLang("de");
-}
-};
-</script>
+  if (userLang.startsWith("fr")) {
+    setLang("fr");
+  } else {
+    //setLang("de");
+  }
   
-<script>
+  document.getElementById("form_time").value = Date.now();
+};
   
 function openPopup(type){
   const content = document.getElementById("popup-content");
@@ -1069,6 +1109,21 @@ Diese Website verwendet SSL/TLS-Verschlüsselung.
 function closePopup(){
   document.getElementById("popup").style.display = "none";
 }
+
+document.getElementById("contact-form").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const formData = new FormData(this);
+
+  fetch("contact.php", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.text())
+  .then(data => {
+    alert(data === "OK" ? "OK" : "Error");
+  });
+});
 </script>
 </body>
 </html>
