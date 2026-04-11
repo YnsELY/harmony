@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <!-- SEO -->
-  <meta name="description" content="
-Consultante certifiée spécialisée en premenopause et menopause">
+  <meta name="description" content="Consultante certifiée spécialisée en premenopause et menopause">
 
   <title>Harmony Féminine</title>
 
@@ -24,7 +23,7 @@ Consultante certifiée spécialisée en premenopause et menopause">
   <style>
     /* ════════════════════════════════════════════
        Override Bootstrap's theme tokens with the
-       Harmonie Féminine palette. Every colour
+       Harmony Féminine palette. Every colour
        reference below uses var(--bs-*) only.
        ════════════════════════════════════════════ */
     :root {
@@ -75,7 +74,7 @@ Consultante certifiée spécialisée en premenopause et menopause">
       /* Extra token outside BS naming (one only) */
       --bs-mauve:               #B07FA8;
       --font-display:           'Lustria', 'ZTOtez', 'Cormorant Garamond', serif;
-      --font-body:              'Mulish', 'Jost', sans-serif;
+      --font-body:              'Lato', 'Mulish', 'Jost', sans-serif;
       
       --bs-primary-plu25:        #AB7157;
       --bs-primary-plu25-rgb:    171, 113, 87;
@@ -85,8 +84,8 @@ Consultante certifiée spécialisée en premenopause et menopause">
     }
     
     @font-face {
-      font-family: ZTOtez;
-      src: url('assets/fonts/ZTOtez-Regular.ttf');
+      font-family: Lato;
+      src: url('assets/fonts/Lato-Regular.ttf');
     }
     
     @font-face {
@@ -98,18 +97,27 @@ Consultante certifiée spécialisée en premenopause et menopause">
       font-family: Mulish;
       src: url('assets/fonts/Mulish-Regular.ttf');
     }
+    
+    @font-face {
+      font-family: ZTOtez;
+      src: url('assets/fonts/ZTOtez-Regular.ttf');
+    }
 
-    /* ── Global ── */
+    /* Global */
     * { scroll-behavior: smooth; }
-    body { letter-spacing: 0.02em; }
+    body {
+      letter-spacing: 0.02em;
+      font-family:var(--font-body);
+      font-weight: 400; 
+    }
     h1,h2,h3,h4,h5 { font-family: var(--font-display); font-weight:400; color:var(--bs-dark); }
 
-    /* ── Language toggle ── */
+    /* Language toggle */
     body.lang-fr .txt-fr, body.lang-de .txt-de { display:inline; }
     body.lang-fr .txt-de, body.lang-de .txt-fr { display:none; }
     .txt-fr, .txt-de { display:none; }
 
-    /* ── Navbar ── */
+    /* Navbar */
     .navbar {
       background: rgba(var(--bs-light-rgb),0.96) !important;
       backdrop-filter: blur(12px);
@@ -131,7 +139,7 @@ Consultante certifiée spécialisée en premenopause et menopause">
     }
     .lang-btn.active, .lang-btn:hover { background:var(--bs-primary); color:#fff; border-color:var(--bs-primary); }
 
-    /* ── Hero ── */
+    /* Hero */
     .hero {
       min-height:100vh;
       background:
@@ -149,7 +157,7 @@ Consultante certifiée spécialisée en premenopause et menopause">
     .hero-sub { font-size:1.25rem; color:var(--bs-body-color); max-width:520px; line-height:1.75; margin-bottom:2.5rem; }
     .petal-bg { position:absolute; right:-60px; bottom:-80px; width:520px; height:520px; background:radial-gradient(circle, rgba(var(--bs-primary-rgb),0.15) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
 
-    /* ── Buttons (extend Bootstrap) ── */
+    /* Buttons (extend Bootstrap) */
     .btn-primary {
       --bs-btn-bg:           var(--bs-primary);
       --bs-btn-border-color: var(--bs-primary);
@@ -182,21 +190,21 @@ Consultante certifiée spécialisée en premenopause et menopause">
     .btn-cal:hover { background:var(--bs-mauve); color:#fff; transform:translateY(-2px); box-shadow:0 8px 32px rgba(var(--bs-primary-rgb),0.3); }
     .btn-cal.sm { padding:0.5rem 1.1rem; font-size:0.75rem; }
 
-    /* ── Section common ── */
+    /* Section common */
     section { padding:100px 0; }
     .section-label { font-size:1.4rem; letter-spacing:0.28em; text-transform:uppercase; color:#AB7157; font-weight:500; margin-bottom:0.75rem; }
     .section-title { font-size:clamp(2rem,4vw,3.2rem); line-height:1.2; color:var(--bs-dark); margin-bottom:1.5rem; }
     .section-title em { color:var(--bs-primary); font-style:italic; }
     .divider { width:50px; height:2px; background:linear-gradient(90deg,var(--bs-primary),var(--bs-secondary)); margin:1.5rem 0; border-radius:2px; }
 
-    /* ── Symptom cards ── */
+    /* Symptom cards */
     .symptom-card { background:#fff; border:1px solid var(--bs-border-color); border-radius:var(--bs-border-radius-lg); padding:2rem; transition:all 0.35s; height:100%; }
     .symptom-card:hover { transform:translateY(-6px); box-shadow:0 20px 60px rgba(var(--bs-primary-rgb),0.14); border-color:var(--bs-secondary); }
     .symptom-icon { width:56px; height:56px; border-radius:calc(var(--bs-border-radius) + 4px); background:var(--bs-warning); display:flex; align-items:center; justify-content:center; margin-bottom:1.2rem; font-size:1.4rem; color:var(--bs-primary); }
     .symptom-card h5 { font-size:1.1rem; margin-bottom:0.5rem; }
     .symptom-card p { font-size:0.88rem; color:var(--bs-body-color); line-height:1.7; margin:0; }
 
-    /* ── Mission ── */
+    /* Mission */
     .mission-section {
       background:
         linear-gradient(135deg, rgba(var(--bs-primary-rgb),0.1) 0%, rgba(var(--bs-success-rgb),0.1) 100%),
@@ -212,7 +220,7 @@ Consultante certifiée spécialisée en premenopause et menopause">
     .stat-num { font-family:var(--font-display); font-size:3rem; color:var(--bs-primary); line-height:1; }
     .stat-label { font-size:1.0rem; color:var(--bs-body-color); text-transform:uppercase; letter-spacing:0.12em; }
 
-    /* ── About ── */
+    /* About */
     .about-section { background:var(--bs-body-bg); }
     .about-photo-wrap { position:relative; border-radius:var(--bs-border-radius-xl); overflow:visible; }
     .about-photo-wrap img { width:100%; border-radius:var(--bs-border-radius-xl); filter:saturate(0.9); display:block; }
@@ -224,7 +232,7 @@ Consultante certifiée spécialisée en premenopause et menopause">
     .quote-block { padding-left:1.5rem; font-family:var(--font-display); font-style:italic; font-size:1.35rem; color:var(--bs-dark); line-height:1.5; margin:2rem 0; }
     .quote-block-border { border-left:3px solid var(--bs-secondary); padding-left:1.5rem; font-family:var(--font-display); font-style:italic; font-size:1.35rem; color:var(--bs-dark); line-height:1.5; margin:2rem 0; }
 
-    /* ── Testimonials ── */
+    /* Testimonials */
     .testi-section { background:linear-gradient(180deg,var(--bs-warning) 0%,var(--bs-body-bg) 100%); }
     .testi-card { background:#fff; border-radius:var(--bs-border-radius-lg); padding:2rem; border:1px solid var(--bs-border-color); height:100%; transition:box-shadow 0.3s; }
     .testi-card:hover { box-shadow:0 16px 48px rgba(var(--bs-primary-rgb),0.12); }
@@ -232,7 +240,7 @@ Consultante certifiée spécialisée en premenopause et menopause">
     .testi-text { font-family:var(--font-display); font-style:italic; font-size:1.08rem; color:var(--bs-dark); line-height:1.6; margin-bottom:1.2rem; }
     .testi-author { font-size:0.82rem; color:var(--bs-body-color); font-weight:500; }
 
-    /* ── Contact ── */
+    /* Contact */
     .contact-section {
       background:
         linear-gradient(135deg, rgba(var(--bs-primary-rgb),0.1) 0%, rgba(var(--bs-warning-rgb),0.1) 100%),
@@ -266,7 +274,7 @@ Consultante certifiée spécialisée en premenopause et menopause">
     .ci-label { font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--bs-body-color); }
     .ci-value { font-size:0.95rem; color:var(--bs-dark); }
 
-    /* ── Footer ── */
+    /* Footer */
     footer { background:var(--bs-dark); color:rgba(255,255,255,.65); padding:3rem 0 2rem; }
     footer .brand { font-family:var(--font-display); font-size:1.4rem; color:var(--bs-info); }
     footer a { color:rgba(255,255,255,.5); text-decoration:none; font-size:0.83rem; transition:color 0.2s; }
@@ -275,15 +283,22 @@ Consultante certifiée spécialisée en premenopause et menopause">
     .social-link { width:36px; height:36px; border-radius:50%; border:1px solid rgba(255,255,255,.2); display:inline-flex; align-items:center; justify-content:center; color:rgba(255,255,255,.5)!important; transition:all 0.2s; }
     .social-link:hover { border-color:var(--bs-secondary); color:var(--bs-secondary)!important; transform:translateY(-2px); }
 
-    /* ── Scroll top ── */
+    /* Scroll top */
     #scrollTop { position:fixed; bottom:2rem; right:2rem; z-index:999; width:44px; height:44px; border-radius:50%; background:var(--bs-primary); color:#fff; border:none; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(var(--bs-primary-rgb),.35); opacity:0; transform:translateY(10px); transition:all 0.3s; pointer-events:none; cursor:pointer; }
     #scrollTop.visible { opacity:1; transform:translateY(0); pointer-events:all; }
     #scrollTop:hover { background:var(--bs-mauve); transform:translateY(-2px); }
+    
+    /* Disclaimer */
+    .disclaimer-section { background:var(--bs-body-bg); }
     
     .hf-text {
       color:var(--warm-brown);
       line-height:1.85;
       font-size:1.2rem;
+    }
+    
+    .hf-pointer {
+      cursor: pointer;
     }
 
     @media(max-width:768px) { section { padding:70px 0; } .about-badge { left:12px; } }
@@ -341,7 +356,7 @@ Consultante certifiée spécialisée en premenopause et menopause">
             <span class="txt-fr">Consultante certifiée spécialisée en premenopause et menopause</span>
             <span class="txt-de">Zertifizierte Beraterin spezialisiert auf Prämenopause und Menopause</span>
           </p>
-          <blockquote class="quote-block">
+          <blockquote class="quote-block fw-bold">
             <span class="txt-fr">« La ménopause n'est pas une fin, c'est une renaissance vers plus de liberté. »</span>
             <span class="txt-de">„Die Menopause ist kein Ende, sie ist eine Wiedergeburt zu mehr Freiheit.“</span>
           </blockquote>
@@ -392,60 +407,84 @@ Consultante certifiée spécialisée en premenopause et menopause">
       <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
         <div class="symptom-card">
           <div class="symptom-icon"><i class="bi bi-thermometer-sun"></i></div>
-          <h5 class="txt-fr">Bouffées de chaleur</h5>
-          <h5 class="txt-de">Hitzewallungen</h5>
-          <p class="txt-fr">Vagues de chaleur soudaines qui peuvent perturber le sommeil et le quotidien.</p>
-          <p class="txt-de">Plötzliche Hitzewellen, die Schlaf und Alltag beeinträchtigen können.</p>
+          <div class="mb-3">
+            <h5 class="txt-fr">Bouffées de chaleur</h5>
+            <h5 class="txt-de">Hitzewallungen</h5>
+          </div>
+          <div class="">
+            <p class="txt-fr">Vagues de chaleur soudaines qui peuvent perturber le sommeil et le quotidien.</p>
+            <p class="txt-de">Plötzliche Hitzewellen, die Schlaf und Alltag beeinträchtigen können.</p>
+          </div>
         </div>
       </div>
       <!-- Card 2 -->
       <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
         <div class="symptom-card">
-          <div class="symptom-icon"><i class="bi bi-moon-stars"></i></div>
-          <h5 class="txt-fr">Troubles du sommeil</h5>
-          <h5 class="txt-de">Schlafstörungen</h5>
-          <p class="txt-fr">Insomnies, réveils nocturnes et fatigue chronique liés aux fluctuations hormonales.</p>
-          <p class="txt-de">Schlaflosigkeit, nächtliches Erwachen und chronische Müdigkeit durch Hormonschwankungen.</p>
+          <div class="symptom-icon"><i class="bi bi-moon-stars"></i></div>            
+          <div class="mb-3">
+            <h5 class="txt-fr">Troubles du sommeil</h5>
+            <h5 class="txt-de">Schlafstörungen</h5>
+          </div>
+          <div class="">
+            <p class="txt-fr">Insomnies, réveils nocturnes et fatigue chronique liés aux fluctuations hormonales.</p>
+            <p class="txt-de">Schlaflosigkeit, nächtliches Erwachen und chronische Müdigkeit durch Hormonschwankungen.</p>
+          </div>
         </div>
       </div>
       <!-- Card 3 -->
       <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
         <div class="symptom-card">
           <div class="symptom-icon"><i class="bi bi-emoji-frown"></i></div>
-          <h5 class="txt-fr">Changements d'humeur</h5>
-          <h5 class="txt-de">Stimmungsschwankungen</h5>
-          <p class="txt-fr">Irritabilité, anxiété et moments de tristesse qui impactent les relations et la qualité de vie.</p>
-          <p class="txt-de">Reizbarkeit, Angst und Traurigkeit, die Beziehungen und Lebensqualität beeinflussen.</p>
+          <div class="mb-3">
+            <h5 class="txt-fr">Changements d'humeur</h5>
+            <h5 class="txt-de">Stimmungsschwankungen</h5>
+          </div>
+          <div class="">
+            <p class="txt-fr">Irritabilité, anxiété et moments de tristesse qui impactent les relations et la qualité de vie.</p>
+            <p class="txt-de">Reizbarkeit, Angst und Traurigkeit, die Beziehungen und Lebensqualität beeinflussen.</p>
+          </div>
         </div>
       </div>
       <!-- Card 4 -->
       <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
         <div class="symptom-card">
           <div class="symptom-icon"><i class="bi bi-droplet-half"></i></div>
-          <h5 class="txt-fr">Sécheresse vaginale</h5>
-          <h5 class="txt-de">Vaginale Trockenheit</h5>
-          <p class="txt-fr">Un symptôme courant mais souvent tabou, qui peut être soulagé efficacement.</p>
-          <p class="txt-de">Ein häufiges, oft tabuisiertes Symptom, das wirksam gelindert werden kann.</p>
+          <div class="mb-3">
+            <h5 class="txt-fr">Sécheresse vaginale</h5>
+            <h5 class="txt-de">Vaginale Trockenheit</h5>
+          </div>
+          <div class="">
+            <p class="txt-fr">Un symptôme courant mais souvent tabou, qui peut être soulagé efficacement.</p>
+            <p class="txt-de">Ein häufiges, oft tabuisiertes Symptom, das wirksam gelindert werden kann.</p>
+          </div>
         </div>
       </div>
       <!-- Card 5 -->
       <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
         <div class="symptom-card">
           <div class="symptom-icon"><i class="bi bi-puzzle"></i></div>
-          <h5 class="txt-fr">Brouillard mental</h5>
-          <h5 class="txt-de">Gehirnnebel</h5>
-          <p class="txt-fr">Difficultés de concentration et de mémoire souvent mal comprises et sous-diagnostiquées.</p>
-          <p class="txt-de">Konzentrations- und Gedächtnisprobleme, oft missverstanden und unterdiagnostiziert.</p>
+          <div class="mb-3">
+            <h5 class="txt-fr">Brouillard mental</h5>
+            <h5 class="txt-de">Gehirnnebel</h5>
+          </div>
+          <div class="">
+            <p class="txt-fr">Difficultés de concentration et de mémoire souvent mal comprises et sous-diagnostiquées.</p>
+            <p class="txt-de">Konzentrations- und Gedächtnisprobleme, oft missverstanden und unterdiagnostiziert.</p>
+          </div>
         </div>
       </div>
       <!-- Card 6 -->
       <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
         <div class="symptom-card">
           <div class="symptom-icon"><i class="bi bi-speedometer2"></i></div>
-          <h5 class="txt-fr">Prise de poids</h5>
-          <h5 class="txt-de">Gewichtszunahme</h5>
-          <p class="txt-fr">Des kilos qui s'installent sans prévenir et un corps qui change sans que vous sachiez pourquoi.</p>
-          <p class="txt-de">Kilos, die sich unbemerkt ansammeln, und ein Körper, der sich verändert, ohne dass Sie wissen, warum.</p>
+          <div class="mb-3">
+            <h5 class="txt-fr">Prise de poids</h5>
+            <h5 class="txt-de">Gewichtszunahme</h5>
+            </div>
+          <div class="">
+            <p class="txt-fr">Des kilos qui s'installent sans prévenir et un corps qui change sans que vous sachiez pourquoi.</p>
+            <p class="txt-de">Kilos, die sich unbemerkt ansammeln, und ein Körper, der sich verändert, ohne dass Sie wissen, warum.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -477,28 +516,40 @@ Consultante certifiée spécialisée en premenopause et menopause">
       <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
         <div class="mission-pillar">
           <div class="pillar-icon"><i class="bi bi-book"></i></div>
-          <h4 class="txt-fr">Éduquer</h4>
-          <h4 class="txt-de">Aufklärung</h4>
-          <p class="txt-fr">Comprendre ce qui se passe dans votre corps vous donne le pouvoir de faire des choix éclairés.</p>
-          <p class="txt-de">Zu verstehen, was in Ihrem Körper vorgeht, gibt Ihnen die Kraft, fundierte Entscheidungen für Ihre Gesundheit zu treffen.</p>
+          <div class="mb-3">
+            <h4 class="txt-fr">Éduquer</h4>
+            <h4 class="txt-de">Aufklärung</h4>
+          </div>
+          <div class="">
+            <p class="txt-fr">Comprendre ce qui se passe dans votre corps vous donne le pouvoir de faire des choix éclairés.</p>
+            <p class="txt-de">Zu verstehen, was in Ihrem Körper vorgeht, gibt Ihnen die Kraft, fundierte Entscheidungen für Ihre Gesundheit zu treffen.</p>
+          </div>        
         </div>
       </div>
       <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
         <div class="mission-pillar">
           <div class="pillar-icon"><i class="bi bi-stars"></i></div>
-          <h4 class="txt-fr">Prévenir</h4>
-          <h4 class="txt-de">Prävention</h4>
-          <p class="txt-fr">Des solutions concrètes — nutrition, mouvement, gestion du stress — pour minimiser les symptômes long terme.</p>
-          <p class="txt-de">Konkrete Strategien — Ernährung, Bewegung, Stressmanagement — um Symptome zu minimieren und Ihre langfristige Wohlbefinden zu schützen.</p>
+            <h4 class="txt-fr">Prévenir</h4>
+            <h4 class="txt-de">Prävention</h4>
+          <div class="mb-3">
+          </div>
+          <div class="">
+            <p class="txt-fr">Des solutions concrètes — nutrition, mouvement, gestion du stress — pour minimiser les symptômes long terme.</p>
+            <p class="txt-de">Konkrete Strategien — Ernährung, Bewegung, Stressmanagement — um Symptome zu minimieren und Ihre langfristige Wohlbefinden zu schützen.</p>
+          </div>
         </div>
       </div>
       <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
         <div class="mission-pillar">
           <div class="pillar-icon"><img src="assets/images/hand-heart.svg" alt="Microsoft Teams" height="32" width="32" /></div>
-          <h4 class="txt-fr">Soutenir</h4>
-          <h4 class="txt-de">Unterstützung</h4>
-          <p class="txt-fr">Un espace sûr et sans jugement où vos expériences sont entendues, validées et accompagnées avec compassion.</p>
-          <p class="txt-de">Ein sicherer, urteilsfreier Raum, in dem Ihre Erfahrungen gehört, bestätigt und mitfühlend begleitet werden.</p>
+          <div class="mb-3">
+            <h4 class="txt-fr">Soutenir</h4>
+            <h4 class="txt-de">Unterstützung</h4>
+          </div>
+          <div class="">
+            <p class="txt-fr">Un espace sûr et sans jugement où vos expériences sont entendues, validées et accompagnées avec compassion.</p>
+            <p class="txt-de">Ein sicherer, urteilsfreier Raum, in dem Ihre Erfahrungen gehört, bestätigt und mitfühlend begleitet werden.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -533,15 +584,15 @@ Consultante certifiée spécialisée en premenopause et menopause">
         <div class="divider"></div>
 
         <p style="color:var(--warm-brown); line-height:1.85; font-size:1.2rem;">
-          <span class="txt-fr">Pendant 28 ans j`ai accompagné les femmes à se sentir belle à travers la coiffure, en prenant soin de leur image et en contribuant à leur confiance en elles.</span>
+          <span class="txt-fr">Pendant 28 ans j'ai accompagné les femmes à se sentir belle à travers la coiffure, en prenant soin de leur image et en contribuant à leur confiance en elles.</span>
           <span class="txt-de">Seit 28 Jahren begleite ich Frauen dabei, sich durch Frisuren schön zu fühlen, indem ich mich um ihr Erscheinungsbild kümmere und zu ihrem Selbstvertrauen beitrage.</span>
         </p>
         <p style="color:var(--warm-brown); line-height:1.85; font-size:1.2rem;">
-          <span class="txt-fr">Avec le temps, j’ai ressenti le besoin profond d`aller plus loin.</span>
+          <span class="txt-fr">Avec le temps, j’ai ressenti le besoin profond d'aller plus loin.</span>
           <span class="txt-de">Mit der Zeit habe ich das tiefe Bedürfnis verspürt, weiter zu gehen.</span>
         </p>
         <p style="color:var(--warm-brown); line-height:1.85; font-size:1.2rem;">
-          <span class="txt-fr">Comme beaucoup de femmes, j’ai moi-même traversé une période de flou, marquée par une forme d’errance, avec le sentiment de ne plus comprendre mon corps ni ce qui s´y jouait. Cette expérience a été un véritable tournant.</span>
+          <span class="txt-fr">Comme beaucoup de femmes, j'ai moi-même traversé une période de flou, marquée par une forme d’errance, avec le sentiment de ne plus comprendre mon corps ni ce qui s´y jouait. Cette expérience a été un véritable tournant.</span>
           <span class="txt-de">Wie viele Frauen habe ich selbst eine Zeit der Unklarheit durchgemacht, geprägt von einer Art des Umherirrens, mit dem Gefühl, meinen Körper und das, was sich in ihm abspielte, nicht mehr zu verstehen. Diese Erfahrung war ein echter Wendepunkt.</span>
         </p>
         <p style="color:var(--warm-brown); line-height:1.85; font-size:1.2rem;">
@@ -726,7 +777,7 @@ Consultante certifiée spécialisée en premenopause et menopause">
                 <span class="txt-de">Ablehnen</span>
               </button>
                 
-              <button class="btn btn-outline-primary" onclick="resetCookies()">                
+              <button class="btn btn-outline-primary d-none" onclick="resetCookies()">                
                 <i class="bi bi-x"></i>
                 <span class="txt-fr">Changer mon choix</span>
                 <span class="txt-de">Wiederrufen</span></button>
@@ -766,9 +817,15 @@ Consultante certifiée spécialisée en premenopause et menopause">
             <div class="ci-value">
               <span class="txt-fr">Disponible dans</span>
               <span class="txt-de">Verfügbar auf</span>
-              <img src="assets/images/microsoft-teams.svg" alt="Microsoft Teams" height="24" width="24" />
-              <img src="assets/images/cisco-webex.svg" alt="Cisco Webex" height="24" width="24" />
-              <img src="assets/images/zoom.svg" alt="Zoom" height="24" width="24" />
+              <a class="text-decoration-none" href="msteams://*" target="_blank">
+                <img class="ms-2 hf-pointer" src="assets/images/microsoft-teams.svg" alt="Microsoft Teams" height="24" width="24" />
+              </a>
+              <a class="text-decoration-none" href="webexteams://im?email=sabine@harmony-feminine.com" target="_blank">
+                <img class="ms-2 hf-pointer" src="assets/images/cisco-webex.svg" alt="Cisco Webex" height="24" width="24" />
+              </a>
+              <a class="text-decoration-none" href="https://zoom.com/" target="_blank">
+                <img class="ms-2 hf-pointer" src="assets/images/zoom.svg" alt="Zoom" height="24" width="24" />
+              </a>
             </div>
           </div>
         </div>
@@ -790,7 +847,7 @@ Consultante certifiée spécialisée en premenopause et menopause">
   </div>
 </section>
   
-<section class="py-3">  
+<section id="disclaimer" class="disclaimer-section py-3">  
   <div class="d-flex justify-content-center text-center" data-aos="fade-up">
     <div class="bg-danger-subtle mx-3 shadow border border-1 border-dark-subtle col-12 col-lg-6 p-4" style="border-radius:20px; max-width:560px;">
       <i class="bi bi-exclamation-octagon fs-2 mb-2 d-block"></i>
@@ -799,11 +856,11 @@ Consultante certifiée spécialisée en premenopause et menopause">
         <span class="txt-de">Warnung</span>
       </h6>
       <p style="font-size:1.0rem; opacity:0.9; line-height:1.7; margin:0;">
-        <span class="txt-fr">Cet accompagnement ne remplace pas un suivi médical. Il vient en complément, dans un approche éducative et préventive.</span>
+        <span class="txt-fr">Cet accompagnement ne remplace pas un suivi médical. Il vient en complément, dans une approche éducative et préventive.</span>
         <span class="txt-de">Diese Begleitung ersetzt keine medizinische Betreuung. Sie ergänzt sie im Rahmen eines pädagogischen und präventiven Ansatzes.</span>
       </p>
     </div>
-  </div>  
+  </div>
 </section>
 
 <!-- ══════════════ FOOTER ══════════════ -->
@@ -856,14 +913,14 @@ Consultante certifiée spécialisée en premenopause et menopause">
         <span class="txt-de">Alle Rechte vorbehalten.</span>
       </span>
       <div class="d-flex gap-3">
-        <span class="pe-auto" onclick="openPopup('privacy')">
+        <a href="politique-confidentialite.html">
           <span class="txt-fr">Politique de confidentialité</span>
           <span class="txt-de">Datenschutz</span>
-        </span>
-        <span class="pe-auto" onclick="openPopup('impressum')">
+        </a>
+        <a href="mentions-legales.html">
           <span class="txt-fr">Mentions légales</span>
           <span class="txt-de">Impressum</span>
-        </span>
+        </a>
       </div>
     </div>
   </div>
@@ -881,7 +938,7 @@ Consultante certifiée spécialisée en premenopause et menopause">
 <!-- ══════════════ SCRIPTS ══════════════ -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-
+  
 <script>
   /* ── AOS ── */
   AOS.init({ duration: 750, once: true, offset: 80 });
@@ -1007,8 +1064,7 @@ function openPopup(type){
 Name / Société: Harnony Feminine<br>
 Rechtsform / Statut: Auto-entrepreneur<br>
 Adresse: 3 Venelle des Muriers, 57200 Sarreguemines<br>
-E-Mail: sabine@harmony-feminine.com<br>
-Telefon: [optional]
+E-Mail: sabine@harmony-feminine.com
 </p>
 
 <h2>Vertreten durch / Représentant légal</h2>
