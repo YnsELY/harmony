@@ -1,0 +1,21 @@
+# robots.txt — Harmony Féminine
+# https://www.harmony-feminine.com
+
+User-agent: *
+Allow: /
+
+# Legal & policy pages (allow indexing)
+Allow: /mentions-legales.html
+Allow: /politique-confidentialite.html
+Allow: /cookies.html
+
+# Block any CMS/admin paths if added in the future
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /cgi-bin/
+
+# Crawl-delay (optional, polite for bots)
+Crawl-delay: 10
+
+# Sitemap location
+Sitemap: https://www.harmony-feminine.com/sitemap.xml

@@ -6,8 +6,13 @@
 
   <!-- SEO -->
   <meta name="description" content="Consultante certifiée spécialisée en premenopause et menopause">
-
+  <meta name="robots" content="noimageindex">
+  
   <title>Harmony Féminine</title>
+  
+  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/>
+  <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
@@ -112,6 +117,8 @@
     }
     h1,h2,h3,h4,h5 { font-family: var(--font-display); font-weight:400; color:var(--bs-dark); }
 
+    a { text-decoration: none; }
+    
     /* Language toggle */
     body.lang-fr .txt-fr, body.lang-de .txt-de { display:inline; }
     body.lang-fr .txt-de, body.lang-de .txt-fr { display:none; }
@@ -309,6 +316,31 @@
     .hero-content > *:nth-child(2){animation-delay:.25s}
     .hero-content > *:nth-child(3){animation-delay:.4s}
     .hero-content > *:nth-child(4){animation-delay:.55s}
+    
+    /* ════════════════════════════════════════════
+       COOKIE BANNER  (copy this <style> block +
+       the #cookie-banner HTML + the <script> block
+       into every page of the site)
+       ════════════════════════════════════════════ */
+    #cookie-banner {
+      position:fixed; bottom:0; left:0; right:0; z-index:9999;
+      background:#fff;
+      border-top:1px solid var(--bs-border-color);
+      box-shadow:0 -8px 40px rgba(var(--bs-primary-rgb),.12);
+      padding:1.25rem 1.5rem;
+      display:none;   /* shown by JS when no consent stored */
+      animation:slideUp 0.4s ease;
+    }
+    @keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+    #cookie-banner .banner-title { font-family:var(--font-display); font-size:1.1rem; color:var(--bs-dark); margin-bottom:0.35rem; }
+    #cookie-banner .banner-text { font-size:0.83rem; color:var(--bs-body-color); line-height:1.65; }
+    #cookie-banner .banner-text a { color:var(--bs-primary); }
+    .banner-btn-accept { background:var(--bs-primary); color:#fff; border:none; border-radius:var(--bs-border-radius-pill); padding:0.6rem 1.5rem; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; font-weight:400; white-space:nowrap; }
+    .banner-btn-accept:hover { background:var(--bs-mauve); }
+    .banner-btn-reject { background:transparent; color:var(--bs-body-color); border:1px solid var(--bs-border-color); border-radius:var(--bs-border-radius-pill); padding:0.6rem 1.5rem; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; font-weight:400; white-space:nowrap; }
+    .banner-btn-reject:hover { border-color:var(--bs-primary); color:var(--bs-primary); }
+    .banner-btn-prefs { background:transparent; color:var(--bs-primary); border:none; font-size:0.8rem; text-decoration:underline; cursor:pointer; padding:0; white-space:nowrap; }
+  
   </style>
 </head>
 <body class="lang-fr">
@@ -404,7 +436,7 @@
 
     <div class="row g-4">
       <!-- Card 1 -->
-      <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
+      <div class="col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
         <div class="symptom-card">
           <div class="symptom-icon"><i class="bi bi-thermometer-sun"></i></div>
           <div class="mb-3">
@@ -418,7 +450,7 @@
         </div>
       </div>
       <!-- Card 2 -->
-      <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+      <div class="col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
         <div class="symptom-card">
           <div class="symptom-icon"><i class="bi bi-moon-stars"></i></div>            
           <div class="mb-3">
@@ -432,7 +464,7 @@
         </div>
       </div>
       <!-- Card 3 -->
-      <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+      <div class="col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
         <div class="symptom-card">
           <div class="symptom-icon"><i class="bi bi-emoji-frown"></i></div>
           <div class="mb-3">
@@ -446,21 +478,21 @@
         </div>
       </div>
       <!-- Card 4 -->
-      <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
+      <div class="col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
         <div class="symptom-card">
           <div class="symptom-icon"><i class="bi bi-droplet-half"></i></div>
           <div class="mb-3">
-            <h5 class="txt-fr">Sécheresse vaginale</h5>
-            <h5 class="txt-de">Vaginale Trockenheit</h5>
+            <h5 class="txt-fr">Des inconforts intime</h5>
+            <h5 class="txt-de">Intime Beschwerden</h5>
           </div>
           <div class="">
-            <p class="txt-fr">Un symptôme courant mais souvent tabou, qui peut être soulagé efficacement.</p>
-            <p class="txt-de">Ein häufiges, oft tabuisiertes Symptom, das wirksam gelindert werden kann.</p>
+            <p class="txt-fr">Sécheresse vaginale, inconfort, envies fréquentes d'uriner... et une intimité qui change.</p>
+            <p class="txt-de">Vaginale Trockenheit, Unbehagen, häufiges Wasserlassen ... und eine sich verändernde Intimität.</p>
           </div>
         </div>
       </div>
       <!-- Card 5 -->
-      <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+      <div class="col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
         <div class="symptom-card">
           <div class="symptom-icon"><i class="bi bi-puzzle"></i></div>
           <div class="mb-3">
@@ -474,7 +506,7 @@
         </div>
       </div>
       <!-- Card 6 -->
-      <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+      <div class="col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
         <div class="symptom-card">
           <div class="symptom-icon"><i class="bi bi-speedometer2"></i></div>
           <div class="mb-3">
@@ -534,8 +566,8 @@
           <div class="mb-3">
           </div>
           <div class="">
-            <p class="txt-fr">Des solutions concrètes — nutrition, mouvement, gestion du stress — pour minimiser les symptômes long terme.</p>
-            <p class="txt-de">Konkrete Strategien — Ernährung, Bewegung, Stressmanagement — um Symptome zu minimieren und Ihre langfristige Wohlbefinden zu schützen.</p>
+            <p class="txt-fr">Des solutions concrètes: nutrition, mouvement, gestion du stress — pour minimiser les symptômes à long terme.</p>
+            <p class="txt-de">Konkrete Strategien: Ernährung, Bewegung, Stressmanagement — um Symptome zu minimieren und Ihre langfristige Wohlbefinden zu schützen.</p>
           </div>
         </div>
       </div>
@@ -562,7 +594,7 @@
     <div class="row align-items-center g-5">
       <div class="col-lg-5" data-aos="fade-right">
         <div class="about-photo-wrap">
-          <img src="assets/images/female-profile-picture-generic-woman-web-avatar_53562-18552.avif"
+          <img src="assets/images/profile-picture.png"
                alt="Sabine Trierweiler — Consultante"
                style="aspect-ratio:4/5; object-fit:contain;"/>
         </div>
@@ -755,33 +787,8 @@
           <!-- Calendly panel -->
           <div id="panelCal" style="display:none;padding:2.5rem;">
             <div id="calendly-container" class="d-flex justify-content-center align-items-center" style="min-height: 400px;">
-              <span class="txt-fr">Veuillez accepter les cookies pour charger le calendrier.</span>
-              <span class="txt-de">Bitte akzeptieren Sie Cookies, um den Kalender zu laden.</span>
-            </div>
-            
-            <div id="cookie-banner" class="row p-4">
-              <div class="col-12 p-3 text-center">
-                <span class="txt-fr">Ce site utilise des services externes (Calendly).</span>
-                <span class="txt-de">Diese Website nutzt externe Dienste (Calendly).</span>
-              </div>
-              
-              <div class="col-12 d-flex justify-content-evenly">
-                <button class="btn btn-primary" onclick="acceptCookies()">
-                <i class="bi bi-check"></i>
-                <span class="txt-fr">Accepter</span>
-                <span class="txt-de">Akzeptieren</span>
-              </button>
-              <button class="btn btn-outline-primary" onclick="declineCookies()">
-                <i class="bi bi-x"></i>
-                <span class="txt-fr">Refuser</span>
-                <span class="txt-de">Ablehnen</span>
-              </button>
-                
-              <button class="btn btn-outline-primary d-none" onclick="resetCookies()">                
-                <i class="bi bi-x"></i>
-                <span class="txt-fr">Changer mon choix</span>
-                <span class="txt-de">Wiederrufen</span></button>
-              </div>
+              <span class="txt-fr">Veuillez accepter les <a href="cookies.html">cookies</a> pour charger le calendrier.</span>
+              <span class="txt-de">Bitte akzeptieren Sie <a href="cookies.html">Cookies</a>, um den Kalender zu laden.</span>
             </div>
           </div>
         </div>
@@ -817,13 +824,13 @@
             <div class="ci-value">
               <span class="txt-fr">Disponible dans</span>
               <span class="txt-de">Verfügbar auf</span>
-              <a class="text-decoration-none" href="msteams://*" target="_blank">
+              <a href="msteams://*" target="_blank">
                 <img class="ms-2 hf-pointer" src="assets/images/microsoft-teams.svg" alt="Microsoft Teams" height="24" width="24" />
               </a>
-              <a class="text-decoration-none" href="webexteams://im?email=sabine@harmony-feminine.com" target="_blank">
+              <a href="webexteams://im?email=sabine@harmony-feminine.com" target="_blank">
                 <img class="ms-2 hf-pointer" src="assets/images/cisco-webex.svg" alt="Cisco Webex" height="24" width="24" />
               </a>
-              <a class="text-decoration-none" href="https://zoom.com/" target="_blank">
+              <a href="https://zoom.com/" target="_blank">
                 <img class="ms-2 hf-pointer" src="assets/images/zoom.svg" alt="Zoom" height="24" width="24" />
               </a>
             </div>
@@ -913,13 +920,18 @@
         <span class="txt-de">Alle Rechte vorbehalten.</span>
       </span>
       <div class="d-flex gap-3">
-        <a href="politique-confidentialite.html">
+        <a href="politique-confidentialite.html" class="me-3">
           <span class="txt-fr">Politique de confidentialité</span>
           <span class="txt-de">Datenschutz</span>
         </a>
-        <a href="mentions-legales.html">
+        <a href="mentions-legales.html" class="me-3">
           <span class="txt-fr">Mentions légales</span>
           <span class="txt-de">Impressum</span>
+        </a>
+        <a href="cookies.html">
+          <i class="bi bi-cookie me-2"></i>
+          <span class="txt-fr">Ajuster vos preferences</span>
+          <span class="txt-de">Passen Sie Ihre Einstellungen an</span>
         </a>
       </div>
     </div>
@@ -934,6 +946,47 @@
   <button class="btn btn-outline-dark mb-4 float-end" onclick="closePopup()">X</button>
   <div id="popup-content"></div>
 </div>
+  
+<!-- ═══════════════════════════════════
+     COOKIE BANNER — embed on every page
+     =================================== -->
+<div id="cookie-banner">
+  <div class="container">
+    <div class="d-flex flex-column flex-md-row align-items-md-center gap-3">
+      <div class="flex-grow-1">
+        <div class="col-12">
+          <div class="banner-title txt-fr"><i class="bi bi-cookie me-2"></i>Ce site utilise des cookies</div>
+          <div class="banner-title txt-de"><i class="bi bi-cookie me-2"></i>Diese Website verwendet Cookies</div>
+        </div>
+        <div class="col-12">
+          <p class="banner-text mb-0 txt-fr">
+            Nous utilisons des cookies essentiels et, avec votre accord, Calendly (prise de rendez-vous).
+            <a href="cookies.html">En savoir plus</a>
+          </p>
+          <p class="banner-text mb-0 txt-de">
+            Wir verwenden technisch notwendige Cookies und, mit Ihrer Zustimmung, Calendly (Terminbuchung).
+            <a href="cookies.html">Mehr erfahren</a>
+          </p>
+        </div>        
+      </div>
+      <div class="d-flex flex-wrap gap-2 align-items-center flex-shrink-0">
+        <button class="banner-btn-accept" onclick="cookieConsent('all')">
+          <span class="txt-fr">Tout accepter</span>
+          <span class="txt-de">Alle akzeptieren</span>
+        </button>
+        <button class="banner-btn-reject" onclick="cookieConsent('essential')">
+          <span class="txt-fr">Essentiel seulement</span>
+          <span class="txt-de">Nur notwendige</span>
+        </button>
+        <button class="banner-btn-prefs" onclick="window.location='cookies.html'">
+          <span class="txt-fr">Personnaliser</span>
+          <span class="txt-de">Anpassen</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END COOKIE BANNER -->  
   
 <!-- ══════════════ SCRIPTS ══════════════ -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -1009,26 +1062,14 @@
     }, { rootMargin:'-40% 0px -55% 0px' }).observe(s);
   });
 
-function acceptCookies() {
-  localStorage.setItem("cookiesAccepted", "true");
-  document.getElementById("cookie-banner").style.display = "none";
-  loadCalendly();
-}
-
-function declineCookies() {
-  localStorage.setItem("cookiesAccepted", "false");
-  document.getElementById("cookie-banner").style.display = "none";
-}
-  
-function resetCookies(){
-  localStorage.removeItem("cookiesAccepted");
-  location.reload();
-}
-
 function loadCalendly() {
-  var script = document.createElement("script");
-  script.src = "https://assets.calendly.com/assets/external/widget.js";
-  document.body.appendChild(script);
+  // Dynamically inject Calendly widget script only after consent
+  if (document.getElementById('calendly-script')) return;
+  const s = document.createElement('script');
+  s.id  = 'calendly-script';
+  s.src = 'https://assets.calendly.com/assets/external/widget.js';
+  s.async = true;
+  document.head.appendChild(s);
 
   document.getElementById("calendly-container").innerHTML =
     '<div class="calendly-inline-widget col-12" data-url="https://calendly.com/sabine-harmony-feminine/30min?hide_gdpr_banner=1&primary_color=C8927A"></div>';
@@ -1037,7 +1078,6 @@ function loadCalendly() {
 window.onload = function () {
   if (localStorage.getItem("cookiesAccepted") === "true") {
     document.getElementById("cookie-banner").style.display = "none";
-    loadCalendly();
   }
   
   const userLang = navigator.language || navigator.userLanguage;
@@ -1045,7 +1085,7 @@ window.onload = function () {
   if (userLang.startsWith("fr")) {
     setLang("fr");
   } else {
-    //setLang("de");
+    setLang("de");
   }
   
   document.getElementById("form_time").value = Date.now();
@@ -1056,106 +1096,11 @@ function openPopup(type){
 
   if(type === "impressum"){
     content.innerHTML = `
-<h1>Impressum / Mentions légales</h1>
-
-<h2>Angaben gemäß § 5 TMG / Informations légales</h2>
-
-<p>
-Name / Société: Harnony Feminine<br>
-Rechtsform / Statut: Auto-entrepreneur<br>
-Adresse: 3 Venelle des Muriers, 57200 Sarreguemines<br>
-E-Mail: sabine@harmony-feminine.com
-</p>
-
-<h2>Vertreten durch / Représentant légal</h2>
-<p>Sabine Trierweiler</p>
-
-<h2>Hosting</h2>
-<p>
-IONOS SARL<br>
-7 place de la Gare<br>
-57200 Sarreguemines<br>
-France
-</p>
-
-<h2>Haftung für Inhalte</h2>
-<p>
-Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit,
-Vollständigkeit und Aktualität übernehmen wir keine Gewähr.
-</p>
-
-<h2>Responsabilité</h2>
-<p>
-Les informations diffusées sont fournies à titre indicatif et peuvent être modifiées sans préavis.
-</p>
-
-<h2>Urheberrecht / Propriété intellectuelle</h2>
-<p>
-Alle Inhalte dieser Website sind urheberrechtlich geschützt.
-</p>
     `;
   }
 
   if(type === "privacy"){
     content.innerHTML = `
-      <h1>Datenschutzerklärung / Politique de confidentialité</h1>
-
-<h2>1. Verantwortlicher / Responsable</h2>
-<p>
-Sabine Trierweiler<br>
-3 Venelle des Muriers, 57200 Sarreguemines<br>
-Email: sabine@harmony-feminine.com
-</p>
-
-<h2>2. Zweck der Verarbeitung / Finalité</h2>
-<p>
-Diese Website dient der Darstellung von Beratungsdienstleistungen und der Kontaktaufnahme.
-</p>
-
-<h2>3. Erhobene Daten / Données collectées</h2>
-
-<h3>Kontaktformular</h3>
-<p>
-Erhobene Daten: Name, E-Mail, Nachricht.<br>
-Zweck: Bearbeitung der Anfrage.<br>
-Rechtsgrundlage: Einwilligung (Art. 6 DSGVO).
-</p>
-
-<h3>Terminbuchung</h3>
-<p>
-Zur Terminvereinbarung wird ein externer Dienst eingebunden.
-Dieser wird nur nach ausdrücklicher Einwilligung geladen.
-</p>
-
-<h2>4. Datenübermittlung in Drittländer</h2>
-<p>
-Es kann nicht ausgeschlossen werden, dass Daten in Länder außerhalb der EU übertragen werden.
-</p>
-
-<h2>5. Speicherdauer</h2>
-<p>
-Anfragen werden maximal 12 Monate gespeichert, sofern keine gesetzliche Aufbewahrungspflicht besteht.
-</p>
-
-<h2>6. Hosting</h2>
-<p>
-Hosting erfolgt über IONOS (Frankreich). Dabei werden technische Logdaten verarbeitet.
-</p>
-
-<h2>7. Rechte der Nutzer</h2>
-<p>
-Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung und Widerspruch.
-</p>
-
-<h2>8. CNIL Hinweis</h2>
-<p>
-Vous pouvez déposer une réclamation auprès de la CNIL (www.cnil.fr).
-</p>
-
-<h2>9. Sicherheit</h2>
-<p>
-Diese Website verwendet SSL/TLS-Verschlüsselung.
-</p>
     `;
   }
 
@@ -1180,6 +1125,104 @@ document.getElementById("contact-form").addEventListener("submit", function(e){
     alert(data === "OK" ? "OK" : "Error");
   });
 });
+
+/* ═══════════════════════════════════════════════════════════════
+   COOKIE CONSENT ENGINE
+   — Copy cookieConsent(), showBanner(), updateStatus() and the
+     DOMContentLoaded block into every page of the site.
+   — The banner HTML above also needs to be copied to each page.
+   ═══════════════════════════════════════════════════════════════ */
+
+  const CONSENT_KEY = 'hf_cookie_consent';   // localStorage key
+  const CONSENT_VER = '1';                    // bump to re-ask after policy change
+
+  function cookieConsent(level) {
+    // level: 'all' | 'essential'
+    const prefs = {
+      version:   CONSENT_VER,
+      level:     level,
+      calendly:  level === 'all',
+      date:      new Date().toISOString()
+    };
+    localStorage.setItem(CONSENT_KEY, JSON.stringify(prefs));
+    document.getElementById('cookie-banner').style.display = 'none';
+    updateStatus(prefs);
+    if (prefs.calendly) loadCalendly();
+    // Sync toggles if on cookies.html
+    syncToggles(prefs);
+  }
+
+  function savePrefs() {
+    const calFR = document.getElementById('tog-calendly');
+    const calDE = document.getElementById('tog-calendly-de');
+    const calEnabled = (calFR && calFR.checked) || (calDE && calDE.checked);
+    const prefs = {
+      version:  CONSENT_VER,
+      level:    calEnabled ? 'all' : 'essential',
+      calendly: calEnabled,
+      date:     new Date().toISOString()
+    };
+    localStorage.setItem(CONSENT_KEY, JSON.stringify(prefs));
+    document.getElementById('cookie-banner').style.display = 'none';
+    updateStatus(prefs);
+    if (prefs.calendly) loadCalendly();
+    // Visual confirmation
+    const btn = event.target;
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<i class="bi bi-check-circle me-1"></i>Enregistré !';
+    setTimeout(() => btn.innerHTML = orig, 2000);
+  }
+
+  function syncToggles(prefs) {
+    const calFR = document.getElementById('tog-calendly');
+    const calDE = document.getElementById('tog-calendly-de');
+    if (calFR) calFR.checked = !!prefs.calendly;
+    if (calDE) calDE.checked = !!prefs.calendly;
+  }
+
+  function showBanner() {
+    const banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.display = 'block';
+  }
+
+  function updateStatus(prefs) {
+    const lang = document.body.className.includes('lang-de') ? 'de' : 'fr';
+    const fr = document.getElementById('statusTextFr');
+    const de = document.getElementById('statusTextDe');
+    if (!fr || !de) return;
+    if (!prefs) {
+      fr.textContent = 'Aucune préférence enregistrée — veuillez faire votre choix.';
+      de.textContent = 'Keine Einstellungen gespeichert — bitte treffen Sie Ihre Auswahl.';
+      return;
+    }
+    const d = new Date(prefs.date).toLocaleDateString(lang === 'de' ? 'de-DE' : 'fr-FR');
+    if (prefs.level === 'all') {
+      fr.textContent = `✓ Tous les cookies acceptés (Calendly activé) — ${d}`;
+      de.textContent = `✓ Alle Cookies akzeptiert (Calendly aktiviert) — ${d}`;
+    } else {
+      fr.textContent = `✓ Cookies essentiels uniquement (Calendly désactivé) — ${d}`;
+      de.textContent = `✓ Nur notwendige Cookies (Calendly deaktiviert) — ${d}`;
+    }
+  }
+
+  /* ── Init ── */
+  document.addEventListener('DOMContentLoaded', () => {
+    // Language
+    setLang(sessionStorage.getItem('lang') || 'fr');
+
+    // Cookie consent
+    let stored = null;
+    try { stored = JSON.parse(localStorage.getItem(CONSENT_KEY)); } catch(e){}
+
+    if (!stored || stored.version !== CONSENT_VER) {
+      showBanner();
+      updateStatus(null);
+    } else {
+      updateStatus(stored);
+      syncToggles(stored);
+      if (stored.calendly) loadCalendly();
+    }
+  });
 </script>
 </body>
 </html>

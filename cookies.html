@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
+  <title>Cookies — Harmonie Féminine</title>
+  
+  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/>
+  <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bs-primary:           #C8927A;
+      --bs-primary-rgb:       200,146,122;
+      --bs-secondary:         #D4A896;
+      --bs-secondary-rgb:     212,168,150;
+      --bs-info:              #E8C4B4;
+      --bs-light:             #FAF0EB;
+      --bs-light-rgb:         250,240,235;
+      --bs-dark:              #3A2420;
+      --bs-warning:           #F5D8CC;
+      --bs-warning-rgb:       245,216,204;
+      --bs-body-color:        #7A4A3C;
+      --bs-body-bg:           #FAF0EB;
+      --bs-border-color:      #E8C4B4;
+      --bs-border-radius:     0.75rem;
+      --bs-border-radius-lg:  1.25rem;
+      --bs-border-radius-pill: 2.5rem;
+      --bs-mauve:             #B07FA8;
+      --font-display:         'Lustria', 'ZTOtez', 'Cormorant Garamond', serif;
+    }
+    
+    @font-face {
+      font-family: Lato;
+      src: url('assets/fonts/Lato-Regular.ttf');
+    }
+    
+    @font-face {
+      font-family: Lustria;
+      src: url('assets/fonts/Lustria-Regular.ttf');
+    }
+    
+    @font-face {
+      font-family: Mulish;
+      src: url('assets/fonts/Mulish-Regular.ttf');
+    }
+    
+    @font-face {
+      font-family: ZTOtez;
+      src: url('assets/fonts/ZTOtez-Regular.ttf');
+    }
+    
+    body { font-family:'Lato', 'Mulish', 'Jost',sans-serif; font-weight:300; font-size:0.93rem; line-height:1.8; color:var(--bs-body-color); background:var(--bs-body-bg); letter-spacing:0.02em; }
+    h1,h2,h3 { font-family:var(--font-display); font-weight:400; color:var(--bs-dark); }
+
+    /* Navbar */
+    .navbar { background:rgba(var(--bs-light-rgb),0.96)!important; backdrop-filter:blur(12px); border-bottom:1px solid var(--bs-info); padding:1rem 0; }
+    .navbar-brand { font-family:var(--font-display); font-size:1.5rem; color:var(--bs-primary)!important; letter-spacing:0.05em; }
+    .navbar-brand span { font-style:italic; }
+    .nav-back { font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--bs-body-color); text-decoration:none; display:inline-flex; align-items:center; gap:6px; transition:color 0.2s; }
+    .nav-back:hover { color:var(--bs-primary); }
+
+    /* Lang */
+    .lang-switch { display:flex; gap:6px; }
+    .lang-btn { font-size:0.72rem; font-weight:500; letter-spacing:0.1em; border:1px solid var(--bs-secondary); color:var(--bs-primary); background:transparent; border-radius:var(--bs-border-radius-pill); padding:2px 10px; cursor:pointer; transition:all 0.2s; }
+    .lang-btn.active,.lang-btn:hover { background:var(--bs-primary); color:#fff; border-color:var(--bs-primary); }
+    .txt-fr,.txt-de { display:none; }
+    body.lang-fr .txt-fr { display:block; }
+    body.lang-de .txt-de { display:block; }
+    span.txt-fr, span.txt-de { display:none; }
+    body.lang-fr span.txt-fr { display:inline; }
+    body.lang-de span.txt-de { display:inline; }
+
+    /* Hero */
+    .page-hero { padding:100px 0 56px; background:linear-gradient(135deg,rgba(var(--bs-light-rgb),.97),rgba(var(--bs-primary-rgb),.07)); border-bottom:1px solid var(--bs-border-color); }
+    .page-hero .eyebrow { font-size:0.78rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--bs-primary); font-weight:500; margin-bottom:0.75rem; }
+    .page-hero h1 { font-size:clamp(1.9rem,4.5vw,2.8rem); margin-bottom:0.4rem; }
+    .page-hero h1 em { color:var(--bs-primary); font-style:italic; }
+
+    /* Cards */
+    .cookie-card { background:#fff; border:1px solid var(--bs-border-color); border-radius:var(--bs-border-radius-lg); margin-bottom:1.5rem; overflow:hidden; }
+    .cookie-card-head { display:flex; align-items:center; gap:1rem; padding:1.4rem 2rem; border-bottom:1px solid var(--bs-border-color); background:rgba(var(--bs-warning-rgb),.35); }
+    .card-icon { width:44px; height:44px; border-radius:12px; background:#fff; border:1px solid var(--bs-border-color); display:flex; align-items:center; justify-content:center; font-size:1.15rem; color:var(--bs-primary); flex-shrink:0; }
+    .cookie-card-head h2 { font-size:1.2rem; margin:0; }
+    .cookie-card-head .section-num { font-size:0.7rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--bs-primary); }
+    .cookie-card-body { padding:1.75rem 2rem; }
+    .prose { color:var(--bs-body-color); font-size:0.9rem; line-height:1.8; }
+    .prose p { margin-bottom:0.85rem; }
+    .prose p:last-child { margin-bottom:0; }
+    .prose ul { padding-left:1.2rem; margin-bottom:0.85rem; }
+    .prose li { margin-bottom:0.4rem; }
+
+    /* Cookie type rows */
+    .cookie-type { display:flex; align-items:flex-start; gap:1rem; padding:1.1rem 0; border-bottom:1px solid var(--bs-border-color); }
+    .cookie-type:last-child { border-bottom:none; padding-bottom:0; }
+    .cookie-type-icon { width:40px; height:40px; border-radius:10px; background:var(--bs-warning); display:flex; align-items:center; justify-content:center; font-size:1rem; color:var(--bs-primary); flex-shrink:0; margin-top:2px; }
+    .cookie-type-info { flex:1; }
+    .cookie-type-name { font-size:0.88rem; font-weight:500; color:var(--bs-dark); margin-bottom:0.2rem; }
+    .cookie-type-desc { font-size:0.84rem; color:var(--bs-body-color); line-height:1.6; }
+    .badge-required { font-size:0.65rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; background:var(--bs-warning); color:var(--bs-primary); border-radius:20px; padding:2px 9px; }
+    .badge-optional { font-size:0.65rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; background:rgba(var(--bs-secondary-rgb),0.25); color:var(--bs-primary); border-radius:20px; padding:2px 9px; }
+
+    /* Toggle switch */
+    .cookie-toggle { position:relative; display:inline-block; width:44px; height:24px; flex-shrink:0; margin-top:8px; }
+    .cookie-toggle input { opacity:0; width:0; height:0; }
+    .toggle-slider { position:absolute; inset:0; background:var(--bs-border-color); border-radius:24px; cursor:pointer; transition:background 0.25s; }
+    .toggle-slider::before { content:''; position:absolute; width:18px; height:18px; left:3px; top:3px; background:#fff; border-radius:50%; transition:transform 0.25s; }
+    input:checked + .toggle-slider { background:var(--bs-primary); }
+    input:checked + .toggle-slider::before { transform:translateX(20px); }
+    input:disabled + .toggle-slider { cursor:not-allowed; opacity:0.5; }
+
+    /* Consent panel */
+    .consent-panel { background:#fff; border:1.5px solid var(--bs-primary); border-radius:var(--bs-border-radius-lg); padding:2rem; margin-bottom:1.5rem; }
+    .consent-panel h3 { font-size:1.3rem; margin-bottom:0.5rem; }
+    .btn-accept-all { background:var(--bs-primary); color:#fff; border:none; border-radius:var(--bs-border-radius-pill); padding:0.7rem 1.8rem; font-size:0.82rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; font-weight:400; }
+    .btn-accept-all:hover { background:var(--bs-mauve); transform:translateY(-1px); }
+    .btn-reject-all { background:transparent; color:var(--bs-body-color); border:1px solid var(--bs-border-color); border-radius:var(--bs-border-radius-pill); padding:0.7rem 1.8rem; font-size:0.82rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; font-weight:400; }
+    .btn-reject-all:hover { border-color:var(--bs-primary); color:var(--bs-primary); }
+    .btn-save-prefs { background:var(--bs-warning); color:var(--bs-primary); border:1px solid var(--bs-secondary); border-radius:var(--bs-border-radius-pill); padding:0.7rem 1.8rem; font-size:0.82rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; font-weight:500; }
+    .btn-save-prefs:hover { background:var(--bs-secondary); color:#fff; border-color:var(--bs-secondary); }
+
+    /* Status bar */
+    .status-bar { background:rgba(var(--bs-warning-rgb),.6); border:1px solid var(--bs-border-color); border-radius:var(--bs-border-radius); padding:0.9rem 1.25rem; display:flex; align-items:center; gap:0.75rem; margin-bottom:1.5rem; }
+    .status-dot { width:8px; height:8px; border-radius:50%; background:var(--bs-primary); flex-shrink:0; animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    /* Third-party table */
+    .tp-table { width:100%; font-size:0.85rem; }
+    .tp-table th { font-size:0.7rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--bs-primary); padding:0 0 0.75rem; border-bottom:1px solid var(--bs-border-color); }
+    .tp-table td { padding:0.85rem 0; border-bottom:1px solid rgba(var(--bs-primary-rgb),0.08); color:var(--bs-body-color); vertical-align:top; }
+    .tp-table tr:last-child td { border-bottom:none; }
+    .tp-table td strong { color:var(--bs-dark); }
+
+    main { padding:56px 0 100px; }
+    footer { background:var(--bs-dark); color:rgba(255,255,255,.55); padding:2rem 0; font-size:0.82rem; text-align:center; }
+    footer .brand { font-family:var(--font-display); color:var(--bs-info); font-size:1.1rem; }
+    footer a { color:rgba(255,255,255,.4); text-decoration:none; }
+    footer a:hover { color:var(--bs-info); }
+
+
+    /* ════════════════════════════════════════════
+       COOKIE BANNER  (copy this <style> block +
+       the #cookie-banner HTML + the <script> block
+       into every page of the site)
+       ════════════════════════════════════════════ */
+    #cookie-banner {
+      position:fixed; bottom:0; left:0; right:0; z-index:9999;
+      background:#fff;
+      border-top:1px solid var(--bs-border-color);
+      box-shadow:0 -8px 40px rgba(var(--bs-primary-rgb),.12);
+      padding:1.25rem 1.5rem;
+      display:none;   /* shown by JS when no consent stored */
+      animation:slideUp 0.4s ease;
+    }
+    @keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+    #cookie-banner .banner-title { font-family:var(--font-display); font-size:1.1rem; color:var(--bs-dark); margin-bottom:0.35rem; }
+    #cookie-banner .banner-text { font-size:0.83rem; color:var(--bs-body-color); line-height:1.65; }
+    #cookie-banner .banner-text a { color:var(--bs-primary); }
+    .banner-btn-accept { background:var(--bs-primary); color:#fff; border:none; border-radius:var(--bs-border-radius-pill); padding:0.6rem 1.5rem; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; font-weight:400; white-space:nowrap; }
+    .banner-btn-accept:hover { background:var(--bs-mauve); }
+    .banner-btn-reject { background:transparent; color:var(--bs-body-color); border:1px solid var(--bs-border-color); border-radius:var(--bs-border-radius-pill); padding:0.6rem 1.5rem; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; font-weight:400; white-space:nowrap; }
+    .banner-btn-reject:hover { border-color:var(--bs-primary); color:var(--bs-primary); }
+    .banner-btn-prefs { background:transparent; color:var(--bs-primary); border:none; font-size:0.8rem; text-decoration:underline; cursor:pointer; padding:0; white-space:nowrap; }
+  </style>
+</head>
+<body class="lang-fr">
+
+<!-- ═══════════════════════════════════
+     COOKIE BANNER — embed on every page
+     =================================== -->
+<div id="cookie-banner">
+  <div class="container">
+    <div class="d-flex flex-column flex-md-row align-items-md-center gap-3">
+      <div class="flex-grow-1">
+        <div class="banner-title txt-fr"><i class="bi bi-cookie me-2"></i>Ce site utilise des cookies</div>
+        <div class="banner-title txt-de"><i class="bi bi-cookie me-2"></i>Diese Website verwendet Cookies</div>
+        <p class="banner-text mb-0 txt-fr">
+          Nous utilisons des cookies essentiels et, avec votre accord, Calendly (prise de rendez-vous).
+          <a href="cookies.html">En savoir plus</a>
+        </p>
+        <p class="banner-text mb-0 txt-de">
+          Wir verwenden technisch notwendige Cookies und, mit Ihrer Zustimmung, Calendly (Terminbuchung).
+          <a href="cookies.html">Mehr erfahren</a>
+        </p>
+      </div>
+      <div class="d-flex flex-wrap gap-2 align-items-center flex-shrink-0">
+        <button class="banner-btn-accept" onclick="cookieConsent('all')">
+          <span class="txt-fr">Tout accepter</span>
+          <span class="txt-de">Alle akzeptieren</span>
+        </button>
+        <button class="banner-btn-reject" onclick="cookieConsent('essential')">
+          <span class="txt-fr">Essentiel seulement</span>
+          <span class="txt-de">Nur notwendige</span>
+        </button>
+        <button class="banner-btn-prefs" onclick="window.location='cookies.html'">
+          <span class="txt-fr">Personnaliser</span>
+          <span class="txt-de">Anpassen</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END COOKIE BANNER -->
+
+
+<!-- ── Navbar ── -->
+<nav class="navbar fixed-top">
+  <div class="container d-flex align-items-center justify-content-between">
+    <a class="navbar-brand" href="index.html"><span class="fw-bold">Harmony</span> Féminine</a>
+    <div class="d-flex align-items-center gap-3">
+      <a class="nav-back" href="index.html">
+        <i class="bi bi-arrow-left"></i>
+        <span class="txt-fr">Retour au site</span>
+        <span class="txt-de">Zurück zur Website</span>
+      </a>
+      <div class="lang-switch">
+        <button class="lang-btn active" id="btnFR" onclick="setLang('fr')">FR</button>
+        <button class="lang-btn" id="btnDE" onclick="setLang('de')">DE</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<div class="page-hero">
+  <div class="container">
+    <p class="eyebrow txt-fr">Transparence &amp; vie privée</p>
+    <p class="eyebrow txt-de">Transparenz &amp; Datenschutz</p>
+    <h1 class="txt-fr">Politique <em>cookies</em></h1>
+    <h1 class="txt-de"><em>Cookie</em>-Richtlinie</h1>
+  </div>
+</div>
+
+<!-- ── Main ── -->
+<main>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <!-- Current status bar -->
+        <div class="status-bar" id="consentStatus">
+          <div class="status-dot"></div>
+          <span class="txt-fr" id="statusTextFr">Vérification de vos préférences…</span>
+          <span class="txt-de" id="statusTextDe">Einstellungen werden geprüft…</span>
+        </div>
+
+
+        <!-- ── FR CONTENT ── -->
+        <div class="txt-fr">
+
+          <!-- Consent panel -->
+          <div class="consent-panel">
+            <h3>Gérez vos <em>préférences</em></h3>
+            <p class="prose" style="margin-bottom:1.5rem;">Choisissez les cookies que vous acceptez. Vous pouvez modifier ces paramètres à tout moment.</p>
+            <div class="d-flex flex-wrap gap-2">
+              <button class="btn-accept-all" onclick="cookieConsent('all')"><i class="bi bi-check-circle me-1"></i>Tout accepter</button>
+              <button class="btn-save-prefs" onclick="savePrefs()"><i class="bi bi-sliders me-1"></i>Enregistrer mes choix</button>
+              <button class="btn-reject-all" onclick="cookieConsent('essential')">Essentiel seulement</button>
+            </div>
+          </div>
+
+          <!-- Cookie types -->
+          <div class="cookie-card">
+            <div class="cookie-card-head">
+              <div class="card-icon"><i class="bi bi-cookie"></i></div>
+              <div><div class="section-num">Catégories</div><h2>Types de cookies utilisés</h2></div>
+            </div>
+            <div class="cookie-card-body">
+
+              <div class="cookie-type">
+                <div class="cookie-type-icon"><i class="bi bi-shield-fill-check"></i></div>
+                <div class="cookie-type-info">
+                  <div class="cookie-type-name">Cookies essentiels <span class="badge-required ms-1">Obligatoire</span></div>
+                  <div class="cookie-type-desc">Nécessaires au fonctionnement du site. Permettent la navigation, la mémorisation de la langue choisie et vos préférences de cookies. Aucune donnée personnelle n'est transmise à des tiers.</div>
+                </div>
+                <label class="cookie-toggle ms-2">
+                  <input type="checkbox" id="tog-essential" checked disabled>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="cookie-type">
+                <div class="cookie-type-icon"><i class="bi bi-calendar-check"></i></div>
+                <div class="cookie-type-info">
+                  <div class="cookie-type-name">Calendly — Prise de rendez-vous <span class="badge-optional ms-1">Optionnel</span></div>
+                  <div class="cookie-type-desc">Ce service tiers (Calendly LLC, USA) permet la réservation en ligne de consultations. Il dépose des cookies de fonctionnement et peut traiter votre nom, email et préférences de rendez-vous. Données pouvant être transférées hors UE.</div>
+                </div>
+                <label class="cookie-toggle ms-2">
+                  <input type="checkbox" id="tog-calendly">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- What is a cookie -->
+          <div class="cookie-card">
+            <div class="cookie-card-head">
+              <div class="card-icon"><i class="bi bi-question-circle"></i></div>
+              <div><div class="section-num">Définition</div><h2>Qu'est-ce qu'un cookie ?</h2></div>
+            </div>
+            <div class="cookie-card-body prose">
+              <p>Un cookie est un petit fichier texte déposé sur votre appareil (ordinateur, téléphone, tablette) lors de la visite d'un site web. Il permet de mémoriser des informations entre deux visites ou au cours d'une même session.</p>
+              <p>Certains cookies sont <strong>strictement nécessaires</strong> au fonctionnement du site. D'autres, <strong>optionnels</strong>, nécessitent votre consentement préalable conformément au RGPD et aux recommandations de la CNIL.</p>
+            </div>
+          </div>
+
+          <!-- Third-party services -->
+          <div class="cookie-card">
+            <div class="cookie-card-head">
+              <div class="card-icon"><i class="bi bi-link-45deg"></i></div>
+              <div><div class="section-num">Services tiers</div><h2>Détail des cookies déposés</h2></div>
+            </div>
+            <div class="cookie-card-body">
+              <table class="tp-table">
+                <thead>
+                  <tr>
+                    <th style="width:22%">Service</th>
+                    <th style="width:20%">Finalité</th>
+                    <th style="width:20%">Durée</th>
+                    <th>Base légale</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Site (interne)</strong></td>
+                    <td>Préférences langue, consentement cookies</td>
+                    <td>1 an</td>
+                    <td>Intérêt légitime</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Calendly LLC</strong></td>
+                    <td>Réservation de rendez-vous</td>
+                    <td>Session / 1 an</td>
+                    <td>Consentement (Art. 6§1a RGPD)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>IONOS (hébergeur)</strong></td>
+                    <td>Logs techniques, sécurité</td>
+                    <td>30 jours</td>
+                    <td>Intérêt légitime</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Rights -->
+          <div class="cookie-card">
+            <div class="cookie-card-head">
+              <div class="card-icon"><i class="bi bi-person-check"></i></div>
+              <div><div class="section-num">Vos droits</div><h2>Modifier ou retirer votre consentement</h2></div>
+            </div>
+            <div class="cookie-card-body prose">
+              <p>Vous pouvez modifier vos préférences à tout moment via les commandes ci-dessus ou en supprimant les cookies de votre navigateur (Paramètres → Confidentialité).</p>
+              <p>Pour toute question : <a href="mailto:sabine@harmony-feminine.com">sabine@harmony-feminine.com</a></p>
+              <p>Voir aussi notre <a href="politique-confidentialite.html">politique de confidentialité</a>.</p>
+            </div>
+          </div>
+
+        </div><!-- /txt-fr -->
+
+
+        <!-- ── DE CONTENT ── -->
+        <div class="txt-de">
+
+          <div class="consent-panel">
+            <h3>Ihre <em>Cookie-Einstellungen</em></h3>
+            <p class="prose" style="margin-bottom:1.5rem;">Wählen Sie, welchen Cookies Sie zustimmen. Sie können diese Einstellungen jederzeit ändern.</p>
+            <div class="d-flex flex-wrap gap-2">
+              <button class="btn-accept-all" onclick="cookieConsent('all')"><i class="bi bi-check-circle me-1"></i>Alle akzeptieren</button>
+              <button class="btn-save-prefs" onclick="savePrefs()"><i class="bi bi-sliders me-1"></i>Auswahl speichern</button>
+              <button class="btn-reject-all" onclick="cookieConsent('essential')">Nur notwendige</button>
+            </div>
+          </div>
+
+          <div class="cookie-card">
+            <div class="cookie-card-head">
+              <div class="card-icon"><i class="bi bi-cookie"></i></div>
+              <div><div class="section-num">Kategorien</div><h2>Verwendete Cookie-Typen</h2></div>
+            </div>
+            <div class="cookie-card-body">
+
+              <div class="cookie-type">
+                <div class="cookie-type-icon"><i class="bi bi-shield-fill-check"></i></div>
+                <div class="cookie-type-info">
+                  <div class="cookie-type-name">Technisch notwendige Cookies <span class="badge-required ms-1">Erforderlich</span></div>
+                  <div class="cookie-type-desc">Notwendig für den Betrieb der Website. Speichern Sprachpräferenzen und Cookie-Einstellungen. Keine Weitergabe an Dritte.</div>
+                </div>
+                <label class="cookie-toggle ms-2">
+                  <input type="checkbox" checked disabled>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="cookie-type">
+                <div class="cookie-type-icon"><i class="bi bi-calendar-check"></i></div>
+                <div class="cookie-type-info">
+                  <div class="cookie-type-name">Calendly — Terminbuchung <span class="badge-optional ms-1">Optional</span></div>
+                  <div class="cookie-type-desc">Externer Dienst (Calendly LLC, USA) für Online-Terminbuchungen. Setzt Cookies und verarbeitet Name, E-Mail und Terminpräferenzen. Datenübertragung in Drittländer möglich. Rechtsgrundlage: Einwilligung gem. Art. 6 Abs. 1 lit. a DSGVO.</div>
+                </div>
+                <label class="cookie-toggle ms-2">
+                  <input type="checkbox" id="tog-calendly-de">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="cookie-card">
+            <div class="cookie-card-head">
+              <div class="card-icon"><i class="bi bi-link-45deg"></i></div>
+              <div><div class="section-num">Drittanbieter</div><h2>Übersicht der eingesetzten Cookies</h2></div>
+            </div>
+            <div class="cookie-card-body">
+              <table class="tp-table">
+                <thead>
+                  <tr>
+                    <th style="width:22%">Dienst</th>
+                    <th style="width:22%">Zweck</th>
+                    <th style="width:18%">Dauer</th>
+                    <th>Rechtsgrundlage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Website (intern)</strong></td>
+                    <td>Sprache, Cookie-Einwilligung</td>
+                    <td>1 Jahr</td>
+                    <td>Berechtigtes Interesse</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Calendly LLC</strong></td>
+                    <td>Online-Terminbuchung</td>
+                    <td>Session / 1 Jahr</td>
+                    <td>Einwilligung (Art. 6 Abs. 1 lit. a DSGVO)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>IONOS (Hosting)</strong></td>
+                    <td>Technische Logs, Sicherheit</td>
+                    <td>30 Tage</td>
+                    <td>Berechtigtes Interesse</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="cookie-card">
+            <div class="cookie-card-head">
+              <div class="card-icon"><i class="bi bi-person-check"></i></div>
+              <div><div class="section-num">Ihre Rechte</div><h2>Einwilligung widerrufen</h2></div>
+            </div>
+            <div class="cookie-card-body prose">
+              <p>Sie können Ihre Einstellungen jederzeit über die Schaltflächen oben ändern oder Cookies in Ihrem Browser löschen (Einstellungen → Datenschutz).</p>
+              <p>Kontakt: <a href="mailto:sabine@harmony-feminine.com">sabine@harmony-feminine.com</a></p>
+              <p>Siehe auch unsere <a href="politique-confidentialite.html">Datenschutzerklärung</a>.</p>
+            </div>
+          </div>
+
+        </div><!-- /txt-de -->
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="container">
+    <div class="brand mb-2"><span class="fw-bold" style="font-style:italic">Harmony</span> Féminine</div>
+    <div class="d-flex justify-content-center gap-3 mt-2 flex-wrap">
+      <a href="index.html">
+        <span class="txt-fr">Accueil</span>
+        <span class="txt-de">Startseite</span>
+      </a>
+      <a href="mentions-legales.html">
+        <span class="txt-fr">Mentions légales</span>
+        <span class="txt-de">Impressum</span>
+      </a>
+      <a href="politique-confidentialite.html">
+        <span class="txt-fr">Politique de confidentialité</span>
+        <span class="txt-de">Datenschutz</span>
+      </a>
+    </div>
+    <p class="mt-3 mb-0" style="font-size:.78rem;">© 2026 Harmonie Féminine.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   COOKIE CONSENT ENGINE
+   — Copy cookieConsent(), showBanner(), updateStatus() and the
+     DOMContentLoaded block into every page of the site.
+   — The banner HTML above also needs to be copied to each page.
+   ═══════════════════════════════════════════════════════════════ */
+
+  const CONSENT_KEY = 'hf_cookie_consent';   // localStorage key
+  const CONSENT_VER = '1';                    // bump to re-ask after policy change
+
+  function cookieConsent(level) {
+    // level: 'all' | 'essential'
+    const prefs = {
+      version:   CONSENT_VER,
+      level:     level,
+      calendly:  level === 'all',
+      date:      new Date().toISOString()
+    };
+    localStorage.setItem(CONSENT_KEY, JSON.stringify(prefs));
+    document.getElementById('cookie-banner').style.display = 'none';
+    updateStatus(prefs);
+    if (prefs.calendly) loadCalendly();
+    // Sync toggles if on cookies.html
+    syncToggles(prefs);
+  }
+
+  function savePrefs() {
+    const calFR = document.getElementById('tog-calendly');
+    const calDE = document.getElementById('tog-calendly-de');
+    const calEnabled = (calFR && calFR.checked) || (calDE && calDE.checked);
+    const prefs = {
+      version:  CONSENT_VER,
+      level:    calEnabled ? 'all' : 'essential',
+      calendly: calEnabled,
+      date:     new Date().toISOString()
+    };
+    localStorage.setItem(CONSENT_KEY, JSON.stringify(prefs));
+    document.getElementById('cookie-banner').style.display = 'none';
+    updateStatus(prefs);
+    if (prefs.calendly) loadCalendly();
+    // Visual confirmation
+    const btn = event.target;
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<i class="bi bi-check-circle me-1"></i>Enregistré !';
+    setTimeout(() => btn.innerHTML = orig, 2000);
+  }
+
+  function syncToggles(prefs) {
+    const calFR = document.getElementById('tog-calendly');
+    const calDE = document.getElementById('tog-calendly-de');
+    if (calFR) calFR.checked = !!prefs.calendly;
+    if (calDE) calDE.checked = !!prefs.calendly;
+  }
+
+  function showBanner() {
+    const banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.display = 'block';
+  }
+
+  function loadCalendly() {
+    
+  }q
+
+  function updateStatus(prefs) {
+    const lang = document.body.className.includes('lang-de') ? 'de' : 'fr';
+    const fr = document.getElementById('statusTextFr');
+    const de = document.getElementById('statusTextDe');
+    if (!fr || !de) return;
+    if (!prefs) {
+      fr.textContent = 'Aucune préférence enregistrée — veuillez faire votre choix.';
+      de.textContent = 'Keine Einstellungen gespeichert — bitte treffen Sie Ihre Auswahl.';
+      return;
+    }
+    const d = new Date(prefs.date).toLocaleDateString(lang === 'de' ? 'de-DE' : 'fr-FR');
+    if (prefs.level === 'all') {
+      fr.textContent = `✓ Tous les cookies acceptés (Calendly activé) — ${d}`;
+      de.textContent = `✓ Alle Cookies akzeptiert (Calendly aktiviert) — ${d}`;
+    } else {
+      fr.textContent = `✓ Cookies essentiels uniquement (Calendly désactivé) — ${d}`;
+      de.textContent = `✓ Nur notwendige Cookies (Calendly deaktiviert) — ${d}`;
+    }
+  }
+
+  /* ── Language ── */
+  function setLang(lang) {
+    document.body.className = 'lang-' + lang;
+    document.getElementById('btnFR').classList.toggle('active', lang === 'fr');
+    document.getElementById('btnDE').classList.toggle('active', lang === 'de');
+    document.documentElement.lang = lang;
+    sessionStorage.setItem('lang', lang);
+  }
+  document.getElementById('btnFR').addEventListener('click', () => setLang('fr'));
+  document.getElementById('btnDE').addEventListener('click', () => setLang('de'));
+
+  /* ── Init ── */
+  document.addEventListener('DOMContentLoaded', () => {
+    // Language
+    setLang(sessionStorage.getItem('lang') || 'fr');
+
+    // Cookie consent
+    let stored = null;
+    try { stored = JSON.parse(localStorage.getItem(CONSENT_KEY)); } catch(e){}
+
+    if (!stored || stored.version !== CONSENT_VER) {
+      showBanner();
+      updateStatus(null);
+    } else {
+      updateStatus(stored);
+      syncToggles(stored);
+      if (stored.calendly) loadCalendly();
+    }
+  });
+</script>
+</body>
+</html>
