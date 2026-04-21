@@ -1,107 +1,208 @@
-/* ═══════════════════════════════════════════════════════════════
-   COOKIE CONSENT ENGINE
-   — Copy cookieConsent(), showBanner(), updateStatus() and the
-     DOMContentLoaded block into every page of the site.
-   — The banner HTML above also needs to be copied to each page.
-   ═══════════════════════════════════════════════════════════════ */
+/**
+ * cookies.js — Cookie consent engine
+ * Harmony Féminine
+ *
+ * Dependency : lang.js (setLang must be available)
+ * Load order : 2nd  (after lang.js, before main.js)
+ *
+ * Exposes : cookieConsent(level), savePrefs(), showBanner(), loadCalendly()
+ *
+ * How it works
+ * ────────────
+ * On every page load the engine reads localStorage for a saved consent
+ * record.  If none exists (or the version has changed), the cookie banner
+ * is shown.  The user can:
+ *   • Accept all   → Calendly script is injected dynamically
+ *   • Essential    → Calendly is NOT loaded
+ *   • Customise    → individual toggles on cookies.html
+ *
+ * To re-ask consent after a policy update: bump CONSENT_VER.
+ */
 
-  const CONSENT_KEY = 'hf_cookie_consent';   // localStorage key
-  const CONSENT_VER = '1';                    // bump to re-ask after policy change
+(function () {
+  'use strict';
 
-  function cookieConsent(level) {
-    // level: 'all' | 'essential'
-    const prefs = {
-      version:   CONSENT_VER,
-      level:     level,
-      calendly:  level === 'all',
-      date:      new Date().toISOString()
+  /* ── Constants ──────────────────────────────────────────────── */
+  var CONSENT_KEY = 'hf_cookie_consent';
+  var CONSENT_VER = '1';  // ← bump this when the cookie policy changes
+
+  var CALENDLY_SCRIPT_ID = 'calendly-script';
+  var CALENDLY_WIDGET_URL =
+    'https://calendly.com/sabine-harmony-feminine/30min' +
+    '?hide_gdpr_banner=1&primary_color=C8927A';
+
+
+  /* ── Core consent function ──────────────────────────────────── */
+
+  /**
+   * Store consent and react immediately.
+   * @param {string} level - 'all' | 'essential'
+   */
+  window.cookieConsent = function (level) {
+    var prefs = {
+      version:  CONSENT_VER,
+      level:    level,
+      calendly: level === 'all',
+      date:     new Date().toISOString()
     };
     localStorage.setItem(CONSENT_KEY, JSON.stringify(prefs));
-    document.getElementById('cookie-banner').style.display = 'none';
-    updateStatus(prefs);
-    if (prefs.calendly) loadCalendly();
-    // Sync toggles if on cookies.html
-    syncToggles(prefs);
-  }
 
-  function savePrefs() {
-    const calFR = document.getElementById('tog-calendly');
-    const calDE = document.getElementById('tog-calendly-de');
-    const calEnabled = (calFR && calFR.checked) || (calDE && calDE.checked);
-    const prefs = {
+    hideBanner();
+    updateStatus(prefs);
+    syncToggles(prefs);
+
+    if (prefs.calendly) loadCalendly();
+  };
+
+  /**
+   * Read the individual toggles on cookies.html and save as custom prefs.
+   * Called by the "Save my choices" button.
+   */
+  window.savePrefs = function () {
+    var calFR = document.getElementById('tog-calendly');
+    var calDE = document.getElementById('tog-calendly-de');
+    var calEnabled = (calFR && calFR.checked) || (calDE && calDE.checked);
+
+    var prefs = {
       version:  CONSENT_VER,
       level:    calEnabled ? 'all' : 'essential',
       calendly: calEnabled,
       date:     new Date().toISOString()
     };
     localStorage.setItem(CONSENT_KEY, JSON.stringify(prefs));
-    document.getElementById('cookie-banner').style.display = 'none';
+
+    hideBanner();
     updateStatus(prefs);
+
     if (prefs.calendly) loadCalendly();
-    // Visual confirmation
-    const btn = event.target;
-    const orig = btn.innerHTML;
-    btn.innerHTML = '<i class="bi bi-check-circle me-1"></i>Enregistré !';
-    setTimeout(() => btn.innerHTML = orig, 2000);
+
+    // Visual confirmation on the save button
+    var btn = event && event.target;
+    if (btn) {
+      var orig = btn.innerHTML;
+      btn.innerHTML = '<i class="bi bi-check-circle me-1"></i>Enregistré !';
+      setTimeout(function () { btn.innerHTML = orig; }, 2000);
+    }
+  };
+
+
+  /* ── Banner helpers ─────────────────────────────────────────── */
+
+  window.showBanner = function () {
+    var banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.display = 'block';
+  };
+
+  function hideBanner() {
+    var banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.display = 'none';
   }
 
+
+  /* ── Calendly loader (called only after consent) ────────────── */
+
+  /**
+   * Inject the Calendly external widget script once and, if a placeholder
+   * container exists on the page, render the inline widget inside it.
+   */
+  window.loadCalendly = function () {
+    // Inject script tag only once
+    if (!document.getElementById(CALENDLY_SCRIPT_ID)) {
+      var s = document.createElement('script');
+      s.id    = CALENDLY_SCRIPT_ID;
+      s.src   = 'https://assets.calendly.com/assets/external/widget.js';
+      s.async = true;
+      s.onload = function () { renderInlineCalendly(); };
+      document.head.appendChild(s);
+
+      // Also inject the Calendly CSS if not already present
+      if (!document.getElementById('calendly-css')) {
+        var link = document.createElement('link');
+        link.id   = 'calendly-css';
+        link.rel  = 'stylesheet';
+        link.href = 'https://assets.calendly.com/assets/external/widget.css';
+        document.head.appendChild(link);
+      }
+    } else {
+      // Script already loaded — just render the inline widget
+      renderInlineCalendly();
+    }
+  };
+
+  /**
+   * If a #calendly-container div is present (used on the contact section),
+   * replace its placeholder with the real inline widget markup and
+   * initialise it via Calendly.initInlineWidget.
+   */
+  function renderInlineCalendly() {
+    var container = document.getElementById('calendly-container');
+    if (!container) return;
+
+    var lang    = sessionStorage.getItem('lang') || 'fr';
+    var url     = CALENDLY_WIDGET_URL + (lang === 'de' ? '&locale=de' : '');
+
+    container.innerHTML =
+      '<div class="calendly-inline-widget"' +
+      ' data-url="' + url + '"' +
+      ' style="min-width:280px;height:680px;"></div>';
+
+    if (typeof Calendly !== 'undefined') {
+      Calendly.initInlineWidget({
+        url:           url,
+        parentElement: container.firstElementChild
+      });
+    }
+  }
+
+
+  /* ── Toggle sync (cookies.html) ─────────────────────────────── */
+
   function syncToggles(prefs) {
-    const calFR = document.getElementById('tog-calendly');
-    const calDE = document.getElementById('tog-calendly-de');
+    var calFR = document.getElementById('tog-calendly');
+    var calDE = document.getElementById('tog-calendly-de');
     if (calFR) calFR.checked = !!prefs.calendly;
     if (calDE) calDE.checked = !!prefs.calendly;
   }
 
-  function showBanner() {
-    const banner = document.getElementById('cookie-banner');
-    if (banner) banner.style.display = 'block';
-  }
 
-  function loadCalendly() {
-    
-  }
+  /* ── Status bar (cookies.html only) ────────────────────────── */
 
   function updateStatus(prefs) {
-    const lang = document.body.className.includes('lang-de') ? 'de' : 'fr';
-    const fr = document.getElementById('statusTextFr');
-    const de = document.getElementById('statusTextDe');
-    if (!fr || !de) return;
+    var elFr = document.getElementById('statusTextFr');
+    var elDe = document.getElementById('statusTextDe');
+    if (!elFr || !elDe) return;  // not on cookies.html — skip silently
+
+    var lang = (sessionStorage.getItem('lang') || 'fr');
+
     if (!prefs) {
-      fr.textContent = 'Aucune préférence enregistrée — veuillez faire votre choix.';
-      de.textContent = 'Keine Einstellungen gespeichert — bitte treffen Sie Ihre Auswahl.';
+      elFr.textContent = 'Aucune préférence enregistrée — veuillez faire votre choix.';
+      elDe.textContent = 'Keine Einstellungen gespeichert — bitte treffen Sie Ihre Auswahl.';
       return;
     }
-    const d = new Date(prefs.date).toLocaleDateString(lang === 'de' ? 'de-DE' : 'fr-FR');
+
+    var d = new Date(prefs.date).toLocaleDateString(lang === 'de' ? 'de-DE' : 'fr-FR');
+
     if (prefs.level === 'all') {
-      fr.textContent = `✓ Tous les cookies acceptés (Calendly activé) — ${d}`;
-      de.textContent = `✓ Alle Cookies akzeptiert (Calendly aktiviert) — ${d}`;
+      elFr.textContent = '✓ Tous les cookies acceptés (Calendly activé) — ' + d;
+      elDe.textContent = '✓ Alle Cookies akzeptiert (Calendly aktiviert) — ' + d;
     } else {
-      fr.textContent = `✓ Cookies essentiels uniquement (Calendly désactivé) — ${d}`;
-      de.textContent = `✓ Nur notwendige Cookies (Calendly deaktiviert) — ${d}`;
+      elFr.textContent = '✓ Cookies essentiels uniquement (Calendly désactivé) — ' + d;
+      elDe.textContent = '✓ Nur notwendige Cookies (Calendly deaktiviert) — ' + d;
     }
   }
 
-  /* ── Language ── */
-  function setLang(lang) {
-    document.body.className = 'lang-' + lang;
-    document.getElementById('btnFR').classList.toggle('active', lang === 'fr');
-    document.getElementById('btnDE').classList.toggle('active', lang === 'de');
-    document.documentElement.lang = lang;
-    sessionStorage.setItem('lang', lang);
-  }
-  document.getElementById('btnFR').addEventListener('click', () => setLang('fr'));
-  document.getElementById('btnDE').addEventListener('click', () => setLang('de'));
 
-  /* ── Init ── */
-  document.addEventListener('DOMContentLoaded', () => {
-    // Language
-    setLang(sessionStorage.getItem('lang') || 'fr');
+  /* ── Init on DOMContentLoaded ───────────────────────────────── */
 
-    // Cookie consent
-    let stored = null;
-    try { stored = JSON.parse(localStorage.getItem(CONSENT_KEY)); } catch(e){}
+  document.addEventListener('DOMContentLoaded', function () {
+    var stored = null;
+    try {
+      stored = JSON.parse(localStorage.getItem(CONSENT_KEY));
+    } catch (e) { /* corrupted data — treat as no consent */ }
 
-    if (!stored || stored.version !== CONSENT_VER) {
+    var hasValidConsent = stored && stored.version === CONSENT_VER;
+
+    if (!hasValidConsent) {
       showBanner();
       updateStatus(null);
     } else {
@@ -110,3 +211,5 @@
       if (stored.calendly) loadCalendly();
     }
   });
+
+})();

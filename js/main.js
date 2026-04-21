@@ -1,224 +1,312 @@
-/* ── AOS ── */
-  AOS.init({ duration: 750, once: true, offset: 80 });
+/**
+ * main.js — Site-wide logic
+ * Harmony Féminine
+ *
+ * Dependencies : lang.js, cookies.js  (must be loaded before this file)
+ * Load order   : 3rd (last)
+ *
+ * Responsibilities
+ * ────────────────
+ *  • AOS (Animate On Scroll) initialisation
+ *  • Navbar scroll shadow
+ *  • Scroll-to-top button visibility
+ *  • Active nav-link highlighting on scroll
+ *  • Calendly popup trigger
+ *  • Contact section tab switcher (Calendar / Message)
+ *  • Contact select options language sync
+ *  • Contact form submission via PHP back-end
+ *  • Popup overlay for impressum / privacy snippets
+ *  • Hidden form timestamp (anti-spam)
+ *
+ */
 
-  /* ── Navbar scroll ── */
-  const nav = document.getElementById('mainNav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 60);
-    document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 400);
+(function () {
+  'use strict';
+
+  /* ── Calendly URL ────────────────────────────────────────────
+     Keep this in sync with the URL in cookies.js.
+     The ?hide_gdpr_banner=1 suppresses Calendly's own GDPR
+     notice since we handle consent ourselves.
+  ──────────────────────────────────────────────────────────── */
+  var CALENDLY_URL =
+    'https://calendly.com/sabine-harmony-feminine/30min' +
+    '?hide_gdpr_banner=1&primary_color=C8927A';
+
+
+  /* ══════════════════════════════════════════════════════════
+     DOM-READY INIT
+  ══════════════════════════════════════════════════════════ */
+  document.addEventListener('DOMContentLoaded', function () {
+
+    initAOS();
+    initNavbarScroll();
+    initScrollTop();
+    initActiveNavLinks();
+    initContactTabs();
+    initContactForm();
+
   });
 
-  /* ── Calendly popup
-     Replace the URL path with your real Calendly username/event-type.
-     The primary_color param matches --bs-primary (without the #).      ── */
-  const CALENDLY_URL = 'https://calendly.com/sabine-harmony-feminine/30min?hide_gdpr_banner=1&primary_color=C8927A&hide_gdpr_banner=1';
 
-  function openCalendlyPopup() {
+  /* ── AOS ────────────────────────────────────────────────── */
+  function initAOS() {
+    if (typeof AOS !== 'undefined') {
+      AOS.init({ duration: 750, once: true, offset: 80 });
+    }
+  }
+
+
+  /* ── Navbar shadow on scroll ────────────────────────────── */
+  function initNavbarScroll() {
+    var nav       = document.getElementById('mainNav');
+    var scrollBtn = document.getElementById('scrollTop');
+    if (!nav) return;
+
+    window.addEventListener('scroll', function () {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+      if (scrollBtn) {
+        scrollBtn.classList.toggle('visible', window.scrollY > 400);
+      }
+    }, { passive: true });
+  }
+
+
+  /* ── Scroll-to-top button ───────────────────────────────── */
+  function initScrollTop() {
+    var btn = document.getElementById('scrollTop');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+
+  /* ── Highlight active nav-link on scroll ────────────────── */
+  function initActiveNavLinks() {
+    var sections = document.querySelectorAll('section[id]');
+    var links    = document.querySelectorAll('.nav-link');
+    if (!sections.length || !links.length) return;
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          links.forEach(function (l) {
+            l.classList.toggle(
+              'active',
+              l.getAttribute('href') === '#' + e.target.id
+            );
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+
+    sections.forEach(function (s) { observer.observe(s); });
+  }
+
+
+  /* ── Contact section: Calendar / Message tab switcher ─────── */
+  function initContactTabs() {
+    var tabCal = document.getElementById('tabCal');
+    var tabMsg = document.getElementById('tabMsg');
+    if (!tabCal || !tabMsg) return;
+
+    tabCal.addEventListener('click', function () { showTab('cal'); });
+    tabMsg.addEventListener('click', function () { showTab('msg'); });
+  }
+
+  /**
+   * Switch between the Calendly panel and the message form.
+   * @param {string} tab - 'cal' | 'msg'
+   */
+  window.showTab = function (tab) {
+    var tabCal    = document.getElementById('tabCal');
+    var tabMsg    = document.getElementById('tabMsg');
+    var panelCal  = document.getElementById('panelCal');
+    var panelMsg  = document.getElementById('panelMsg');
+
+    if (tabCal) tabCal.classList.toggle('active', tab === 'cal');
+    if (tabMsg) tabMsg.classList.toggle('active', tab === 'msg');
+    if (panelCal) panelCal.style.display = tab === 'cal' ? 'block' : 'none';
+    if (panelMsg) panelMsg.style.display = tab === 'msg' ? 'block' : 'none';
+  };
+
+
+  /* ── Contact form → PHP back-end ────────────────────────── */
+  function initContactForm() {
+    var form = document.getElementById('contact-form');
+    if (!form) return;  // not present on every page
+
+    // Anti-spam: hidden timestamp field
+    var tsField = document.getElementById('form_time');
+    if (tsField) tsField.value = Date.now();
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var formData = new FormData(form);
+
+      fetch('contact.php', { method: 'POST', body: formData })
+        .then(function (res) { return res.text(); })
+        .then(function (data) {
+          var lang    = sessionStorage.getItem('lang') || 'fr';
+          var success = data.trim() === 'OK';
+
+          var msgFr = success
+            ? 'Votre message a bien été envoyé. Merci !'
+            : 'Une erreur est survenue. Veuillez réessayer ou envoyer un email directement.';
+          var msgDe = success
+            ? 'Ihre Nachricht wurde erfolgreich gesendet. Danke!'
+            : 'Ein Fehler ist aufgetreten. Bitte erneut versuchen oder direkt eine E-Mail senden.';
+
+          showFormFeedback(form, lang === 'de' ? msgDe : msgFr, success);
+          if (success) form.reset();
+        })
+        .catch(function () {
+          var lang = sessionStorage.getItem('lang') || 'fr';
+          showFormFeedback(
+            form,
+            lang === 'de'
+              ? 'Netzwerkfehler. Bitte direkt per E-Mail kontaktieren.'
+              : 'Erreur réseau. Veuillez contacter directement par email.',
+            false
+          );
+        });
+    });
+  }
+
+  function showFormFeedback(form, message, isSuccess) {
+    var existing = form.querySelector('.form-feedback');
+    if (existing) existing.remove();
+
+    var div = document.createElement('div');
+    div.className = 'form-feedback mt-3 p-3';
+    div.style.cssText =
+      'border-radius:var(--bs-border-radius);font-size:.88rem;' +
+      (isSuccess
+        ? 'background:rgba(168,181,160,.2);color:#3A5A32;border:1px solid #A8B5A0;'
+        : 'background:rgba(200,146,122,.12);color:#7A2020;border:1px solid #C8927A;');
+    div.textContent = message;
+    form.appendChild(div);
+
+    setTimeout(function () { div.remove(); }, 6000);
+  }
+
+
+  /* ── Calendly popup ─────────────────────────────────────── */
+
+  /**
+   * Open Calendly as a popup modal.
+   * If the Calendly script has not yet been loaded (no consent), falls back
+   * to opening the URL in a new tab.
+   */
+  window.openCalendlyPopup = function () {
     if (typeof Calendly !== 'undefined') {
       Calendly.initPopupWidget({ url: CALENDLY_URL });
     } else {
-      window.open(CALENDLY_URL, '_blank');
+      window.open(CALENDLY_URL, '_blank', 'noopener');
     }
     return false;
-  }
+  };
 
-  /* ── Contact tab switcher ── */
-  function showTab(tab) {
-    ['cal','msg'].forEach(t => {
-      const btn = document.getElementById('tab' + (t === 'cal' ? 'Cal' : 'Msg'));
-      btn.classList.toggle('active', t === tab);
+
+  /* ── Language: update Calendly widget locale + select options ── */
+
+  /**
+   * Called by lang.js's setLang after switching language.
+   * Patches any dynamic UI that depends on the active language.
+   *
+   * Override: wrap original setLang to hook in post-switch work.
+   */
+  var _origSetLang = window.setLang;
+  window.setLang = function (lang) {
+    if (typeof _origSetLang === 'function') _origSetLang(lang);
+    syncContactSelect(lang);
+    syncCalendlyLocale(lang);
+  };
+
+  function syncContactSelect(lang) {
+    var sel = document.querySelector('.contact-section select');
+    if (!sel) return;
+
+    var placeholder = sel.options[0];
+    if (placeholder) {
+      placeholder.text = lang === 'fr'
+        ? 'Choisissez un sujet…'
+        : 'Wählen Sie ein Thema…';
+    }
+
+    sel.querySelectorAll('option[data-fr]').forEach(function (o) {
+      o.text = o.dataset[lang] || o.dataset.fr;
     });
-    document.getElementById('panelCal').style.display = tab === 'cal' ? 'block' : 'none';
-    document.getElementById('panelMsg').style.display = tab === 'msg' ? 'block' : 'none';
   }
 
-  /* ── Language switcher ── */
-  function setLang(lang) {
-    document.body.className = 'lang-' + lang;
-    document.getElementById('btnFR').classList.toggle('active', lang === 'fr');
-    document.getElementById('btnDE').classList.toggle('active', lang === 'de');
-    document.documentElement.lang = lang;
+  function syncCalendlyLocale(lang) {
+    var cal = document.querySelector('.calendly-inline-widget');
+    if (!cal || typeof Calendly === 'undefined') return;
 
-    const sel = document.querySelector('.contact-section select');
-    if (sel) sel.options[0].text = lang === 'fr' ? 'Choisissez un sujet…' : 'Wählen Sie ein Thema…';
-    // Update select options
-    document.querySelectorAll('.contact-section select option[data-fr]').forEach(o => {
-      o.text = o.dataset[lang];
-    });
+    var url = CALENDLY_URL + (lang === 'de' ? '&locale=de' : '');
+    cal.setAttribute('data-url', url);
+    Calendly.initInlineWidget({ url: url, parentElement: cal });
+  }
 
-    // Pass locale to Calendly inline widget
-    const cal = document.querySelector('.calendly-inline-widget');
-    if (cal && typeof Calendly !== 'undefined') {
-      const url = CALENDLY_URL + (lang === 'de' ? '&locale=de' : '');
-      cal.setAttribute('data-url', url);
-      Calendly.initInlineWidget({ url, parentElement: cal });
+
+  /* ── Popup overlay (impressum / privacy snippets) ────────── */
+
+  /**
+   * Open the generic popup overlay with dynamically loaded content.
+   * @param {string} type - 'impressum' | 'privacy'
+   */
+  window.openPopup = function (type) {
+    var overlay = document.getElementById('popup');
+    var content = document.getElementById('popup-content');
+    if (!overlay || !content) return;
+
+    var lang = sessionStorage.getItem('lang') || 'fr';
+
+    if (type === 'impressum') {
+      content.innerHTML = lang === 'de'
+        ? '<h3>Impressum</h3>' +
+          '<p><strong>Sabine Trierweiler</strong><br>' +
+          '3 Venelle des Muriers, 57200 Sarreguemines, Frankreich<br>' +
+          'E-Mail: <a href="mailto:sabine@harmony-feminine.com">sabine@harmony-feminine.com</a></p>' +
+          '<p>Für vollständige Angaben: <a href="mentions-legales.html">Impressum</a></p>'
+        : '<h3>Mentions légales</h3>' +
+          '<p><strong>Sabine Trierweiler</strong><br>' +
+          '3 Venelle des Muriers, 57200 Sarreguemines, France<br>' +
+          'Email : <a href="mailto:sabine@harmony-feminine.com">sabine@harmony-feminine.com</a></p>' +
+          '<p>Page complète : <a href="mentions-legales.html">Mentions légales</a></p>';
     }
-  }
-  setLang('fr');
 
-  /* ── Active nav on scroll ── */
-  document.querySelectorAll('section[id]').forEach(s => {
-    new IntersectionObserver(([e]) => {
-      if (e.isIntersecting)
-        document.querySelectorAll('.nav-link').forEach(l =>
-          l.classList.toggle('active', l.getAttribute('href') === '#' + s.id));
-    }, { rootMargin:'-40% 0px -55% 0px' }).observe(s);
-  });
-
-function loadCalendly() {
-  // Dynamically inject Calendly widget script only after consent
-  if (document.getElementById('calendly-script')) return;
-  const s = document.createElement('script');
-  s.id  = 'calendly-script';
-  s.src = 'https://assets.calendly.com/assets/external/widget.js';
-  s.async = true;
-  document.head.appendChild(s);
-
-  document.getElementById("calendly-container").innerHTML =
-    '<div class="calendly-inline-widget col-12" data-url="https://calendly.com/sabine-harmony-feminine/30min?hide_gdpr_banner=1&primary_color=C8927A"></div>';
-}
-
-window.onload = function () {
-  const userLang = navigator.language || navigator.userLanguage;
-
-  if (userLang.startsWith("fr")) {
-    setLang("fr");
-  } else {
-    setLang("de");
-  }
-  
-  document.getElementById("form_time").value = Date.now();
-};
-  
-function openPopup(type){
-  const content = document.getElementById("popup-content");
-
-  if(type === "impressum"){
-    content.innerHTML = `
-    `;
-  }
-
-  if(type === "privacy"){
-    content.innerHTML = `
-    `;
-  }
-
-  document.getElementById("popup").style.display = "block";
-}
-
-function closePopup(){
-  document.getElementById("popup").style.display = "none";
-}
-
-document.getElementById("contact-form").addEventListener("submit", function(e){
-  e.preventDefault();
-
-  const formData = new FormData(this);
-
-  fetch("contact.php", {
-    method: "POST",
-    body: formData
-  })
-  .then(res => res.text())
-  .then(data => {
-    alert(data === "OK" ? "OK" : "Error");
-  });
-});
-
-/* ═══════════════════════════════════════════════════════════════
-   COOKIE CONSENT ENGINE
-   — Copy cookieConsent(), showBanner(), updateStatus() and the
-     DOMContentLoaded block into every page of the site.
-   — The banner HTML above also needs to be copied to each page.
-   ═══════════════════════════════════════════════════════════════ */
-
-  const CONSENT_KEY = 'hf_cookie_consent';   // localStorage key
-  const CONSENT_VER = '1';                    // bump to re-ask after policy change
-
-  function cookieConsent(level) {
-    // level: 'all' | 'essential'
-    const prefs = {
-      version:   CONSENT_VER,
-      level:     level,
-      calendly:  level === 'all',
-      date:      new Date().toISOString()
-    };
-    localStorage.setItem(CONSENT_KEY, JSON.stringify(prefs));
-    document.getElementById('cookie-banner').style.display = 'none';
-    updateStatus(prefs);
-    if (prefs.calendly) loadCalendly();
-    // Sync toggles if on cookies.html
-    syncToggles(prefs);
-  }
-
-  function savePrefs() {
-    const calFR = document.getElementById('tog-calendly');
-    const calDE = document.getElementById('tog-calendly-de');
-    const calEnabled = (calFR && calFR.checked) || (calDE && calDE.checked);
-    const prefs = {
-      version:  CONSENT_VER,
-      level:    calEnabled ? 'all' : 'essential',
-      calendly: calEnabled,
-      date:     new Date().toISOString()
-    };
-    localStorage.setItem(CONSENT_KEY, JSON.stringify(prefs));
-    document.getElementById('cookie-banner').style.display = 'none';
-    updateStatus(prefs);
-    if (prefs.calendly) loadCalendly();
-    // Visual confirmation
-    const btn = event.target;
-    const orig = btn.innerHTML;
-    btn.innerHTML = '<i class="bi bi-check-circle me-1"></i>Enregistré !';
-    setTimeout(() => btn.innerHTML = orig, 2000);
-  }
-
-  function syncToggles(prefs) {
-    const calFR = document.getElementById('tog-calendly');
-    const calDE = document.getElementById('tog-calendly-de');
-    if (calFR) calFR.checked = !!prefs.calendly;
-    if (calDE) calDE.checked = !!prefs.calendly;
-  }
-
-  function showBanner() {
-    const banner = document.getElementById('cookie-banner');
-    if (banner) banner.style.display = 'block';
-  }
-
-  function updateStatus(prefs) {
-    const lang = document.body.className.includes('lang-de') ? 'de' : 'fr';
-    const fr = document.getElementById('statusTextFr');
-    const de = document.getElementById('statusTextDe');
-    if (!fr || !de) return;
-    if (!prefs) {
-      fr.textContent = 'Aucune préférence enregistrée — veuillez faire votre choix.';
-      de.textContent = 'Keine Einstellungen gespeichert — bitte treffen Sie Ihre Auswahl.';
-      return;
+    if (type === 'privacy') {
+      content.innerHTML = lang === 'de'
+        ? '<h3>Datenschutz</h3>' +
+          '<p>Diese Website verwendet technisch notwendige Cookies sowie Calendly ' +
+          '(nach Ihrer Einwilligung) für Terminbuchungen.</p>' +
+          '<p>Vollständige Datenschutzerklärung: ' +
+          '<a href="politique-confidentialite.html">Datenschutzerklärung</a></p>'
+        : '<h3>Confidentialité</h3>' +
+          '<p>Ce site utilise des cookies essentiels et, avec votre accord, Calendly ' +
+          'pour la prise de rendez-vous.</p>' +
+          '<p>Page complète : ' +
+          '<a href="politique-confidentialite.html">Politique de confidentialité</a></p>';
     }
-    const d = new Date(prefs.date).toLocaleDateString(lang === 'de' ? 'de-DE' : 'fr-FR');
-    if (prefs.level === 'all') {
-      fr.textContent = `✓ Tous les cookies acceptés (Calendly activé) — ${d}`;
-      de.textContent = `✓ Alle Cookies akzeptiert (Calendly aktiviert) — ${d}`;
-    } else {
-      fr.textContent = `✓ Cookies essentiels uniquement (Calendly désactivé) — ${d}`;
-      de.textContent = `✓ Nur notwendige Cookies (Calendly deaktiviert) — ${d}`;
-    }
-  }
 
-  /* ── Init ── */
-  document.addEventListener('DOMContentLoaded', () => {
-    // Language
-    setLang(sessionStorage.getItem('lang') || 'fr');
+    overlay.style.display = 'flex';
+  };
 
-    // Cookie consent
-    let stored = null;
-    try { stored = JSON.parse(localStorage.getItem(CONSENT_KEY)); } catch(e){}
+  window.closePopup = function () {
+    var overlay = document.getElementById('popup');
+    if (overlay) overlay.style.display = 'none';
+  };
 
-    if (!stored || stored.version !== CONSENT_VER) {
-      showBanner();
-      updateStatus(null);
-    } else {
-      updateStatus(stored);
-      syncToggles(stored);
-      if (stored.calendly) loadCalendly();
+  // Close popup on backdrop click
+  document.addEventListener('DOMContentLoaded', function () {
+    var overlay = document.getElementById('popup');
+    if (overlay) {
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closePopup();
+      });
     }
   });
+
+})();
