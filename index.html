@@ -419,7 +419,17 @@
 
           <!-- Message panel -->
           <div id="panelMsg" style="padding:2.5rem;">
-            <form id="contact-form"> 
+            <form id="contact-form"
+                  name="contact"
+                  method="POST"
+                  data-netlify="true"
+                  data-netlify-honeypot="hp-field">
+
+              <!-- Anti-spam honeypot (hidden) -->
+              <input type="hidden" name="form-name" value="contact" />
+              <input type="hidden" name="hp-field" style="display:none" />
+              <input type="hidden" name="form_time" id="form_time" />
+              
               <div class="row g-3">
                 <div class="col-sm-6">
                   <label class="form-label"><span class="txt-fr">Prénom</span><span class="txt-de">Vorname</span></label>

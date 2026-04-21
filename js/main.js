@@ -131,7 +131,19 @@
   };
 
 
-  /* ── Contact form → PHP back-end ────────────────────────── */
+  /* ── Contact form → Netlify Forms ───────────────────────────
+     Netlify handles submission server-side at deploy time.
+     Requirements in the HTML form tag:
+       name="contact"
+       method="POST"
+       data-netlify="true"
+       data-netlify-honeypot="bot-field"
+     And inside the form:
+       <input type="hidden" name="form-name" value="contact" />
+       <input type="hidden" name="bot-field" style="display:none" />
+     After deploying: Netlify dashboard → Forms → contact →
+       Notifications → Add notification → Email to sabine@harmony-feminine.com
+  ──────────────────────────────────────────────────────────── */
   function initContactForm() {
     var form = document.getElementById('contact-form');
     if (!form) return;  // not present on every page
@@ -143,31 +155,37 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      var formData = new FormData(form);
+      var lang = sessionStorage.getItem('lang') || 'fr';
 
-      fetch('contact.php', { method: 'POST', body: formData })
-        .then(function (res) { return res.text(); })
-        .then(function (data) {
-          var lang    = sessionStorage.getItem('lang') || 'fr';
-          var success = data.trim() === 'OK';
+      // Netlify Forms requires application/x-www-form-urlencoded — NOT JSON or raw FormData
+      var body = new URLSearchParams(new FormData(form)).toString();
 
-          var msgFr = success
-            ? 'Votre message a bien été envoyé. Merci !'
-            : 'Une erreur est survenue. Veuillez réessayer ou envoyer un email directement.';
-          var msgDe = success
-            ? 'Ihre Nachricht wurde erfolgreich gesendet. Danke!'
-            : 'Ein Fehler ist aufgetreten. Bitte erneut versuchen oder direkt eine E-Mail senden.';
-
-          showFormFeedback(form, lang === 'de' ? msgDe : msgFr, success);
-          if (success) form.reset();
+      fetch('/', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body:    body
+      })
+        .then(function (res) {
+          if (res.ok) {
+            showFormFeedback(
+              form,
+              lang === 'de'
+                ? 'Ihre Nachricht wurde erfolgreich gesendet. Danke!'
+                : 'Votre message a bien été envoyé. Merci !',
+              true
+            );
+            form.reset();
+          } else {
+            throw new Error('HTTP ' + res.status);
+          }
         })
-        .catch(function () {
-          var lang = sessionStorage.getItem('lang') || 'fr';
+        .catch(function (err) {
+          console.error('Form submission error:', err);
           showFormFeedback(
             form,
             lang === 'de'
-              ? 'Netzwerkfehler. Bitte direkt per E-Mail kontaktieren.'
-              : 'Erreur réseau. Veuillez contacter directement par email.',
+              ? 'Ein Fehler ist aufgetreten. Bitte schreiben Sie direkt an sabine@harmony-feminine.com'
+              : 'Une erreur est survenue. Écrivez directement à sabine@harmony-feminine.com',
             false
           );
         });
