@@ -1,0 +1,78 @@
+/* ── Theme toggle button ── */
+.theme-toggle {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--bs-secondary);
+  background: transparent;
+  color: var(--bs-primary);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s;
+  font-size: 0.8rem;
+}
+.theme-toggle:hover {
+  background: var(--bs-primary);
+  color: #fff;
+  border-color: var(--bs-primary);
+}
+
+/* ── Dark mode palette overrides ──
+   Bootstrap handles its own components via data-bs-theme="dark".
+   We only need to re-map our custom tokens here.            */
+[data-bs-theme="dark"] {
+  --bs-primary:         #D4A896;   /* lighter rosewood — readable on dark */
+  --bs-primary-rgb:     212,168,150;
+
+  --bs-secondary:       #B07FA8;   /* mauve */
+  --bs-secondary-rgb:   176,127,168;
+
+  --bs-info:            #6B4A42;   /* dark border */
+  --bs-info-rgb:        107,74,66;
+
+  --bs-light:           #2A1E1C;   /* dark surface */
+  --bs-light-rgb:       42,30,28;
+
+  --bs-dark:            #F5D8CC;   /* text becomes pale blush */
+  --bs-dark-rgb:        245,216,204;
+
+  --bs-warning:         #3D2820;   /* dark blush bg */
+  --bs-warning-rgb:     61,40,32;
+
+  --bs-body-color:      #C4A090;
+  --bs-body-bg:         #1A1210;
+  --bs-border-color:    #5A3830;
+  --bs-emphasis-color:  #F5D8CC;
+
+  --bs-mauve:           #C49AC0;
+}
+
+/* Components that need explicit dark adjustments */
+[data-bs-theme="dark"] .navbar {
+  background: rgba(26, 18, 16, 0.96) !important;
+  border-bottom-color: var(--bs-info);
+}
+[data-bs-theme="dark"] .symptom-card,
+[data-bs-theme="dark"] .testi-card,
+[data-bs-theme="dark"] .contact-card,
+[data-bs-theme="dark"] .policy-card,
+[data-bs-theme="dark"] .legal-card {
+  background: #2A1E1C;
+  border-color: var(--bs-info);
+}
+[data-bs-theme="dark"] .about-badge,
+[data-bs-theme="dark"] .credential-chip {
+  background: #2A1E1C;
+  border-color: var(--bs-info);
+}
+[data-bs-theme="dark"] .hero {
+  background:
+    linear-gradient(135deg, rgba(26,18,16,0.88) 0%, rgba(61,40,32,0.75) 50%, rgba(42,30,28,0.6) 100%),
+    url('../assets/images/file_00000000d5c072439dc8ff3d80cf7165.png') center/cover no-repeat;
+}
+[data-bs-theme="dark"] footer {
+  background: #0D0908;
+}
+
+/* Smooth transition on switch */
+*, *::before, *::after {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+}

@@ -38,6 +38,7 @@
   ══════════════════════════════════════════════════════════ */
   document.addEventListener('DOMContentLoaded', function () {
 
+    initTheme();
     initAOS();
     initNavbarScroll();
     initScrollTop();
@@ -322,9 +323,39 @@
     var overlay = document.getElementById('popup');
     if (overlay) {
       overlay.addEventListener('click', function (e) {
-        if (e.target === overlay) closePopup();
+          if (e.target === overlay) closePopup();
       });
     }
   });
 
+  /* ── Theme (light / dark) ─────────────────────────────────── */
+  
+  var THEME_KEY = 'hf_theme';
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-bs-theme', theme);
+  
+    var iconLight = document.getElementById('iconLight');
+    var iconDark  = document.getElementById('iconDark');
+    if (iconLight) iconLight.style.display = theme === 'dark' ? 'none'  : '';
+    if (iconDark)  iconDark.style.display  = theme === 'dark' ? ''      : 'none';
+  
+    localStorage.setItem(THEME_KEY, theme);
+  }
+
+  window.toggleTheme = function () {
+    var current = document.documentElement.getAttribute('data-bs-theme') || 'light';
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+  };
+  
+  function initTheme() {
+    // Priority: 1) user's saved choice  2) OS preference  3) light
+    var saved = localStorage.getItem(THEME_KEY);
+    if (saved === 'dark' || saved === 'light') {
+      applyTheme(saved);
+      return;
+    }
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(prefersDark ? 'dark' : 'light');
+  }
 })();
