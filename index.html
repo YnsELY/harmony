@@ -53,17 +53,15 @@
         <li class="nav-item"><a class="nav-link" href="#mission"><span class="txt-fr">Ma methode</span><span class="txt-de">Methode</span></a></li>
         <li class="nav-item"><a class="nav-link" href="#apropos"><span class="txt-fr">À Propos</span><span class="txt-de">Über Mich</span></a></li>
         <li class="nav-item"><a class="nav-link" href="#contact"><span class="txt-fr">Contact</span><span class="txt-de">Kontakt</span></a></li>
+
         <li class="nav-item ms-lg-2">
-          <button class="btn-cal sm" onclick="openCalendlyPopup()">
-            <i class="bi bi-calendar-check"></i>
-            <span class="txt-fr">Rendez-vous</span><span class="txt-de">Termin</span>
+          <button class="lang-toggle" id="langToggle"
+                  onclick="toggleLang()"
+                  aria-label="Langue active : Français — Cliquer pour Deutsch">
+            <span id="langFlag">🇫🇷</span>
+            <span id="langCode">FR</span>
+            <i class="bi bi-arrow-left-right"></i>
           </button>
-        </li>
-        <li class="nav-item ms-lg-2">
-          <div class="lang-switch">
-            <button class="lang-btn active" id="btnFR" onclick="setLang('fr')">FR</button>
-            <button class="lang-btn" id="btnDE" onclick="setLang('de')">DE</button>
-          </div>
         </li>
       </ul>
     </div>
@@ -647,9 +645,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   
-<script src="js/lang.js"></script>
-<script src="js/cookies.js"></script>
-<script src="js/main.js"></script>
+<script src="js/lang.js" defer></script>
+<script src="js/cookies.js" defer></script>
+<script src="js/main.js" defer></script>
 
 </body>
 </html>

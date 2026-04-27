@@ -28,8 +28,13 @@
         <span class="txt-de">Zurück zur Website</span>
       </a>
       <div class="lang-switch">
-        <button class="lang-btn active" id="btnFR" onclick="setLang('fr')">FR</button>
-        <button class="lang-btn" id="btnDE" onclick="setLang('de')">DE</button>
+        <button class="lang-toggle" id="langToggle"
+                onclick="toggleLang()"
+                aria-label="Langue active : Français — Cliquer pour Deutsch">
+          <span id="langFlag">🇫🇷</span>
+          <span id="langCode">FR</span>
+          <i class="bi bi-arrow-left-right"></i>
+        </button>
       </div>
     </div>
   </div>
