@@ -11,7 +11,7 @@
  *   <button class="lang-toggle" id="langToggle" onclick="toggleLang()">
  *     <span id="langFlag">🇫🇷</span>
  *     <span id="langCode">FR</span>
- *     <i class="bi bi-arrow-left-right"></i>
+ *     <i class="bi bi-translate"></i>
  *   </button>
  *
  * The button shows the CURRENT language flag + code.
