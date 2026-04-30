@@ -27,7 +27,7 @@
 
   --bs-body-color:          #3A2420;
   --bs-body-bg:             #FAF0EB;
-  --bs-body-font-family:    'Jost', 'Mulish', sans-serif;
+  --bs-body-font-family:    'Lato', sans-serif;
   --bs-body-font-weight:    300;
   --bs-body-line-height:    1.7;
   --bs-emphasis-color:      #3A2420;
@@ -49,8 +49,8 @@
   --bs-card-border-radius:  var(--bs-border-radius-lg);
 
   --bs-mauve:               #B07FA8;
-  --font-display:           'Lustria', 'ZTOtez', 'Cormorant Garamond', serif;
-  --font-body:              'Lato', 'Mulish', 'Jost', sans-serif;
+  --font-display:           'Lustria', serif;
+  --font-body:              'Lato', sans-serif;
 
   --bs-primary-plu25:        #AB7157;
   --bs-primary-plu25-rgb:    171, 113, 87;
@@ -63,7 +63,7 @@
 body {
   letter-spacing: 0.02em;
   font-family:var(--font-body);
-  font-weight: 400; 
+  font-weight: 400;
 }
 h1,h2,h3,h4,h5 { font-family: var(--font-display); font-weight:400; color:var(--bs-dark); }
 

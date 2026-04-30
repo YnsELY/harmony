@@ -208,8 +208,19 @@
     } else {
       updateStatus(stored);
       syncToggles(stored);
-      if (stored.calendly) loadCalendly();
+      //if (stored.calendly) loadCalendly();
     }
   });
 
+  const calendlyTarget = document.querySelector('#calendly-container');
+
+  const calendlyObserver = new IntersectionObserver((entries, obs) => {
+    if (entries[0].isIntersecting) {
+      window.loadCalendly();
+      obs.disconnect();
+    }
+  });
+
+  calendlyObserver.observe(calendlyTarget);
+  
 })();

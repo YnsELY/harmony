@@ -22,6 +22,11 @@
     })();
   </script>
   
+  <style>
+    body { margin: 0; font-family: sans-serif; }
+    .hero { height: 60vh; background: #FAF0EB; }
+  </style>
+  
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <!-- Bootstrap Icons -->
@@ -33,8 +38,8 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lustria:wght@300;400;500&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="styles/main.css" />
-  <link rel="stylesheet" href="styles/theme.css" />
+  <link rel="preload" href="styles/main.css" as="style" onload="this.rel='stylesheet'" />
+  <link rel="preload" href="styles/theme.css" as="style" onload="this.rel='stylesheet'" />
 </head>
 <body class="lang-fr">
 
@@ -54,7 +59,7 @@
         <li class="nav-item"><a class="nav-link" href="#apropos"><span class="txt-fr">À Propos</span><span class="txt-de">Über Mich</span></a></li>
         <li class="nav-item"><a class="nav-link" href="#contact"><span class="txt-fr">Contact</span><span class="txt-de">Kontakt</span></a></li>
 
-        <li class="nav-item ms-lg-2">
+        <li class="nav-item ms-lg-2" style="padding:0.4rem 1rem!important;">
           <button class="lang-toggle" id="langToggle"
                   onclick="toggleLang()"
                   aria-label="Langue active : Français — Cliquer pour Deutsch">
@@ -73,7 +78,7 @@
   <div class="petal-bg"></div>
   <div class="container">
     <div class="row">
-      <div class="col-lg-7">
+      <div class="col-12 col-lg-7 mt-5">
         <div class="hero-content">
           <p class="hero-tagline">
             <span class="txt-fr">Consultante certifiée spécialisée en premenopause et menopause</span>
@@ -647,8 +652,8 @@
 <!-- END COOKIE BANNER -->  
   
 <!-- ══════════════ SCRIPTS ══════════════ -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" defer></script>
   
 <script src="js/lang.js" defer></script>
 <script src="js/cookies.js" defer></script>
