@@ -208,7 +208,6 @@
     } else {
       updateStatus(stored);
       syncToggles(stored);
-      //if (stored.calendly) loadCalendly();
     }
   });
 

@@ -75,10 +75,6 @@
 [data-bs-theme="dark"] #cookie-banner {
   background:var(--bs-body-bg);
   border-top:1px solid var(--bs-border-color);
-  box-shadow:0 -8px 40px rgba(var(--bs-primary-rgb),.12);
-  padding:1.25rem 1.5rem;
-  display:none;   /* shown by JS when no consent stored */
-  animation:slideUp 0.4s ease;
 }
 
 /* Smooth transition on switch */
