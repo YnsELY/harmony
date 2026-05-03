@@ -181,7 +181,7 @@ section { padding:100px 0; }
 .mission-section > .container { position:relative; z-index:2; }
 .mission-pillar { text-align:center; padding:2.5rem 1.5rem; }
 .pillar-icon { width:72px; height:72px; border-radius:50%; background:linear-gradient(135deg,var(--bs-primary),var(--bs-mauve)); color:#fff; font-size:1.7rem; display:flex; align-items:center; justify-content:center; margin:0 auto 1.5rem; box-shadow:0 8px 32px rgba(var(--bs-primary-rgb),0.28); }
-.mission-pillar h4 { font-size:1.3rem; margin-bottom:0.75rem; }
+.mission-pillar .lustria { font-size:1.3rem; margin-bottom:0.75rem; }
 .mission-pillar p { font-size:0.9rem; color:var(--bs-body-color); line-height:1.75; }
 .stat-num { font-family:var(--font-display); font-size:3rem; color:var(--bs-primary); line-height:1; }
 .stat-label { font-size:1.0rem; color:var(--bs-body-color); text-transform:uppercase; letter-spacing:0.12em; }
