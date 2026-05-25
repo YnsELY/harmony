@@ -24,14 +24,15 @@
   
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <!-- Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet"/>
   <!-- AOS - Animate On Scroll -->
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
   <!-- Calendly widget CSS -->
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet"/>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lustria:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap Icons subset -->
+  <link rel="stylesheet" href="styles/icons.css" />
   
   <link rel="stylesheet" href="styles/main.css" />
   <link rel="stylesheet" href="styles/theme.css" />
@@ -174,7 +175,7 @@
         <div class="symptom-card">
           <div class="symptom-icon"><i class="bi bi-droplet-half"></i></div>
           <div class="mb-3 lustria">
-            <div class="txt-fr">Des inconforts intime</div>
+            <div class="txt-fr">Des inconforts intimes</div>
             <div class="txt-de">Intime Beschwerden</div>
           </div>
           <div class="">
@@ -486,13 +487,13 @@
             <div class="ci-value d-flex gap-1">
               <span class="txt-fr">Disponible dans</span>
               <span class="txt-de">Verfügbar auf</span>
-              <a href="msteams://*" target="_blank" aria-label="Microsoft Teams">
+              <a class="video-icon" href="msteams://*" target="_blank" aria-label="Microsoft Teams">
                 <img class="ms-2 hf-pointer" src="assets/images/microsoft-teams.svg" alt="Microsoft Teams" height="24" width="24" />
               </a>
-              <a href="webexteams://im?email=sabine@harmony-feminine.com" target="_blank" aria-label="Cisco Webex">
+              <a class="video-icon" href="webexteams://im?email=sabine@harmony-feminine.com" target="_blank" aria-label="Cisco Webex">
                 <img class="ms-2 hf-pointer" src="assets/images/cisco-webex.svg" alt="Cisco Webex" height="24" width="24" />
               </a>
-              <a href="https://zoom.com/" target="_blank" aria-label="Zoom">
+              <a class="video-icon" href="https://zoom.com/" target="_blank" aria-label="Zoom">
                 <img class="ms-2 hf-pointer" src="assets/images/zoom.svg" alt="Zoom" height="24" width="24" />
               </a>
             </div>
@@ -508,6 +509,19 @@
             <div class="ci-value">
               <span class="txt-fr">Lun–Ven 9h–18h (CET)</span>
               <span class="txt-de">Mo–Fr 9–18 Uhr (MEZ)</span>
+            </div>
+          </div>
+        </div>
+        <div class="contact-info-item d-none">
+          <div class="card-icon"><i class="bi bi-building"></i></div>
+          <div>
+            <div class="ci-label">
+              <span class="txt-fr">Cabinet</span>
+              <span class="txt-de">Praxis</span>
+            </div>
+            <div class="ci-value">
+              <span class="txt-fr">6 Rue Albert Einstein, Creutzwald</span>
+              <span class="txt-de">6 Rue Albert Einstein, Creutzwald</span>
             </div>
           </div>
         </div>
@@ -545,7 +559,7 @@
         </p>
         <div class="d-flex gap-2 mt-3">
           <a href="https://www.instagram.com/harmony.feminine/" class="social-link" target="_blank" aria-label="Instagram - Harmony Feminine"><i class="bi bi-instagram"></i></a>
-          <a href="https://www.facebook.com/harmony.feminine/" class="social-link" target="_blank" aria-label="Facebook - Harmony Feminine"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.facebook.com/share/1BCX2gtFEr/" class="social-link" target="_blank" aria-label="Facebook - Harmony Feminine"><i class="bi bi-facebook"></i></a>
         </div>
       </div>
       <div class="col-6 col-lg-2 offset-lg-1">
@@ -633,7 +647,7 @@
             Wir verwenden technisch notwendige Cookies und, mit Ihrer Zustimmung, Calendly (Terminbuchung).
             <a href="cookies.html" class="text-dark">Mehr erfahren</a>
           </p>
-        </div>        
+        </div>
       </div>
       <div class="d-flex flex-wrap gap-2 align-items-center flex-shrink-0">
         <button class="banner-btn-accept" onclick="cookieConsent('all')" aria-label="Accept all cookies">
