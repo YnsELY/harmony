@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <!-- SEO -->
-  <meta name="description" content="Consultante certifiée spécialisée en premenopause et menopause">
-  <meta name="robots" content="noimageindex">
-  <meta name="keywords" content="consultante,menopause,sarreguemines">
+  <meta name="description" content="Consultante certifiée spécialisée en préménopause et ménopause à Sarreguemines. Accompagnement bien-être féminin personnalisé."/>
+  <meta name="robots" content="index,follow,noimageindex"/>
+  <meta name="theme-color" content="#f8e8e8"/>
   
-  <title>Harmony Féminine</title>
+  <title>Harmony Féminine | Consultante certifiée en préménopause et ménopause</title>
   
   <link rel="icon" type="image/x-icon" href="favicon.ico"/>
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/>
@@ -37,18 +37,22 @@
   <link rel="preload"
         as="style"
         href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Lustria&display=swap"
-        onload="this.rel='stylesheet'">
+        onload="this.onload=null;this.rel='stylesheet'">
 
   <noscript>
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Lustria&display=swap">
   </noscript>
   
-  <!-- Bootstrap Icons subset -->
-  <link rel="preload" href="styles/icons.css" as="style" onload="this.rel='stylesheet'">
-  
-  <link rel="stylesheet" href="styles/main.min.css" />
-  <link rel="stylesheet" href="styles/theme.css" />
+  <link rel="preload" href="styles/main.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="styles/icons.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="styles/theme.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+  <noscript>
+    <link rel="stylesheet" href="styles/main.min.css">
+    <link rel="stylesheet" href="styles/icons.css">
+    <link rel="stylesheet" href="styles/theme.css">
+  </noscript>
 </head>
 <body class="lang-fr">
 
@@ -622,10 +626,10 @@
           <span class="txt-de">Passen Sie Ihre Einstellungen an</span>
         </a>
         
-          <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" onclick="toggleTheme()">
-            <i class="bi bi-sun-fill"  id="iconLight"></i>
-            <i class="bi bi-moon-fill" id="iconDark"  style="display:none"></i>
-          </button>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" onclick="toggleTheme()">
+          <i class="bi bi-sun-fill"  id="iconLight"></i>
+          <i class="bi bi-moon-fill" id="iconDark"  style="display:none"></i>
+        </button>
       </div>
     </div>
   </div>
