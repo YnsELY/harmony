@@ -355,7 +355,7 @@
       applyTheme(saved);
       return;
     }
-    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var prefersDark = window.matchMedia('(prefers-color-scheme: light)').matches;
     applyTheme(prefersDark ? 'dark' : 'light');
   }
 })();
