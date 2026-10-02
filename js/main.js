@@ -349,8 +349,8 @@
   };
   
   function initTheme() {
-    // Priority: 1) user's saved choice  2) OS preference  3) light
-    var saved = localStorage.getItem(THEME_KEY);
+    // Priority: 1) light
+    var saved = 'light'; // always start with light theme
     if (saved === 'dark' || saved === 'light') {
       applyTheme(saved);
       return;
