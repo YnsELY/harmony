@@ -11,44 +11,51 @@
   
   <link rel="canonical" href="https://harmony-feminine.com/" />
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "@id": "https://harmony-feminine.com/",
-  "name": "Harmony Feminine",
-  "url": "https://harmony-feminine.com/",
-  "logo": "https://harmony-feminine.com/apple-touch-icon.png",
-  "image": "https://harmony-feminine.com/android-chrome-512x512.png",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "6 Rue Albert Einstein",
-    "addressLocality": "Creutzwald",
-    "postalCode": "57150",
-    "addressCountry": "FR"
-  },
   {
-    "@type": "Person",
-    "@id": "https://harmony-feminine.com/#apropos",
-    "name": "Sabine Trierweiler"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": "49.2053",
-    "longitude": "6.697"
-  },
-  "openingHoursSpecification": [
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Wednesday",
-        "Saturday"
-      ],
-      "opens": "09:00",
-      "closes": "16:00"
-    }
-  ]
-}
-</script>
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://harmony-feminine.com/#localbusiness",
+        "name": "Harmony Feminine",
+        "url": "https://harmony-feminine.com/",
+        "logo": "https://harmony-feminine.com/apple-touch-icon.png",
+        "image": "https://harmony-feminine.com/android-chrome-512x512.png",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "6 Rue Albert Einstein",
+          "addressLocality": "Creutzwald",
+          "postalCode": "57150",
+          "addressCountry": "FR"
+        },
+        "founder": {
+          "@id": "https://harmony-feminine.com/#apropos"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 49.2053,
+          "longitude": 6.697
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Wednesday",
+              "Saturday"
+            ],
+            "opens": "09:00",
+            "closes": "16:00"
+          }
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://harmony-feminine.com/#apropos",
+        "name": "Sabine Trierweiler"
+      }
+    ]
+  }
+  </script>
   
   <title>Harmony Féminine | Consultante certifiée en préménopause et ménopause</title>
   
