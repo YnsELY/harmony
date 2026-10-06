@@ -42,11 +42,11 @@
         <div class="banner-title txt-fr"><i class="bi bi-cookie me-2"></i>Ce site utilise des cookies</div>
         <div class="banner-title txt-de"><i class="bi bi-cookie me-2"></i>Diese Website verwendet Cookies</div>
         <p class="banner-text mb-0 txt-fr">
-          Nous utilisons des cookies essentiels et, avec votre accord, Calendly (prise de rendez-vous).
+          Nous utilisons des cookies essentiels et, avec votre accord, Calendly (prise de rendez-vous) et Google Analytics (mesure d'audience).
           <a href="cookies.html">En savoir plus</a>
         </p>
         <p class="banner-text mb-0 txt-de">
-          Wir verwenden technisch notwendige Cookies und, mit Ihrer Zustimmung, Calendly (Terminbuchung).
+          Wir verwenden technisch notwendige Cookies und, mit Ihrer Zustimmung, Calendly (Terminbuchung) und Google Analytics (Reichweitenmessung).
           <a href="cookies.html">Mehr erfahren</a>
         </p>
       </div>
@@ -163,6 +163,18 @@
                 </label>
               </div>
 
+              <div class="cookie-type">
+                <div class="cookie-type-icon"><i class="bi bi-bar-chart-line"></i></div>
+                <div class="cookie-type-info">
+                  <div class="cookie-type-name">Google Analytics — Mesure d'audience <span class="badge-optional ms-1">Optionnel</span></div>
+                  <div class="cookie-type-desc">Ce service (Google Ireland Ltd / Google LLC, USA) mesure la fréquentation du site : pages vues, durée de visite, provenance générale des visiteurs. Il dépose des cookies (_ga, _ga_*) et traite votre adresse IP et des identifiants en ligne. Données pouvant être transférées hors UE. Aucun script Google n'est chargé tant que vous n'avez pas donné votre accord.</div>
+                </div>
+                <label class="cookie-toggle ms-2">
+                  <input type="checkbox" id="tog-analytics">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
             </div>
           </div>
 
@@ -211,6 +223,12 @@
                     <td><strong>Calendly LLC</strong></td>
                     <td>Réservation de rendez-vous</td>
                     <td>Session / 1 an</td>
+                    <td>Consentement (Art. 6§1a RGPD)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Google Analytics</strong></td>
+                    <td>Mesure d'audience (_ga, _ga_*)</td>
+                    <td>13 mois maximum</td>
                     <td>Consentement (Art. 6§1a RGPD)</td>
                   </tr>
                 </tbody>
@@ -278,6 +296,18 @@
                 </label>
               </div>
 
+              <div class="cookie-type">
+                <div class="cookie-type-icon"><i class="bi bi-bar-chart-line"></i></div>
+                <div class="cookie-type-info">
+                  <div class="cookie-type-name">Google Analytics — Reichweitenmessung <span class="badge-optional ms-1">Optional</span></div>
+                  <div class="cookie-type-desc">Dienst von Google Ireland Ltd / Google LLC (USA) zur Messung der Websitenutzung: Seitenaufrufe, Besuchsdauer, grobe Herkunft der Besucher. Setzt Cookies (_ga, _ga_*) und verarbeitet IP-Adresse und Online-Kennungen. Datenübertragung in Drittländer möglich. Es wird kein Google-Skript geladen, bevor Sie eingewilligt haben. Rechtsgrundlage: Einwilligung gem. Art. 6 Abs. 1 lit. a DSGVO.</div>
+                </div>
+                <label class="cookie-toggle ms-2">
+                  <input type="checkbox" id="tog-analytics-de">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
             </div>
           </div>
 
@@ -313,6 +343,12 @@
                     <td><strong>Calendly LLC</strong></td>
                     <td>Online-Terminbuchung</td>
                     <td>Session / 1 Jahr</td>
+                    <td>Einwilligung (Art. 6 Abs. 1 lit. a DSGVO)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Google Analytics</strong></td>
+                    <td>Reichweitenmessung (_ga, _ga_*)</td>
+                    <td>max. 13 Monate</td>
                     <td>Einwilligung (Art. 6 Abs. 1 lit. a DSGVO)</td>
                   </tr>
                 </tbody>
@@ -368,6 +404,7 @@
 <script src="dist/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <script src="js/lang.js"></script>
+<script src="js/cookies.js"></script>
 
 </body>
 </html>

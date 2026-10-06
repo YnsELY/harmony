@@ -1,0 +1,117 @@
+#!/usr/bin/env node
+/**
+ * build-pages.js — Generates the SEO content pages, the German home page
+ * and sitemap.xml.
+ * Harmony Féminine
+ *
+ * Usage (from the project root):  node scripts/build-pages.js
+ *
+ *  • content-fr.js / content-de.js  →  <path>/index.html
+ *  • index.html                      →  de/index.html (same page, German by default)
+ *  • every page                      →  sitemap.xml
+ *
+ * Re-run it after editing index.html or any content file.
+ */
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const { renderPage, SITE, MODIFIED } = require('./layout');
+
+const ROOT = path.resolve(__dirname, '..');
+const pages = [...require('./content-fr'), ...require('./content-de')];
+
+function write(urlPath, html) {
+  const file = path.join(ROOT, urlPath, 'index.html');
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, html);
+  console.log('  wrote', path.relative(ROOT, file));
+}
+
+/* ── 1. Content pages ─────────────────────────────────────── */
+pages.forEach((page) => write(page.path, renderPage(page)));
+
+/* ── 2. German home page (copy of index.html) ─────────────── */
+function buildGermanHome() {
+  let html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  const replace = (pattern, value) => {
+    if (!pattern.test(html)) throw new Error('build-pages: pattern not found in index.html: ' + pattern);
+    html = html.replace(pattern, value);
+  };
+
+  replace(/<html lang="fr"/, '<html lang="de"');
+  replace(/<body class="lang-fr">/, '<body class="lang-de">');
+  replace(/<meta name="description" content="[^"]*"\/>/,
+    '<meta name="description" content="Sabine Trierweiler, zertifizierte Menopulse®-Beraterin für Prämenopause und Menopause. Praxis in Creutzwald an der Grenze zum Saarland und Online-Beratung auf Deutsch. Kostenloses 20-Minuten-Gespräch."/>');
+  replace(/<link rel="canonical" href="[^"]*" \/>/,
+    `<link rel="canonical" href="${SITE}/de/" />`);
+  replace(/<meta property="og:locale" content="fr_FR"\/>\s*<meta property="og:locale:alternate" content="de_DE"\/>/,
+    '<meta property="og:locale" content="de_DE"/>\n  <meta property="og:locale:alternate" content="fr_FR"/>');
+  replace(/<meta property="og:url" content="[^"]*"\/>/,
+    `<meta property="og:url" content="${SITE}/de/"/>`);
+  replace(/<meta property="og:title" content="[^"]*"\/>/,
+    '<meta property="og:title" content="Sabine Trierweiler – Zertifizierte Beraterin für die Wechseljahre | Harmony Féminine"/>');
+  replace(/<meta property="og:description" content="[^"]*"\/>/,
+    '<meta property="og:description" content="Begleitung in Prämenopause und Menopause – Praxis in Creutzwald (nahe Saarlouis) und online. Kostenloses 20-Minuten-Gespräch."/>');
+  replace(/<title>[^<]*<\/title>/,
+    '<title>Sabine Trierweiler – Wechseljahre-Beraterin nahe Saarlouis & online | Harmony Féminine</title>');
+
+  // Relative asset/page paths → absolute, since this copy lives in /de/.
+  html = html.replace(/((?:href|src)=")(?!https?:|\/|#|mailto:|msteams:|webexteams:)/g, '$1/');
+  html = html.replace(/(\s)(assets\/images\/)/g, '$1/$2');
+
+  // Internal links → German equivalents where they exist.
+  html = html
+    .replace(/href="\/accompagnement-menopause\/"/g, 'href="/de/wechseljahre-begleitung/"')
+    .replace(/href="\/consultation-menopause-en-ligne\/"/g, 'href="/de/online-beratung-wechseljahre/"')
+    .replace(/href="\/sabine-trierweiler\/"/g, 'href="/de/sabine-trierweiler/"')
+    .replace(/href="\/symptomes\/[^"]+"/g, 'href="/de/wechseljahre-begleitung/#symptome"');
+
+  html = html.replace('<head>',
+    '<head>\n  <!-- Generated from index.html by scripts/build-pages.js — do not edit by hand. -->');
+  write('/de/', html);
+}
+buildGermanHome();
+
+/* ── 3. sitemap.xml ───────────────────────────────────────── */
+function buildSitemap() {
+  const entries = [
+    { path: '/', priority: '1.0', alternates: { fr: '/', de: '/de/' } },
+    { path: '/de/', priority: '0.9', alternates: { fr: '/', de: '/de/' } },
+    ...pages.map((p) => ({
+      path: p.path,
+      priority: p.path.startsWith('/symptomes/') && p.path !== '/symptomes/' ? '0.7' : '0.8',
+      alternates: p.alternates,
+    })),
+    { path: '/mentions-legales.html', priority: '0.2' },
+    { path: '/politique-confidentialite.html', priority: '0.2' },
+    { path: '/cookies.html', priority: '0.1' },
+  ];
+
+  const urls = entries.map((e) => {
+    const alt = e.alternates
+      ? Object.entries(e.alternates).map(([lang, href]) =>
+          `\n    <xhtml:link rel="alternate" hreflang="${lang}" href="${SITE + href}"/>`).join('') +
+        `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE + e.alternates.fr}"/>`
+      : '';
+    return `  <url>
+    <loc>${SITE + e.path}</loc>
+    <lastmod>${MODIFIED}</lastmod>
+    <priority>${e.priority}</priority>${alt}
+  </url>`;
+  }).join('\n\n');
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated by scripts/build-pages.js -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+${urls}
+
+</urlset>
+`;
+  fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), xml.replace(/\n/g, '\r\n'));
+  console.log('  wrote sitemap.xml (' + entries.length + ' URLs)');
+}
+buildSitemap();

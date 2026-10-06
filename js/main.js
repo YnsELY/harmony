@@ -305,7 +305,7 @@
           '<a href="politique-confidentialite.html">Datenschutzerklärung</a></p>'
         : '<h3>Confidentialité</h3>' +
           '<p>Ce site utilise des cookies essentiels et, avec votre accord, Calendly ' +
-          'pour la prise de rendez-vous.</p>' +
+          '(prise de rendez-vous) et Google Analytics (mesure d\'audience).</p>' +
           '<p>Page complète : ' +
           '<a href="politique-confidentialite.html">Politique de confidentialité</a></p>';
     }

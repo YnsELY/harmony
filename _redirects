@@ -1,0 +1,12 @@
+# Netlify redirects — Harmony Féminine
+# (www → non-www is handled by the Netlify primary-domain setting.)
+
+# Profile photos renamed for SEO
+/assets/images/profile-picture-sm.jpg  /assets/images/sabine-trierweiler-consultante-menopause-sm.jpg  301
+/assets/images/profile-picture-md.jpg  /assets/images/sabine-trierweiler-consultante-menopause-md.jpg  301
+/assets/images/profile-picture-lg.jpg  /assets/images/sabine-trierweiler-consultante-menopause-lg.jpg  301
+
+# Short, memorable URLs
+/sabine        /sabine-trierweiler/   301
+/a-propos      /sabine-trierweiler/   301
+/ueber-mich    /de/sabine-trierweiler/   301

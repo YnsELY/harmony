@@ -16,6 +16,13 @@
  *
  * The button shows the CURRENT language flag + code.
  * Clicking it switches to the other language.
+ *
+ * SEO / URLs
+ *   Bilingual pages (index.html and its copy /de/index.html) switch in place
+ *   and swap the URL to the matching <link rel="alternate" hreflang> page,
+ *   so / is always the French URL and /de/ the German one.
+ *   Single-language pages declare <html data-lang-fixed="fr|de"> and
+ *   navigate to their hreflang alternate (or data-lang-fallback) instead.
  */
 
 (function () {
@@ -36,7 +43,10 @@
 
     // ── <html lang> + storage ────────────────────────────────────
     document.documentElement.lang = lang;
-    sessionStorage.setItem('lang', lang);
+    if (!fixedLang()) {
+      sessionStorage.setItem('lang', lang);
+      syncUrl(lang);
+    }
 
     // ── Toggle button UI ─────────────────────────────────────────
     var flagEl = document.getElementById('langFlag');
@@ -59,15 +69,54 @@
    * Called by onclick="toggleLang()" on the button.
    */
   window.toggleLang = function () {
-    var current = sessionStorage.getItem('lang') || 'fr';
-    window.setLang(current === 'fr' ? 'de' : 'fr');
+    var fixed = fixedLang();
+    var current = fixed || sessionStorage.getItem('lang') || 'fr';
+    var target = current === 'fr' ? 'de' : 'fr';
+    if (fixed) {
+      var href = alternateHref(target) ||
+                 document.documentElement.getAttribute('data-lang-fallback');
+      if (href) {
+        sessionStorage.setItem('lang', target);
+        // Stay on the current origin (local preview, Netlify deploy previews)
+        window.location.href = new URL(href, window.location.href).pathname;
+        return;
+      }
+    }
+    window.setLang(target);
   };
 
+  /** Language forced by a single-language page, or null. */
+  function fixedLang() {
+    return document.documentElement.getAttribute('data-lang-fixed');
+  }
+
+  /** href of <link rel="alternate" hreflang="lang">, or null. */
+  function alternateHref(lang) {
+    var link = document.querySelector('link[rel="alternate"][hreflang="' + lang + '"]');
+    return link ? link.getAttribute('href') : null;
+  }
+
+  /** Show the URL of the page matching the active language (no reload). */
+  function syncUrl(lang) {
+    var href = alternateHref(lang);
+    if (!href || !window.history || !history.replaceState) return;
+    try {
+      var url = new URL(href, window.location.href);
+      if (url.pathname !== window.location.pathname) {
+        history.replaceState(null, '', url.pathname + window.location.search + window.location.hash);
+      }
+    } catch (e) { /* different origin (local preview) — ignore */ }
+  }
+
   /* ── Auto-detect on first visit ────────────────────────────────
-     Priority: 1) sessionStorage  2) browser language  3) 'fr'
+     Priority: 0) page fixed language  1) German page (/de/)
+               2) sessionStorage  3) browser language  4) 'fr'
   ─────────────────────────────────────────────────────────────── */
   function detectLang() {
+    var fixed = fixedLang();
+    if (fixed) return fixed;
     var stored = sessionStorage.getItem('lang');
+    if (document.documentElement.lang === 'de') return 'de';
     if (stored === 'fr' || stored === 'de') return stored;
     var browser = (navigator.language || navigator.userLanguage || '').toLowerCase();
     return browser.startsWith('de') ? 'de' : 'fr';

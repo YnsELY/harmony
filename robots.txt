@@ -1,31 +1,29 @@
 # robots.txt — Harmony Féminine
-# https://www.harmony-feminine.com
+# https://harmony-feminine.com
 
 User-agent: *
 Allow: /
-
-# Legal & policy pages (allow indexing)
-Allow: /mentions-legales.html
-Allow: /politique-confidentialite.html
-Allow: /cookies.html
-
-# Block any CMS/admin paths if added in the future
 Disallow: /admin/
 Disallow: /wp-admin/
 Disallow: /cgi-bin/
+Disallow: /scripts/
 
-# Crawl-delay (optional, polite for bots)
-Crawl-delay: 10
-
-# Sitemap location
-Sitemap: https://www.harmony-feminine.com/sitemap.xml
-
-# AI crawler blocking:
+# AI training crawlers: opted out (does not affect Google Search or AI Overviews).
 User-agent: GPTBot
-Disallow: /
-
-User-agent: ChatGPT-User
 Disallow: /
 
 User-agent: Google-Extended
 Disallow: /
+
+# AI search / answer engines: allowed, so the site can be cited when
+# someone asks an assistant about Sabine Trierweiler or menopause support.
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://harmony-feminine.com/sitemap.xml

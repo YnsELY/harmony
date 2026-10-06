@@ -5,16 +5,21 @@
  * Dependency : lang.js (setLang must be available)
  * Load order : 2nd  (after lang.js, before main.js)
  *
- * Exposes : cookieConsent(level), savePrefs(), showBanner(), loadCalendly()
+ * Exposes : cookieConsent(level), savePrefs(), showBanner(), loadCalendly(),
+ *           loadAnalytics()
  *
  * How it works
  * ────────────
  * On every page load the engine reads localStorage for a saved consent
  * record.  If none exists (or the version has changed), the cookie banner
  * is shown.  The user can:
- *   • Accept all   → Calendly script is injected dynamically
- *   • Essential    → Calendly is NOT loaded
+ *   • Accept all   → Calendly and Google Analytics are injected dynamically
+ *   • Essential    → neither is loaded
  *   • Customise    → individual toggles on cookies.html
+ *
+ * Google Analytics 4 (audience measurement) is opt-in: nothing is loaded and
+ * no request is sent to Google until the visitor accepts it. Set GA_ID below
+ * to the GA4 measurement ID (Admin → Data streams → Web, format G-XXXXXXXXXX).
  *
  * To re-ask consent after a policy update: bump CONSENT_VER.
  */
@@ -24,7 +29,10 @@
 
   /* ── Constants ──────────────────────────────────────────────── */
   var CONSENT_KEY = 'hf_cookie_consent';
-  var CONSENT_VER = '1';  // ← bump this when the cookie policy changes
+  var CONSENT_VER = '2';  // ← bump this when the cookie policy changes
+
+  var GA_ID = 'G-XXXXXXXXXX';  // ← TODO: replace with the real GA4 measurement ID
+  var GA_SCRIPT_ID = 'ga-script';
 
   var CALENDLY_SCRIPT_ID = 'calendly-script';
   var CALENDLY_WIDGET_URL =
@@ -40,10 +48,11 @@
    */
   window.cookieConsent = function (level) {
     var prefs = {
-      version:  CONSENT_VER,
-      level:    level,
-      calendly: level === 'all',
-      date:     new Date().toISOString()
+      version:   CONSENT_VER,
+      level:     level,
+      calendly:  level === 'all',
+      analytics: level === 'all',
+      date:      new Date().toISOString()
     };
     localStorage.setItem(CONSENT_KEY, JSON.stringify(prefs));
 
@@ -52,6 +61,7 @@
     syncToggles(prefs);
 
     if (prefs.calendly) loadCalendly();
+    applyAnalytics(prefs.analytics);
   };
 
   /**
@@ -61,13 +71,17 @@
   window.savePrefs = function () {
     var calFR = document.getElementById('tog-calendly');
     var calDE = document.getElementById('tog-calendly-de');
-    var calEnabled = (calFR && calFR.checked) || (calDE && calDE.checked);
+    var gaFR = document.getElementById('tog-analytics');
+    var gaDE = document.getElementById('tog-analytics-de');
+    var calEnabled = !!((calFR && calFR.checked) || (calDE && calDE.checked));
+    var gaEnabled  = !!((gaFR && gaFR.checked) || (gaDE && gaDE.checked));
 
     var prefs = {
-      version:  CONSENT_VER,
-      level:    calEnabled ? 'all' : 'essential',
-      calendly: calEnabled,
-      date:     new Date().toISOString()
+      version:   CONSENT_VER,
+      level:     calEnabled && gaEnabled ? 'all' : (calEnabled || gaEnabled ? 'custom' : 'essential'),
+      calendly:  calEnabled,
+      analytics: gaEnabled,
+      date:      new Date().toISOString()
     };
     localStorage.setItem(CONSENT_KEY, JSON.stringify(prefs));
 
@@ -75,6 +89,7 @@
     updateStatus(prefs);
 
     if (prefs.calendly) loadCalendly();
+    applyAnalytics(prefs.analytics);
 
     // Visual confirmation on the save button
     var btn = event && event.target;
@@ -96,6 +111,54 @@
   function hideBanner() {
     var banner = document.getElementById('cookie-banner');
     if (banner) banner.style.display = 'none';
+  }
+
+
+  /* ── Google Analytics 4 (called only after consent) ─────────── */
+
+  function analyticsConfigured() {
+    return /^G-[A-Z0-9]{6,}$/.test(GA_ID) && GA_ID !== 'G-XXXXXXXXXX';
+  }
+
+  /** Load GA4 once the visitor has accepted audience measurement. */
+  window.loadAnalytics = function () {
+    if (!analyticsConfigured()) return;
+    window['ga-disable-' + GA_ID] = false;
+    if (document.getElementById(GA_SCRIPT_ID)) return;
+
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', GA_ID);
+
+    var s = document.createElement('script');
+    s.id    = GA_SCRIPT_ID;
+    s.async = true;
+    s.src   = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
+  };
+
+  /** Stop GA and remove its cookies when consent is withdrawn. */
+  function stopAnalytics() {
+    if (!analyticsConfigured()) return;
+    window['ga-disable-' + GA_ID] = true;
+    var host  = window.location.hostname;
+    var parts = host.split('.');
+    var domains = [host, '.' + host];
+    if (parts.length > 2) domains.push('.' + parts.slice(-2).join('.'));
+    document.cookie.split(';').forEach(function (c) {
+      var name = c.split('=')[0].trim();
+      if (name === '_ga' || name.indexOf('_ga_') === 0) {
+        domains.forEach(function (d) {
+          document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=' + d;
+        });
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+      }
+    });
+  }
+
+  function applyAnalytics(enabled) {
+    if (enabled) window.loadAnalytics(); else stopAnalytics();
   }
 
 
@@ -160,8 +223,12 @@
   function syncToggles(prefs) {
     var calFR = document.getElementById('tog-calendly');
     var calDE = document.getElementById('tog-calendly-de');
+    var gaFR  = document.getElementById('tog-analytics');
+    var gaDE  = document.getElementById('tog-analytics-de');
     if (calFR) calFR.checked = !!prefs.calendly;
     if (calDE) calDE.checked = !!prefs.calendly;
+    if (gaFR)  gaFR.checked  = !!prefs.analytics;
+    if (gaDE)  gaDE.checked  = !!prefs.analytics;
   }
 
 
@@ -183,11 +250,14 @@
     var d = new Date(prefs.date).toLocaleDateString(lang === 'de' ? 'de-DE' : 'fr-FR');
 
     if (prefs.level === 'all') {
-      elFr.textContent = '✓ Tous les cookies acceptés (Calendly activé) — ' + d;
-      elDe.textContent = '✓ Alle Cookies akzeptiert (Calendly aktiviert) — ' + d;
+      elFr.textContent = "✓ Tous les cookies acceptés (Calendly et mesure d'audience activés) — " + d;
+      elDe.textContent = '✓ Alle Cookies akzeptiert (Calendly und Reichweitenmessung aktiviert) — ' + d;
+    } else if (prefs.level === 'custom') {
+      elFr.textContent = '✓ Préférences personnalisées enregistrées — ' + d;
+      elDe.textContent = '✓ Individuelle Einstellungen gespeichert — ' + d;
     } else {
-      elFr.textContent = '✓ Cookies essentiels uniquement (Calendly désactivé) — ' + d;
-      elDe.textContent = '✓ Nur notwendige Cookies (Calendly deaktiviert) — ' + d;
+      elFr.textContent = '✓ Cookies essentiels uniquement (services optionnels désactivés) — ' + d;
+      elDe.textContent = '✓ Nur notwendige Cookies (optionale Dienste deaktiviert) — ' + d;
     }
   }
 
@@ -208,18 +278,21 @@
     } else {
       updateStatus(stored);
       syncToggles(stored);
+      if (stored.analytics) window.loadAnalytics();
     }
   });
 
-  const calendlyTarget = document.querySelector('#calendly-container');
+  var calendlyTarget = document.querySelector('#calendly-container');
 
-  const calendlyObserver = new IntersectionObserver((entries, obs) => {
-    if (entries[0].isIntersecting) {
-      window.loadCalendly();
-      obs.disconnect();
-    }
-  });
+  if (calendlyTarget) {
+    var calendlyObserver = new IntersectionObserver(function (entries, obs) {
+      if (entries[0].isIntersecting) {
+        window.loadCalendly();
+        obs.disconnect();
+      }
+    });
 
-  calendlyObserver.observe(calendlyTarget);
+    calendlyObserver.observe(calendlyTarget);
+  }
   
 })();

@@ -85,3 +85,19 @@
 *, *::before, *::after {
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
 }
+/* ── SEO: semantic headings keep the exact look of the former <p>/<div> ── */
+.hero h1.hero-tagline {
+  font-family: var(--font-body);
+  font-size: 1.6rem;
+  line-height: var(--bs-body-line-height);
+  color: #AB7157;
+  margin-bottom: 1.5rem;
+}
+.hf-inherit-link,
+.hf-inherit-link:hover,
+.hf-card-link,
+.hf-card-link:hover { color: inherit; text-decoration: none; }
+.symptom-card { position: relative; }
+.hf-card-link::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.symptom-card h3.lustria,
+.mission-pillar h3.lustria { line-height: var(--bs-body-line-height); color: inherit; }
