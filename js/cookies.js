@@ -31,7 +31,7 @@
   var CONSENT_KEY = 'hf_cookie_consent';
   var CONSENT_VER = '2';  // ← bump this when the cookie policy changes
 
-  var GA_ID = 'G-XXXXXXXXXX';  // ← TODO: replace with the real GA4 measurement ID
+  var GA_ID = 'G-REGN9WQPDC';  // GA4 measurement ID
   var GA_SCRIPT_ID = 'ga-script';
 
   var CALENDLY_SCRIPT_ID = 'calendly-script';

@@ -116,7 +116,7 @@ node scripts/build-pages.js
 ### Google Analytics 4 (consentement RGPD)
 - Intégré dans `js/cookies.js` : **chargé uniquement si le visiteur accepte** (bandeau « Tout accepter » ou case dédiée sur `cookies.html`). Aucun appel à Google avant accord ; retrait du consentement = arrêt de GA et suppression des cookies `_ga*`.
 - Bandeau, page cookies et politique de confidentialité (FR + DE) mis à jour. Le consentement est redemandé à tous les visiteurs (version 2).
-- **À faire** : créer la propriété GA4 (analytics.google.com → Admin → Flux de données → Web), puis remplacer `G-XXXXXXXXXX` par l’ID de mesure dans `js/cookies.js` (`GA_ID`). Tant que l’ID est le provisoire, rien n’est chargé.
+- ID de mesure configuré : `G-REGN9WQPDC` (`GA_ID` dans `js/cookies.js`). Le script officiel Google n’est volontairement pas collé dans les pages : il serait chargé avant tout consentement.
 - Dans GA4 : conservation des données à 14 mois, signaux Google et personnalisation des annonces désactivés, lier la propriété à Search Console, marquer comme événement clé les clics « Appel 20 Min. offert » / réservations Calendly.
 - Limite : seuls les visiteurs qui acceptent les cookies sont mesurés ; Search Console reste la source fiable pour les impressions et clics Google.
 
