@@ -157,6 +157,16 @@
     });
   }
 
+  /**
+   * Send a GA4 event. Does nothing unless the visitor accepted audience
+   * measurement (gtag only exists after loadAnalytics) and has not withdrawn.
+   */
+  window.hfTrack = function (name, params) {
+    if (typeof window.gtag !== 'function') return;
+    if (window['ga-disable-' + GA_ID]) return;
+    window.gtag('event', name, params || {});
+  };
+
   function applyAnalytics(enabled) {
     if (enabled) window.loadAnalytics(); else stopAnalytics();
   }

@@ -17,6 +17,7 @@
  *  • Contact form submission via PHP back-end
  *  • Popup overlay for impressum / privacy snippets
  *  • Hidden form timestamp (anti-spam)
+ *  • GA4 conversion events (only sent after cookie consent, see hfTrack)
  *
  */
 
@@ -45,6 +46,7 @@
     initActiveNavLinks();
     initContactTabs();
     initContactForm();
+    initTracking();
 
   });
 
@@ -176,6 +178,7 @@
               true
             );
             form.reset();
+            track('contact_form_submit', { link_location: 'contact' });
           } else {
             throw new Error('HTTP ' + res.status);
           }
@@ -208,6 +211,42 @@
     form.appendChild(div);
 
     setTimeout(function () { div.remove(); }, 6000);
+  }
+
+
+  /* ── GA4 events (conversions) ───────────────────────────────
+     All events go through hfTrack (cookies.js): nothing is sent unless
+     the visitor accepted audience measurement.
+       calendly_click      click on any "Appel 20 Min. offert" / agenda button
+       calendly_booking    appointment actually booked in the Calendly widget
+       contact_form_submit contact form sent successfully
+       email_click         click on the mailto: address
+     Mark them as "key events" in GA4 (Admin → Events).
+  ──────────────────────────────────────────────────────────── */
+  function track(name, params) {
+    if (typeof window.hfTrack === 'function') window.hfTrack(name, params);
+  }
+
+  function initTracking() {
+    document.addEventListener('click', function (e) {
+      var el = e.target.closest ? e.target.closest('[onclick*="openCalendlyPopup"], #tabCal, a[href^="mailto:"]') : null;
+      if (!el) return;
+      var holder = el.closest('[id]');
+      var params = {
+        link_location: holder ? holder.id : 'page',
+        page_path: window.location.pathname
+      };
+      if (el.tagName === 'A') track('email_click', params);
+      else track('calendly_click', params);
+    });
+
+    // Calendly posts a message to the page when a booking is completed.
+    window.addEventListener('message', function (e) {
+      if (e.origin !== 'https://calendly.com') return;
+      if (e.data && e.data.event === 'calendly.event_scheduled') {
+        track('calendly_booking', { page_path: window.location.pathname });
+      }
+    });
   }
 
 
