@@ -125,7 +125,7 @@ node scripts/build-pages.js
 - 2–3 témoignages de clientes (avec accord écrit).
 - Dates, lieu et tarif des ateliers.
 - Accès au cabinet (stationnement, étage, accessibilité).
-- ⚠️ `mentions-legales.html` indique l'hébergeur **IONOS**, alors que le site est servi par **Netlify** : à corriger (obligation légale). L'adresse de l'entreprise (Sarreguemines) diffère de celle du cabinet (Creutzwald) : c'est normal si c'est le siège, mais à vérifier.
+- ✅ Hébergeur corrigé (Netlify) dans les mentions légales, la politique de confidentialité et la page cookies. L'adresse de l'entreprise (Sarreguemines) diffère de celle du cabinet (Creutzwald) : c'est normal si c'est le siège, mais à vérifier.
 
 ---
 
