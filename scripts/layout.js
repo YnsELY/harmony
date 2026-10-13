@@ -43,7 +43,7 @@ const T = {
     footerSymptoms: 'Symptômes',
     services: [
       ['/accompagnement-menopause/', 'Accompagnement ménopause'],
-      ['/accompagnement-premenopause/', 'Accompagnement préménopause'],
+      ['/accompagnement-premenopause/', 'Préménopause'],
       ['/consultation-menopause-en-ligne/', 'Consultation en ligne'],
       ['/ateliers-conferences/', 'Ateliers & conférences'],
       ['/coach-menopause-creutzwald-moselle/', 'Cabinet de Creutzwald'],
@@ -330,7 +330,7 @@ function footer(t) {
 ${list(t.nav)}
         </ul>
       </div>
-      <div class="col-6 col-lg-3">
+      <div class="col-6 col-lg-2">
         ${heading(t.footerServices)}
         <ul class="list-unstyled" style="line-height:2.2;">
 ${list(t.services)}

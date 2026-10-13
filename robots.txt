@@ -27,3 +27,4 @@ User-agent: PerplexityBot
 Allow: /
 
 Sitemap: https://harmony-feminine.com/sitemap.xml
+Sitemap: https://harmony-feminine.com/sitemap-harmony.xml
